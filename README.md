@@ -40,7 +40,7 @@ tplus-landing/
 ├── index.css           # Stylesheet (minimal)
 ├── _headers            # Security headers for Cloudflare
 ├── _redirects          # Redirect rules
-├── tplus_files/        # Static assets (images, JS)
+├── assets/             # Static assets (images, JS)
 │   ├── *.webp          # Images
 │   └── index-*.js      # JavaScript
 └── README.md           # This file
