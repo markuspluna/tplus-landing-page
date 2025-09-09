@@ -25,7 +25,12 @@
     <meta name="twitter:site" content="@HotPageBuilder">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="assets/1650.webp">
-  <style>@keyframes path0589 { 0% { transform: translate(0, 0); } 30% { transform: translate(40px, 0); } 100% { transform: translate(425px, -20px); } }</style><style>@keyframes path3943 { 0% { transform: translate(0, 0); } 30% { transform: translate(40px, 0); } 100% { transform: translate(425px, 40px); } }</style></head>
+  <style>@keyframes path0589 { 0% { transform: translate(0, 0); } 30% { transform: translate(40px, 0); } 100% { transform: translate(425px, -20px); } }</style><style>@keyframes path3943 { 0% { transform: translate(0, 0); } 30% { transform: translate(40px, 0); } 100% { transform: translate(425px, 40px); } }</style><style>
+    .fade-out {
+      opacity: 0;
+      transition: opacity 1s ease-out;
+    }
+  </style></head>
   <body id="hot-3c47c" class="index-page">
     <div>
       
@@ -606,7 +611,7 @@ asset
       <div id="tplus-overlay">
         <div id="tplus-terminal">
           <!-- Password screen -->
-          <div id="tplus-password" style="display: none;">
+          <div id="tplus-password" style="display: block;">
             <div>user@t-plus:~$ ./specifications.sh</div>
             <div><b>t+ specifications</b></div>
             
@@ -620,7 +625,7 @@ asset
           </div>
           
           <!-- Surprise screen -->
-          <div id="tplus-surprise" style="display: block;">
+          <div id="tplus-surprise" style="display: none;">
             <div>user@t-plus:~$ ./specifications.sh</div>
              <div id="tplus-welcome">Just Kidding! Welcome to perfect markets.</div>
       <pre id="tplus-ascii">****************************************************************************************************
@@ -699,9 +704,9 @@ asset
           if (inputField) {
             inputField.focus();
             
-            // Keep focus when clicking anywhere
-            overlay.addEventListener('click', function() {
-              if (passwordScreen.style.display !== 'none') {
+            // Keep focus when clicking on password screen
+            overlay.addEventListener('click', function(e) {
+              if (passwordScreen.style.display !== 'none' && e.target !== inputField) {
                 inputField.focus();
               }
             });
@@ -734,19 +739,23 @@ asset
                 removeOverlay();
               }
             } else {
-              // On password screen
-              clearTimeout(timer);
-              showSurprise();
+              // On password screen - any key press shows surprise
+              if (event.key.length === 1 || event.key === 'Enter' || event.key === 'Backspace') {
+                clearTimeout(timer);
+                showSurprise();
+              }
             }
           });
           
           // Handle click events
           document.addEventListener('click', function(event) {
             if (passwordScreen.style.display === 'none') {
+              // On surprise screen - only "Press enter to continue..." removes overlay
               if (event.target.id === 'tplus-continue') {
                 removeOverlay();
               }
             } else {
+              // On password screen - any click shows surprise
               clearTimeout(timer);
               showSurprise();
             }
