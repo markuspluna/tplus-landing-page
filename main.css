@@ -40,6 +40,7 @@ img {
   background-color: #ff0000;
   overflow: hidden;
   position: relative;
+  height: 40px;
 }
 
 .ticker-container {
@@ -101,9 +102,9 @@ body {
   color: var(--terminal-black);
   font-family: var(--terminal-font);
   line-height: 1.6;
-  padding: 20px;
-  max-width: 800px;
-  margin: 0 auto;
+  padding: 10px;
+  margin: 0;
+  width: 100%;
 }
 
 header {
@@ -164,8 +165,9 @@ footer {
 }
 
 /*  more styling from hotpage - homepage */
-console-button-container {
+.console-button-container {
   height: 40px;
+  margin: 30px 0;
 }
 
 .console-button {
@@ -469,7 +471,7 @@ console-button-container {
 .tpteam-container {
   --tpteam-red: #ff0000;
   --tpteam-black: #000000;
-  --tpteam-font: 'V323', monospace;
+  --tpteam-font: 'VT323', monospace;
   background-color: white;
   color: var(--tpteam-black);
   font-family: var(--tpteam-font);
@@ -727,11 +729,6 @@ console-button-container {
 
 /*  more styling from hotpage - get involved */
 
-img {
-  width: 25%;
-  height: 25%;
-}
-
 .banner {
   background-color: #ff0000;
   height: 40px;
@@ -799,7 +796,7 @@ img {
 
 @media screen and (min-width: 768px) {
   .centered-image {
-    max-width: 66%;
+    max-width: 80%;
   }
 }
 
@@ -953,7 +950,7 @@ img {
 .tpteam-container {
   --tpteam-red: #ff0000;
   --tpteam-black: #000000;
-  --tpteam-font: 'V323', monospace;
+  --tpteam-font: 'VT323', monospace;
   background-color: white;
   color: var(--tpteam-black);
   font-family: var(--tpteam-font);
@@ -1297,4 +1294,84 @@ img {
 
 @keyframes fade {
   to { opacity: 0; visibility: hidden; }
+}
+
+/* Index page scoped layout to mirror deployed site */
+.index-page {
+  width: 100%;
+  margin: 0;
+  padding: 10px;
+}
+
+.index-page .centered-image {
+  display: block;
+  margin: 30px auto 10px;
+  width: 50%;
+  max-width: 1000px;
+  height: auto;
+}
+
+.index-page .retro-panel {
+  margin: 20px auto;
+  max-width: 1220px;
+}
+
+.index-page .panel-body {
+  gap: 16px;
+}
+
+.index-page .components-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: 1220px;
+  margin: 0 auto;
+}
+
+.index-page .arcade-console {
+  width: 520px;
+}
+
+.index-page .connector {
+  margin: 0 24px;
+}
+
+/* Center headline lines and rule like live site */
+.index-page .wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+
+.index-page .p-font-2 {
+  text-align: center;
+}
+
+.index-page hr {
+  max-width: 1220px;
+  margin: 12px auto 24px;
+  border: 0;
+  border-top: 1px solid #cfcfcf;
+}
+
+.index-page .components-container { margin-top: 24px; }
+
+@media (max-width: 1200px) {
+  .index-page {
+    width: 100%;
+    padding: 10px;
+  }
+  .index-page .components-container {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .index-page .arcade-console {
+    width: 95%;
+    max-width: 600px;
+  }
+  .index-page .connector {
+    transform: rotate(90deg);
+    margin: 10px 0;
+  }
 }
