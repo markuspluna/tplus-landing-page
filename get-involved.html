@@ -20,90 +20,81 @@
       <img src="assets/1836.webp" alt="Left Logo" class="banner-image right-image" />
     </div>
 
-    <img src="assets/1836_002.webp" width="1836" height="1836" srcset="assets/250.webp 250w, assets/500_002.webp 500w, assets/1000_002.webp 1000w, assets/1836_002.webp 1836w" />
+    <img src="assets/1836_002.webp" width="1836" height="1836" srcset="assets/250.webp 250w, assets/500_002.webp 500w, assets/1000_002.webp 1000w, assets/1836_002.webp 1836w" class="centered-image" />
 
-    <h1>Want to get involved?</h1>
-    <p>
-      We’re looking for 2 profiles of engineers to join us at the founding or principle engineer level. From a business
-      standpoint this means your responsibilities might include:
-    </p>
-    <ul>
-      <li>
-        <strong>Product Development:</strong><br>
-        You’ll spearhead the build out of the user facing product. This doesn't mean you're just a frontend dev. Our frontend,
-        api endpoints, and telegram bots have to be crisp - fast - performant - and handle load well. You'll help design what
-        these user facing interfaces should look and feel like - then implement them.
-      </li>
-      <li>
-        <strong>Technical Team Lead:</strong><br>
-        You'll be responsible for helping lead the engineering team.
-      </li>
-    </ul>
-    <h3>Now - the profiles</h3>
-    <ul>
-      <li>
-        <strong>Orderbook Exchange Frontend Experts:</strong><br>
-        You have experience with orderbook exchanges at the technical product level. You understand why the exchange looks and
-        feels the way it does - and how it delivers the performance users expect.<br>
-        <br>
-        t+ depends on running a highly performant orderbook as the user entrypoint. We need to process a high volume of orders
-        efficiently with minimal room for downtime or errors. Your job is figuring out how to get from user landing on our
-        website to submitting a trade as quickly as possible.
-      </li>
-      <li>
-        <strong>Searcher/Solver/Quant/Market Maker/Block Builder</strong><br>
-        You've built and maintained high-volume strategies.<br>
-        <br>
-        Many of the skills and expertise involved in the above fields are highly relevant to t+. We're trying to run a
-        high-performance program that enables orderflow monetization by market makers. As a searcher or quant you likely have
-        experience with implementing highly performant technical architecture that interacts with external exchanges constantly.
-        We also plan on running the initial market making algorithm on t+ to kickstart the liquidity flywheel, your experience
-        is highly relevant here. <br>
-        <br>
-        One other important aspect here is knowing what market makers expect from a trading venue. What kind of API endpoints
-        and discoverability is valuable? What can we reasonably support with our infrastructure?
-      </li>
-    </ul>
-    <h3>Nice To Have</h3>
-    <p>The following skills aren't required, but are useful for candidates to have</p>
-    <ul>
-      <li>
-        <strong>Experience or interest in Rust or other high-performance languages</strong><br>
-        <br>
-        Our off-chain components are currently written in rust, although that isn't mandatory, I just like it and Go/C++ scare
-        me a little.<br>
-        <br>
-      </li>
-      <li>
-        <strong>Smart Contract Development</strong><br>
-        <br>
-        We will be writing smart contracts.<br>
-        <br>
-      </li>
-      <li>
-        <strong>Risk Engines</strong><br>
-        <br>
-        t+ heavily depends on having a highly effective risk engine. We want market makers to have as much capital efficiency as
-        possible, but the efficacy of our confirmations requires market makers remaining solvent. Managing system risk is
-        everything.<br>
-        <br>
-      </li>
-      <li>
-        <strong>Node Management</strong><br>
-        <br>
-        Our off-chain components must run light-clients inside TEEs to have trustless access to on-chain state. <br>
-        <br>
-      </li>
-      <li>
-        <strong>Crypto Orderflow Supply Chain</strong><br>
-        <br>
-        We live or die by being able to efficiently execute and monitize unsettled user intents. Experience or interest in how
-        execution works in crypto is useful.
-      </li>
-    </ul>
-    <h3>Anything Else?</h3>
-    <p>If you think we're missing something here that would be valuable and you can provide let me know!</p>
-    <p></p>
-    <p>Contact: markus@tplus.cx</p>
+    <div class="tpteam-container">
+      <div class="retro-panel">
+        <div class="panel-header">
+          <span class="prompt">t+:</span>WANT TO GET INVOLVED?
+        </div>
+        <div class="panel-body">
+          <div class="panel-content">
+            <div class="panel-text">
+              <p>We're looking for 2 profiles of engineers to join us at the founding or principle engineer level. From a business standpoint this means your responsibilities might include:</p>
+              <ul class="tpteam-list">
+                <li class="tpteam-list-item"><strong>Product Development:</strong> You'll spearhead the build out of the user facing product. This doesn't mean you're just a frontend dev. Our frontend, api endpoints, and telegram bots have to be crisp - fast - performant - and handle load well. You'll help design what these user facing interfaces should look and feel like - then implement them.</li>
+                <li class="tpteam-list-item"><strong>Technical Team Lead:</strong> You'll be responsible for helping lead the engineering team.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="retro-panel">
+        <div class="panel-header">
+          <span class="prompt">t+:</span>THE PROFILES
+        </div>
+        <div class="panel-body">
+          <div class="panel-content">
+            <div class="panel-text">
+              <ul class="tpteam-list">
+                <li class="tpteam-list-item"><strong>Orderbook Exchange Frontend Experts:</strong> You have experience with orderbook exchanges at the technical product level. You understand why the exchange looks and feels the way it does - and how it delivers the performance users expect. t+ depends on running a highly performant orderbook as the user entrypoint. We need to process a high volume of orders efficiently with minimal room for downtime or errors. Your job is figuring out how to get from user landing on our website to submitting a trade as quickly as possible.</li>
+                <li class="tpteam-list-item"><strong>Searcher/Solver/Quant/Market Maker/Block Builder:</strong> You've built and maintained high-volume strategies. Many of the skills and expertise involved in the above fields are highly relevant to t+. We're trying to run a high-performance program that enables orderflow monetization by market makers. As a searcher or quant you likely have experience with implementing highly performant technical architecture that interacts with external exchanges constantly. We also plan on running the initial market making algorithm on t+ to kickstart the liquidity flywheel, your experience is highly relevant here. One other important aspect here is knowing what market makers expect from a trading venue. What kind of API endpoints and discoverability is valuable? What can we reasonably support with our infrastructure?</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="retro-panel">
+        <div class="panel-header">
+          <span class="prompt">t+:</span>NICE TO HAVE
+        </div>
+        <div class="panel-body">
+          <div class="panel-content">
+            <div class="panel-text">
+              <p>The following skills aren't required, but are useful for candidates to have:</p>
+              <ul class="tpteam-list">
+                <li class="tpteam-list-item"><strong>Experience or interest in Rust or other high-performance languages:</strong> Our off-chain components are currently written in rust, although that isn't mandatory, I just like it and Go/C++ scare me a little.</li>
+                <li class="tpteam-list-item"><strong>Smart Contract Development:</strong> We will be writing smart contracts.</li>
+                <li class="tpteam-list-item"><strong>Risk Engines:</strong> t+ heavily depends on having a highly effective risk engine. We want market makers to have as much capital efficiency as possible, but the efficacy of our confirmations requires market makers remaining solvent. Managing system risk is everything.</li>
+                <li class="tpteam-list-item"><strong>Node Management:</strong> Our off-chain components must run light-clients inside TEEs to have trustless access to on-chain state.</li>
+                <li class="tpteam-list-item"><strong>Crypto Orderflow Supply Chain:</strong> We live or die by being able to efficiently execute and monitize unsettled user intents. Experience or interest in how execution works in crypto is useful.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="retro-panel">
+        <div class="panel-header">
+          <span class="prompt">t+:</span>CONTACT
+        </div>
+        <div class="panel-body">
+          <div class="panel-content">
+            <div class="panel-text">
+              <p>If you think we're missing something here that would be valuable and you can provide let me know!</p>
+              <p><strong>Contact: markus@tplus.cx</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="console-button-container">
+        <a href="index.html" class="console-button">
+          &gt; Back to Home
+        </a>
+      </div>
+    </div>
   </body>
 </html>
