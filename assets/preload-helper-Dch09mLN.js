@@ -1,4 +1,4 @@
-// Placeholder for Hot Page preload helper
+// Preload helper module
 // This prevents import errors for missing dependency
 
 export const _ = (fn, deps = [], url) => {
@@ -7,7 +7,7 @@ export const _ = (fn, deps = [], url) => {
     try {
       return fn();
     } catch (e) {
-      console.warn('Hot Page preload helper error:', e);
+      console.warn('Preload helper error:', e);
     }
   }
   return Promise.resolve();

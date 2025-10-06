@@ -26,7 +26,7 @@ h1, h2, h3, h4, h5, h6 {
   box-sizing: inherit;
 }
 
-/* Hot Page will add width and height attributes to any <img> tag for images you upload to the service. This really helps the page load because it reserves space for the image and prevents the page jumping around as images load. However, this can make it difficult to size the images. If you add a width without a height, it will use the height from the attribute and your image will probably be squished in a very unattractive way. Setting "height: auto" will fix that problem. */
+/* Image sizing helper - ensures proper aspect ratios for uploaded images */
 img {
   display: block;
   max-width: 100%;
@@ -34,7 +34,7 @@ img {
   height: auto;
 }
 
-/* Other css from hotpage - research page */
+/* Additional styling for research page */
 
 .banner {
   background-color: #ff0000;
@@ -164,7 +164,7 @@ footer {
   }
 }
 
-/*  more styling from hotpage - homepage */
+/* Additional styling for homepage */
 .console-button-container {
   height: 40px;
   margin: 30px 0;
@@ -728,7 +728,7 @@ footer {
   }
 }
 
-/*  more styling from hotpage - get involved */
+/* Additional styling for get involved page */
 
 .banner {
   background-color: #ff0000;
@@ -787,7 +787,7 @@ footer {
   }
 }
 
-/*  more styling from hotpage - wtf */
+/* Additional styling for wtf page */
 .centered-image {
   display: block;
   margin: 0 auto;

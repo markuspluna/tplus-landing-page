@@ -1,7 +1,7 @@
-// Placeholder for Hot Page advertisement module
+// Advertisement module placeholder
 // This prevents import errors for missing dependency
 
-console.log('Hot Page - Made with love from hot.page');
+console.log('Advertisement module loaded');
 
 // Export a default function to satisfy import requirements
 export default function() {
