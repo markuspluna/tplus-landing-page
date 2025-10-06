@@ -768,12 +768,12 @@ footer {
 
 .left-image {
   left: 12px;
-  top: 12px;
+  top: 6px;
 }
 
 .right-image {
   right: 12px;
-  top: 12px;
+  top: 6px;
 }
 
 @keyframes scroll {
@@ -907,12 +907,12 @@ footer {
 
 .left-image {
   left: 12px;
-  top: 12px;
+  top: 6px;
 }
 
 .right-image {
   right: 12px;
-  top: 12px;
+  top: 6px;
 }
 
 @keyframes scroll {
