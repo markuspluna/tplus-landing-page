@@ -162,46 +162,47 @@
 
 
       
-          <script>
-              document.addEventListener('DOMContentLoaded', function() {
-                  // Depth Chart Component
-                  initDepthChart();
-                  
-                  // Sankey Diagram Component
-                  initSankeyDiagram();
-                  
-                  // Modal functionality for buttons
-                  initModalButtons();
-              });
-              
-              function initModalButtons() {
-                  // Get the modal
-                  var modal = document.getElementById('image-modal');
-                  var modalImg = document.getElementById('modal-image');
-                  
-                  // Get the buttons
-                  var depthBtn = document.getElementById('learn-more-depth');
-                  var journeyBtn = document.getElementById('learn-more-journey');
-                  
-                  // When the depth button is clicked, open the modal
-                  depthBtn.onclick = function() {
-                      modal.style.display = "flex";
-                      modalImg.src = "assets/1000.webp";
-                  }
-                  
-                  // When the journey button is clicked, open the modal
-                  journeyBtn.onclick = function() {
-                      modal.style.display = "flex";
-                      modalImg.src = "assets/1000_002.webp";
-                  }
-                  
-                  // When the user clicks on the modal, close it
-                  modal.onclick = function() {
-                      modal.style.display = "none";
-                  }
-              }
-              
-              function initDepthChart() {
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                initDepthChart();
+                initSankeyDiagram();
+
+                const exampleModal = document.getElementById('example-modal');
+                const exampleVideo = document.getElementById('example-video');
+                const exampleButton = document.getElementById('example-button');
+                const closeExampleButton = document.getElementById('close-example-modal');
+
+                if (exampleModal && exampleVideo && exampleButton && closeExampleButton) {
+                    const openExampleModal = () => {
+                        exampleModal.style.display = 'flex';
+                        exampleVideo.currentTime = 0;
+                        exampleVideo.play();
+                    };
+
+                    const closeExampleModal = () => {
+                        exampleModal.style.display = 'none';
+                        exampleVideo.pause();
+                    };
+
+                    exampleButton.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        openExampleModal();
+                    });
+
+                    closeExampleButton.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        closeExampleModal();
+                    });
+
+                    exampleModal.addEventListener('click', (event) => {
+                        if (event.target === exampleModal) {
+                            closeExampleModal();
+                        }
+                    });
+                }
+            });
+            
+            function initDepthChart() {
                   // Access the game window
                   var gameWindow = document.getElementById('game-window');
                   if (!gameWindow) {
@@ -553,28 +554,18 @@
     <div class="wrapper-left">
       <!-- The button -->
       <div class="console-button-container">
-         <a href="#" class="console-button" onclick="openModal(); return false;">
+         <a href="#" class="console-button" id="example-button">
               &gt; Can I have an example please?
           </a>
       </div>
       
-      <!-- The modal -->
-      <div id="imageModal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.8);">
-          <span onclick="closeModal()" style="position:absolute; top:15px; right:35px; color:#f1f1f1; font-size:40px; font-weight:bold; cursor:pointer;">×</span>
-          <img src="assets/4000.webp" style="margin:auto; display:block; max-width:90%; max-height:90%; margin-top:50px;">
+      <div id="example-modal" class="modal-shell" style="display:none;">
+          <button id="close-example-modal" class="modal-close" aria-label="Close example">×</button>
+          <video id="example-video" controls preload="auto" playsinline width="1280" height="720">
+            <source src="assets/tplus-bullposting-and-content/bullposting-vid-2-compressed.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
       </div>
-      
-      <script>
-      function openModal() {
-          document.getElementById('imageModal').style.display = 'block';
-      }
-
-      function closeModal() {
-          document.getElementById('imageModal').style.display = 'none';
-      }
-
-
-      </script>
       <div class="console-button-container">
           <a href="wtf.html" class="console-button" target="_self">
               &gt; Why are we here?
