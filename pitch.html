@@ -1,0 +1,1964 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>t+ Pitch - DeFi's Brokerage Layer</title>
+    <link rel="icon" type="image/png" href="assets/1836.webp">
+    <link rel="stylesheet" href="main.css">
+    <style>
+        /* Page-specific styles */
+        body {
+            padding: 0 20px 20px 20px;
+        }
+
+        /* Make basic paragraph text more readable */
+        p {
+            font-weight: 550;
+            letter-spacing: 0.4px;
+            font-size: 18px;
+        }
+        
+        /* Make list items more readable */
+        ul li {
+            font-weight: 550;
+            font-size: 16px;
+        }
+        
+        /* Make headings slightly bolder */
+        h2, h3 {
+            font-weight: 600;
+        }
+
+        #hot-50e94 {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        #hot-ecff2 {
+            font-size: 18px;
+        }
+
+        #hot-386c1 {
+            padding-bottom: 0px;
+        }
+
+        #hot-dd3ae, #hot-d497c {
+            font-weight: lighter;
+            margin-top: -20px;
+            color: #b6b6b6;
+        }
+
+        #hot-191b3 {
+            font-size: 100px;
+        }
+
+        #hot-b53ed {
+            padding-right: 40px;
+            margin-top: 20px;
+        }
+
+        #hot-0b2b2 {
+            display: block;
+            max-width: 100%;
+            height: fit-content;
+        }
+    </style>
+</head>
+<body>
+    <img src="assets/1650.webp" srcset="assets/250.webp 250w, assets/500.webp 500w, assets/1000.webp 1000w, assets/1650.webp 1650w" sizes="auto" loading="lazy" width="1650" height="1050" class="centered-image">
+    
+    <div id="hot-b53ed">
+        <div class="retro-panel">
+            <div class="panel-header"><span class="prompt">t+:</span>DEFI'S BROKERAGE LAYER </div>
+            <div class="panel-body">
+                <div class="panel-content">
+                    <h3 class="panel-title">OFFERING:</h3>
+                    <div class="panel-text">
+                        <ul class="list">
+                            <li class="list-item">trades fill in under 1 millisecond</li>
+                            <li class="list-item">supports every onchain asset and product in one box - with leverage and liquidity</li>
+                            <li class="list-item">minimal market maker costs → quotes are excellent</li>
+                            <li class="list-item">executes against everyone else's liquidity → infinite depth (thx 4 the stale quotes) </li>
+                            <li class="list-item">Decentralized, Permissionless, Private</li>
+                        </ul>
+                    </div>
+                    <div class="panel-status">
+                        We're building the decentralized orderflow execution endgame // C:\SYSTEM\PERFECT-MARKETS&gt; <span class="blink">_</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p class="wrapper" id="hot-ecff2">It's the OTC &amp; Prime Broker Stack - decentralized - composable with the defi orderflow supply chain - and using all of defi as it's ever-expanding product suite.</p>
+    <p class="wrapper p-font-2">it's the new thing</p>
+    <hr>
+    
+    <h2 class = "wrapper" id="hot-386c1">We're fixing orderflow execution</h2>
+    <p class = "wrapper" id="hot-dd3ae">(for around the hundredth time)</p>
+    <p class = "wrapper">Orderflow execution in crypto sucks. We all know this - we've all heard the pitch.</p>
+    <h3 class = "wrapper">But it's true</h3>
+    
+    <div class="alert-container">
+        <div class="basic-terminal">
+            <div class="alert error">
+                <span class="symbol">✘</span> OOPS: Liquidity is fragmented
+            </div>
+            <div class="alert warning">
+                <span class="symbol">⚠</span> SAD: Confirmation times suck
+            </div>
+            <div class="alert info">
+                <span class="symbol">ℹ</span> 😹: EVERY decentralized venue even "sophisticated" solver networks have bad markouts
+            </div>
+        </div>
+    </div>
+
+    <p class = "wrapper">Most solutions fail at improving things because they implement N+1 fixes to self-inflicted problems. This has predictable results</p>
+
+    <div class="terminal-container">
+        <div class="alert-o">
+            <span class="breaking-prefix">BREAKING NEWS!:</span>
+            <span class="breaking-message">The new super fast isolated execution environment increased liquidity fragmentation</span>
+        </div>
+    </div>
+    <div class="terminal-container">
+        <div class="alert-o">
+            <span class="breaking-prefix">BREAKING NEWS!:</span>
+            <span class="breaking-message">The chain abstraction network increased cost and latency</span>
+        </div>
+    </div>
+    <div class="terminal-container">
+        <div class="alert-o">
+            <span class="breaking-prefix">BREAKING NEWS!:</span>
+            <span class="breaking-message">Another auction that sells the right to pick off market makers had minimal impact</span>
+        </div>
+    </div>
+    <div class="terminal-container">
+        <div class="alert">
+            <span class="error-prefix">MISSION FAILED:</span>
+            <span class="error-message">Orderflow execution still sucks.</span>
+        </div>
+    </div>
+
+    <p class = "wrapper">Instead of continuing the trend. t+ took a top down approach, and solved for what user's NEED from their orderflow execution: </p>
+    <ul>
+        <li>Speed!</li>
+        <li>Every asset &amp; protocol in one place!</li>
+        <li>Leverage and cross-margining (ie. capital efficiency)!</li>
+        <li>Good quotes!</li>
+        <li>Permissionless &amp; Trustless!</li>
+    </ul>
+    <div>
+    <div class="container">
+        <div class="p-font-2">
+            To fit all these properties in one product
+        </div>
+    </div>
+    <div class="container">
+        <div class="p-font-2">
+            we needed to build <span class="illegal">T+</span> - a decentralized brokerage layer
+        </div>
+    </div>
+    <div class="container">
+        <div class="p-font-2">
+            that can decouple trade
+            <span class="illegal">Confirmation</span> from <span class="illegal">Settlement </span>
+        </div>
+    </div>
+    <div class="container">
+        <div class="p-font-2">
+            and optimize each separately
+        </div>
+    </div>
+    
+<div class="components-container">
+    <!-- Left component (Personal Onboarding) -->
+    <div class="arcade-console" id="depth-console">
+        <h1 class="title">TRADE CONFIRMATION</h1>
+
+        <div class="game-window" id="game-window">
+            <div class="depth-bar" style="left: 6px; height: 70.5997px; width: 31px;"></div>
+            <div class="depth-bar" style="left: 38px; height: 59.5997px; width: 31px;"></div>
+            <div class="depth-bar" style="left: 70px; height: 49.5997px; width: 31px;"></div>
+            <div class="depth-bar" style="left: 102px; height: 39.5997px; width: 31px;"></div>
+            <div class="depth-bar" style="left: 134px; height: 28.5997px; width: 31px;"></div>
+            <div class="depth-bar" style="left: 166px; height: 17.5997px; width: 31px;"></div>
+            <div class="depth-bar" style="left: 198px; height: 8.59969px; width: 31px;"></div>
+            <div class="depth-bar" style="left: 250px; height: 7.16568px; width: 31px;"></div>
+            <div class="depth-bar" style="left: 282px; height: 16.1657px; width: 31px;"></div>
+            <div class="depth-bar" style="left: 314px; height: 26.1657px; width: 31px;"></div>
+            <div class="depth-bar" style="left: 346px; height: 36.1657px; width: 31px;"></div>
+            <div class="depth-bar" style="left: 378px; height: 47.1657px; width: 31px;"></div>
+            <div class="depth-bar" style="left: 410px; height: 57.1657px; width: 31px;"></div>
+            <div class="depth-bar" style="left: 442px; height: 66.1657px; width: 31px;"></div>
+            <div class="ball" style="left: 290px; top: -15px; animation: 1242.39ms linear forwards fall;"></div>
+        </div>
+
+        <div class="tpteam-container">
+            Orders are processed in an offchain orderbook ran in a TEE(trusted execution environment)
+            <ul class="tpteam-list">
+
+                <li class="tpteam-list-item">Under 1ms time to confirmation</li>
+                <li class="tpteam-list-item">The exchange software is immutable and private</li>
+
+            </ul>
+            Deposit any asset on any chain. We even support some CEXs and Custodians
+            <ul class="tpteam-list">
+                <li class="tpteam-list-item">t+ supports all assets instantly (they're even instantly liquid because we're composable with external liquidity)</li>
+
+            </ul>
+
+            Market maker costs are minimized
+            <ul class="tpteam-list">
+                <li class="tpteam-list-item">Posting a quote does not lock up margin, margin is checked on match </li>
+                <li class="tpteam-list-item">Quotes and cancels are prioritized - they're processed in a faster queue
+                    than taker orders
+                </li>
+
+
+            </ul>
+        </div>
+
+
+            <button class="btn-learn-more" id="learn-more-depth">LEARN MORE</button>
+
+        <div class="console-footer">
+            <div class="console-program">C:\SYSTEM\OPTIMAL-CONFIRMATION &gt; </div>
+        </div>
+    </div>
+
+    <!-- Connector between components -->
+    <div class="connector">&gt;</div>
+
+    <!-- Right component (User Journey) -->
+    <div class="arcade-console" id="sankey-console">
+        <h1 class="title">TRADE SETTLEMENT</h1>
+
+        <div class="sankey-window" id="sankey-window">
+            <div class="sankey-start"></div>
+            <div class="sankey-end" style="top: 10px; height: 15px;"></div>
+            <div class="sankey-end" style="top: 30px; height: 15px;"></div>
+            <div class="sankey-end" style="top: 50px; height: 15px;"></div>
+            <div class="sankey-end" style="top: 70px; height: 15px;"></div>
+            <div class="sankey-path" style="left: 40px; width: 40px; top: 45px;"></div>
+            <div class="sankey-path"
+                style="left: 80px; width: 361.087px; top: 45px; transform-origin: 0px 0px 0px; transform: rotate(-4.44739deg);">
+            </div>
+            <div class="sankey-path"
+                style="left: 80px; width: 360.089px; top: 45px; transform-origin: 0px 0px 0px; transform: rotate(-1.27303deg);">
+            </div>
+            <div class="sankey-path"
+                style="left: 80px; width: 360.2px; top: 45px; transform-origin: 0px 0px 0px; transform: rotate(1.90915deg);">
+            </div>
+            <div class="sankey-path"
+                style="left: 80px; width: 361.419px; top: 45px; transform-origin: 0px 0px 0px; transform: rotate(5.07961deg);">
+            </div>
+            <div class="sankey-ball" style="animation: 2292.12ms linear forwards path0589;"></div>
+            <div class="sankey-ball" style="animation: 2801.53ms linear forwards path3943;"></div>
+        </div>
+
+        <div class="tpteam-container">
+            Market makers can fill trades on-margin then net the exposure on a delayed basis into any liquidity source
+
+            <ul class="tpteam-list">
+                <li class="tpteam-list-item">MMs can settle exposure atomically into any dex</li>
+                <li class="tpteam-list-item">MMs can hedge exposure on cross-margined venues</li>
+                <li class="tpteam-list-item">Exposure can be cleared in the t+ book</li>
+                <li class="tpteam-list-item">The t+ book is made up of internal liquidity PLUS a latent bid from
+                    external on/offchain liquidity because we're composable with it</li>
+
+
+            </ul>
+
+            Settlements can be performed using any user deposits
+            <ul class="tpteam-list">
+                <li class="tpteam-list-item">Market makers have negligible rebalancing or capital costs, as well as no
+                    need to hold inventory of assets they want to quote</li>
+
+            </ul>
+
+
+        </div>
+
+            <button class="btn-learn-more" id="learn-more-journey">LEARN MORE</button>
+
+
+        <div class="console-footer">
+            <div class="console-program">C:\SYSTEM\OPTIMAL-SETTLEMENT &gt; </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Depth Chart Component
+        initDepthChart();
+
+        // Sankey Diagram Component
+        initSankeyDiagram();
+
+        // Modal functionality for buttons
+        initModalButtons();
+    });
+
+    function initModalButtons() {
+        // Get the modal
+        var modal = document.getElementById('image-modal');
+        var modalImg = document.getElementById('modal-image');
+
+        // Get the buttons
+        var depthBtn = document.getElementById('learn-more-depth');
+        var journeyBtn = document.getElementById('learn-more-journey');
+
+        // When the depth button is clicked, open the modal
+        depthBtn.onclick = function () {
+            modal.style.display = "flex";
+            modalImg.src = "assets/trading-confirmation.webp";
+        }
+
+        // When the journey button is clicked, open the modal
+        journeyBtn.onclick = function () {
+            modal.style.display = "flex";
+            modalImg.src = "assets/trading-settlement.webp";
+        }
+
+        // When the user clicks on the modal, close it
+        modal.onclick = function () {
+            modal.style.display = "none";
+        }
+    }
+
+    function initDepthChart() {
+        // Access the game window
+        var gameWindow = document.getElementById('game-window');
+        if (!gameWindow) {
+            console.error('Game window element not found');
+            return;
+        }
+
+        var windowWidth = gameWindow.offsetWidth;
+
+        // Clear any existing content
+        gameWindow.innerHTML = '';
+
+        // Store bars for collision detection
+        var bars = [];
+        var barCount = 7; // Number of bars on each side
+        var middleGap = 20; // Smaller gap in the middle
+        var spacing = 1; // Minimal spacing between bars
+
+        // Calculate bar width dynamically to ensure bars fit in window
+        var barWidth = Math.floor((windowWidth - middleGap) / (2 * barCount) - spacing);
+
+        // Calculate starting positions
+        var leftStart = (windowWidth / 2) - (middleGap / 2) - (barCount * (barWidth + spacing));
+        var rightStart = (windowWidth / 2) + (middleGap / 2);
+
+        // Maximum height for bars (4/5 of the game window height)
+        var maxHeight = 80;
+
+        // Variables for base value generation
+        var minValue = Math.max(Math.floor(maxHeight / 7) - 2, 1);
+        var maxValue = Math.floor(maxHeight / 7);
+
+        // Generate bid values (base values for left side)
+        var bidValues = [];
+        for (var i = 0; i < barCount; i++) {
+            // Random number between minValue and maxValue
+            bidValues.push(Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue);
+        }
+
+        // Generate ask values (base values for right side)
+        var askValues = [];
+        for (var i = 0; i < barCount; i++) {
+            // Random number between minValue and maxValue
+            askValues.push(Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue);
+        }
+
+        // Create left side bars (bid side) - aggregating from all to fewer
+        for (var i = 0; i < barCount; i++) {
+            // Sum of values from 0 to (barCount-i-1)
+            // For example: 
+            // i=0: sum of all 7 values (index 0 to 6)
+            // i=1: sum of first 6 values (index 0 to 5)
+            // ...
+            // i=6: sum of first 1 value (index 0 only)
+            var aggregateHeight = 0;
+            for (var j = 0; j < barCount - i; j++) {
+                aggregateHeight += bidValues[j];
+            }
+
+            // Ensure height doesn't exceed maxHeight
+            aggregateHeight = Math.min(aggregateHeight, maxHeight);
+
+            var bar = document.createElement('div');
+            bar.className = 'depth-bar';
+            bar.style.left = (leftStart + (i * (barWidth + spacing))) + 'px';
+            bar.style.height = aggregateHeight + 'px';
+            bar.style.width = barWidth + 'px';
+            gameWindow.appendChild(bar);
+
+            bars.push({
+                element: bar,
+                height: aggregateHeight,
+                x: leftStart + (i * (barWidth + spacing)),
+                width: barWidth,
+                baseIndex: i,
+                side: 'left'
+            });
+        }
+
+        // Create right side bars (ask side) - aggregating from fewer to all
+        for (var i = 0; i < barCount; i++) {
+            // Sum of values from 0 to i
+            // For example:
+            // i=0: sum of first 1 value (index 0 only)
+            // i=1: sum of first 2 values (index 0 to 1)
+            // ...
+            // i=6: sum of all 7 values (index 0 to 6)
+            var aggregateHeight = 0;
+            for (var j = 0; j <= i; j++) {
+                aggregateHeight += askValues[j];
+            }
+
+            // Ensure height doesn't exceed maxHeight
+            aggregateHeight = Math.min(aggregateHeight, maxHeight);
+
+            var bar = document.createElement('div');
+            bar.className = 'depth-bar';
+            bar.style.left = (rightStart + (i * (barWidth + spacing))) + 'px';
+            bar.style.height = aggregateHeight + 'px';
+            bar.style.width = barWidth + 'px';
+            gameWindow.appendChild(bar);
+
+            bars.push({
+                element: bar,
+                height: aggregateHeight,
+                x: rightStart + (i * (barWidth + spacing)),
+                width: barWidth,
+                baseIndex: barCount + i,
+                side: 'right'
+            });
+        }
+
+        // Function to update aggregate heights when base values change
+        function updateAggregateHeights() {
+            // Update left side (bid)
+            for (var i = 0; i < barCount; i++) {
+                var aggregateHeight = 0;
+                for (var j = 0; j < barCount - i; j++) {
+                    aggregateHeight += bidValues[j];
+                }
+                // Ensure height doesn't exceed maxHeight
+                aggregateHeight = Math.min(aggregateHeight, maxHeight);
+                var bar = bars[i];
+                bar.height = aggregateHeight;
+                bar.element.style.height = aggregateHeight + 'px';
+            }
+
+            // Update right side (ask)
+            for (var i = 0; i < barCount; i++) {
+                var aggregateHeight = 0;
+                for (var j = 0; j <= i; j++) {
+                    aggregateHeight += askValues[j];
+                }
+                // Ensure height doesn't exceed maxHeight
+                aggregateHeight = Math.min(aggregateHeight, maxHeight);
+                var bar = bars[barCount + i];
+                bar.height = aggregateHeight;
+                bar.element.style.height = aggregateHeight + 'px';
+            }
+        }
+
+        // Function to create a falling ball
+        function createBall() {
+            // Create a ball for one of the middle 4 bars only
+            // This means bar indexes 5, 6, 7, 8 (middle 4 out of 14 total bars)
+            var middleStartIndex = Math.floor(bars.length / 2) - 2; // Start of middle section
+            var targetBarIndex = middleStartIndex + Math.floor(Math.random() * 4); // Choose one of 4 middle bars
+
+            var targetBar = bars[targetBarIndex];
+
+            var ball = document.createElement('div');
+            ball.className = 'ball';
+
+            // Position ball to fall on the bar
+            var ballX = targetBar.x + (barWidth / 2) - 7.5; // Center on bar with 15px ball width
+            ball.style.left = ballX + 'px';
+            ball.style.top = '-15px';
+
+            // Random fall duration between 1-3 seconds (faster for smaller window)
+            var fallDuration = Math.random() * 1000 + 1000;
+            ball.style.animation = 'fall ' + fallDuration + 'ms linear forwards';
+
+            gameWindow.appendChild(ball);
+
+            // Handle ball when animation ends
+            ball.addEventListener('animationend', function () {
+                // Collision with the targeted bar
+                var reduceAmount = Math.random() * 2 + 1; // Random between 1-3px (smaller effect)
+
+                // Determine which base value to modify based on the bar
+                if (targetBar.side === 'left') {
+                    // For left side, we need to modify bidValues[0] to have the most effect
+                    // since it's included in all aggregates
+                    bidValues[0] = Math.max(bidValues[0] - reduceAmount, 1);
+                } else {
+                    // For right side, we need to modify askValues at the right index
+                    // Find which ask value corresponds to this bar
+                    var askIndex = Math.min(targetBar.baseIndex - barCount, askValues.length - 1);
+                    askValues[askIndex] = Math.max(askValues[askIndex] - reduceAmount, 1);
+                }
+
+                // Update all aggregate heights
+                updateAggregateHeights();
+
+                // Remove ball
+                ball.remove();
+            });
+        }
+
+        // Create balls periodically
+        setInterval(createBall, 2000); // More frequent but targeted balls
+
+        // Start with initial balls at different positions
+        setTimeout(function () { createBall(); }, 500);
+        setTimeout(function () { createBall(); }, 1000);
+
+        // Update bar heights occasionally - less frequent for smaller component
+        setInterval(function () {
+            // Update 1-2 random bars
+            var numBarsToUpdate = Math.floor(Math.random() * 2) + 1;
+
+            for (var i = 0; i < numBarsToUpdate; i++) {
+                // Randomly choose bid or ask side
+                if (Math.random() < 0.5) {
+                    // Update a bid value
+                    var bidIndex = Math.floor(Math.random() * bidValues.length);
+                    bidValues[bidIndex] = Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
+                } else {
+                    // Update an ask value
+                    var askIndex = Math.floor(Math.random() * askValues.length);
+                    askValues[askIndex] = Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
+                }
+            }
+
+            // Update all aggregate heights
+            updateAggregateHeights();
+        }, 1000);
+    }
+
+    function initSankeyDiagram() {
+        var sankeyWindow = document.getElementById('sankey-window');
+        if (!sankeyWindow) {
+            console.error('Sankey window element not found');
+            return;
+        }
+
+        var windowWidth = sankeyWindow.offsetWidth;
+        var windowHeight = sankeyWindow.offsetHeight;
+
+        // Clear any existing content
+        sankeyWindow.innerHTML = '';
+
+        // Create the start point (left side)
+        var startNode = document.createElement('div');
+        startNode.className = 'sankey-start';
+        sankeyWindow.appendChild(startNode);
+
+        // Create 4 end points (right side) with different heights
+        var endPositions = [
+            { top: 10, height: 15 },
+            { top: 30, height: 15 },
+            { top: 50, height: 15 },
+            { top: 70, height: 15 }
+        ];
+
+        var endNodes = [];
+
+        for (var i = 0; i < endPositions.length; i++) {
+            var endNode = document.createElement('div');
+            endNode.className = 'sankey-end';
+            endNode.style.top = endPositions[i].top + 'px';
+            endNode.style.height = endPositions[i].height + 'px';
+            sankeyWindow.appendChild(endNode);
+            endNodes.push(endNode);
+        }
+
+        // Create a single path from start that branches to the 4 ends
+        var pathLength = windowWidth - 80; // Account for padding and node widths
+        var startY = 45; // Middle of start node
+
+        // Create the main stem (short horizontal line from start)
+        var mainStem = document.createElement('div');
+        mainStem.className = 'sankey-path';
+        mainStem.style.left = '40px'; // After start node
+        mainStem.style.width = '40px';
+        mainStem.style.top = startY + 'px';
+        sankeyWindow.appendChild(mainStem);
+
+        // Create the 4 diverging paths
+        for (var i = 0; i < endPositions.length; i++) {
+            var path = document.createElement('div');
+            path.className = 'sankey-path';
+            var endY = endPositions[i].top + 7; // Middle of end node
+
+            // For diagonal lines, we use transform: rotate
+            var dx = pathLength - 40; // Length after subtracting main stem
+            var dy = endY - startY;
+            var length = Math.sqrt(dx * dx + dy * dy);
+            var angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+            // Position and rotate the path
+            path.style.left = '80px'; // End of main stem
+            path.style.width = length + 'px';
+            path.style.top = startY + 'px';
+            path.style.transformOrigin = '0 0';
+            path.style.transform = 'rotate(' + angle + 'deg)';
+
+            sankeyWindow.appendChild(path);
+        }
+
+        // Function to create a moving ball
+        function createSankeyBall() {
+            // Choose a random end point
+            var endIndex = Math.floor(Math.random() * endNodes.length);
+            var endPosition = endPositions[endIndex];
+
+            var ball = document.createElement('div');
+            ball.className = 'sankey-ball';
+
+            // First animation: move horizontally along main stem
+            var stemDuration = 700; // 0.7 seconds for main stem
+            var mainAnimation = 'none';
+
+            // Second animation: move along the branch to end point
+            var branchDuration = Math.random() * 1000 + 1300; // 1.3-2.3 seconds
+            var endY = endPosition.top + 7; // Center of end node
+
+            // Create keyframe animations dynamically
+            var keyframes = '';
+            var animName = 'path' + endIndex + Math.floor(Math.random() * 1000);
+
+            keyframes = '@keyframes ' + animName + ' { ' +
+                '0% { transform: translate(0, 0); } ' +
+                '30% { transform: translate(40px, 0); } ' + // Move to branch point
+                '100% { transform: translate(' + (windowWidth - 55) + 'px, ' + (endY - 37) + 'px); } ' + // Move to end
+                '}';
+
+            // Add the keyframes to the document
+            var style = document.createElement('style');
+            style.innerHTML = keyframes;
+            document.head.appendChild(style);
+
+            // Apply the animation
+            ball.style.animation = animName + ' ' + (stemDuration + branchDuration) + 'ms linear forwards';
+
+            sankeyWindow.appendChild(ball);
+
+            // Remove ball and style when animation ends
+            ball.addEventListener('animationend', function () {
+                ball.remove();
+                style.remove();
+            });
+        }
+
+        // Create balls periodically
+        setInterval(createSankeyBall, 2000);
+
+        // Start with initial balls
+        setTimeout(function () { createSankeyBall(); }, 500);
+        setTimeout(function () { createSankeyBall(); }, 1200);
+    }
+</script>
+
+</div>
+   
+    
+    <!-- Modal for displaying image -->
+    <div class="modal" id="image-modal">
+        <img class="modal-content" id="modal-image" src="" alt="More Information">
+    </div>
+
+    <hr>
+    <h2>"This sounds really cool, but it sounds complex, isn't there a lot of risk baked into the system?"</h2>
+    <p class = "wrapper">Good question! We're absolutely managing a lot of risk! As a brokerage we have a lot of inherent leverage and counterparty risk that needs to be considered.</p>
+    <p class = "wrapper">Risk is managed the same way it's managed in any venue with counterparty risk (below is not an exhaustive list): </p>
+    <ul>
+        <li>Caps on cross-margining and asset deposits based on the risk of the custodian (CEX's, Chains, L2s, Issuers, etc. are all custodians)</li>
+        <li>Borrow and funding rates are utilized to manage liquidity and exposure skew</li>
+        <ul>
+            <li>Note: t+ has to manage exposure skew more aggressively than say a perp exchange because our margin trades are filled by counter-side margin trades, spot trades, margin trades that are settled onchain (effectively spot trades)</li>
+        </ul>
+        <li>Not Every Asset is enabled as collateral! Assets that are supported as collateral have:</li>
+        <ul>
+            <li>Caps on both spot-margin and derivative based leverage based on asset liquidity</li>
+            <li>Maintenance and Initial margin haircuts based on price and liquidity volatility - IM haircuts move up as exposure skew increases</li>
+            <li>Cross-margin support is limited to majors</li>
+        </ul>
+        <li>Robust oracle that aggregates volume and liquidity weighted prices from multiple on and off chain sources</li>
+        <li>Deposits are rebalanced between vaults to maintain withdrawal and settlement liquidity</li>
+        <li>Fills on long-tail assets support optional delayed margin checks to allow market makers to settle onchain before confirming the trade - if settlement fails, the trade reverts (like an RFQ)</li>
+    </ul>
+    
+    
+    <div class="wrapper">
+        <!-- The button -->
+        <div class="console-button-container">
+            <a href="#" class="console-button" onclick="openModal(); return false;">
+                &gt; How would t+ have handled 10/10/25?
+            </a>
+        </div>
+    
+        <!-- The modal -->
+        <div id="imageModal"
+            style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.8);">
+            <span onclick="closeModal()"
+                style="position:absolute; top:15px; right:35px; color:#f1f1f1; font-size:40px; font-weight:bold; cursor:pointer;">×</span>
+            <img src="assets/tplus-risk-in-action.png" style="margin:auto; display:block; max-width:90%; max-height:90%; margin-top:50px;">
+        </div>
+    
+        <script>
+            function openModal() {
+                document.getElementById('imageModal').style.display = 'block';
+            }
+
+            function closeModal() {
+                document.getElementById('imageModal').style.display = 'none';
+            }
+
+
+        </script>
+        </div>
+        <hr>
+    <div id="hot-191b3">
+        <div class="container">
+            <div class="p-font-2">Our Road To</div>
+        </div>
+        <div class="container">
+            <div class="p-font-2">
+                <span class="illegal">Decentralized Orderflow Execution Endgame</span>
+            </div>
+        </div>
+    </div>
+    
+    <h2>Phase 1: A Really Really Good DEX</h2>
+    <p id="hot-d497c">(bet you never heard of one of these)</p>
+    <p>t+'s exchange offering, as a decentralized brokerage, is the best on market.</p>
+
+    <div class="alert-container">
+        <div class="basic-terminal">
+            <div class="alert good">
+                <span class="symbol">✅</span> Every asset (they'll all be liquid too!)
+            </div>
+            <div class="alert good">
+                <span class="symbol">✅</span> Leverage
+            </div>
+            <div class="alert good">
+                <span class="symbol">✅</span> Very Fast Trading
+            </div>
+            <div class="alert good">
+                <span class="symbol">✅</span> Excellent Quotes and Liquidity
+            </div>
+            <div class="alert good">
+                <span class="symbol">✅</span> Permissionless and Trustless
+            </div>
+            <div class="alert good">
+                <span class="symbol">✅</span> Eigenlayer restaking as our insurance fund (billions in insurance)
+            </div>
+        </div>
+    </div>
+
+    <p>There isn't an equivalent</p>
+    <p>It'll be offered initially via website UI, telegram bot, and high-performance api</p>
+    <h3>Product doesn't matter - how do we get users?</h3>
+
+    <div class="retro-panel">
+        <div class="panel-header">USER OWNERSHIP</div>
+        <div class="panel-body">
+            <div class="panel-image">
+                <img src="assets/user-ownership.webp" alt="t+Cut">
+            </div>
+            <div class="panel-content">
+                <div class="panel-text">
+                    <p>Some of the highest quality takers in the space are invested in us.</p>
+                    <p>We're building with them from day 1</p>
+                </div>
+                <div class="panel-status">
+                    C:\SYSTEM\REAL-BD &gt; <span class="blink">_</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="retro-panel">
+        <div class="panel-header">PERSONAL ONBOARDING</div>
+        <div class="panel-body">
+            <div class="panel-image">
+                <img src="assets/tplus-onboaard-chunghua@3x.png" alt="t+Chunghua">
+            </div>
+            <div class="panel-content">
+                <div class="panel-text">
+                    <p>In crypto people try products because they trust and like the people building them. </p>
+                    <p>We plan on aggressively onboarding 1-on-1 in addition to the typical strategies of sponsoring streamers, running exclusive poker games, the usual.</p>
+                </div>
+                <div class="panel-status">
+                    C:\SYSTEM\REAL-BD &gt; <span class="blink">_</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="retro-panel">
+        <div class="panel-header">PRICE MATCHING</div>
+        <div class="panel-body">
+            <div class="panel-image">
+                <img src="assets/price-matching.webp" alt="t+Price">
+            </div>
+            <div class="panel-content">
+                <div class="panel-text">
+                    <p>We're confident we will almost always fill at a premium to chain. </p>
+                    <p>We'll refund you if we don't.</p>
+                </div>
+                <div class="panel-status">
+                    C:\SYSTEM\REAL-BD &gt; <span class="blink">_</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="retro-panel">
+        <div class="panel-header">TRADING EXPERIENCES POWERED BY t+</div>
+        <div class="panel-body">
+            <div class="panel-image">
+                <img src="assets/trading-games.webp" alt="t+Game">
+            </div>
+            <div class="panel-content">
+                <div class="panel-text">
+                    <p>t+ supports arbitrary orderbooks with custom rules.</p>
+                    <p>We're going to be the backend for products like Euphoria</p>
+                </div>
+                <div class="panel-status">
+                    C:\SYSTEM\REAL-BD &gt; <span class="blink">_</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="retro-panel">
+        <div class="panel-header">VAMPIRE ATTACKING CEXS</div>
+        <div class="panel-body">
+            <div class="panel-image">
+                <img src="assets/vampire-attacks.webp" alt="t+Vampire">
+            </div>
+            <div class="panel-content">
+                <div class="panel-text">
+                    <p>t+ offers the same UX as a CEX, a broader product, and lower counterparty risk.</p>
+                    <p>Using TEE's we can encumber CEX traders account credentials and trustlessly (and confidentially) verify their volume, fee tier, etc. Then offer them more perks, assets, and incentives than they had on the CEX</p>
+                </div>
+                <div class="panel-status">
+                    C:\SYSTEM\REAL-BD &gt; <span class="blink">_</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="p-font-2">Where's the cash - what's our upside?</div>
+    </div>
+
+    <div class="retro-panel-g">
+        <div class="panel-header-g">RECOGNIZE THIS CHART?</div>
+        <div class="panel-body">
+            <span style="color: #66CDAA; font-size: 14px;">(I'm sure it's in every exchange pitch deck these days)</span>
+            <div class="panel-image-g">
+                <img src="assets/HL-revenue.png" alt="Hyperliquid">
+            </div>
+            <div class="panel-content">
+                <div class="panel-text">
+                                        <p>This is very achievable for t+</p>
+
+                    <p>Category defining exchange products are extremely profitable. Hyperliquid defined decentralized perps, t+ will define decentralized brokerages.</p>
+                    <p>We have the same initial draw as HyperLiquid (trade new thing here - also look! Liquidity!) - but better since we have every new thing instantly.</p>
+                    <div style="text-align: center; width: 100%;">
+                        <h3 class="panel-title-g"><span style="color:#FF0000"> ALSO</span></h3>
+                        <div style="display: flex; justify-content: center; flex-wrap: wrap;">
+                            <div style="display: flex; align-items: center; font-size: 16px; color: #444;">
+                                Privacy <span style="color: #4CAF50; font-size: 18px;">▲</span>
+                            </div>
+                            
+                            <div style="background-color: #ddd; width: 1px; height: 20px; margin: 0 8px;"></div>
+                            <div style="display: flex; align-items: center; font-size: 16px; color: #444;">
+                                Fill Quality <span style="color: #4CAF50; font-size: 18px;">▲</span>
+                            </div>
+                            
+                            <div style="background-color: #ddd; width: 1px; height: 20px; margin: 0 8px;"></div>
+                            <div style="display: flex; align-items: center; font-size: 16px; color: #444;">
+                                Speed <span style="color: #4CAF50; font-size: 18px;">▲</span>
+                            </div>
+                            <div style="background-color: #ddd; width: 1px; height: 20px; margin: 0 8px;"></div>
+                            <div style="display: flex; align-items: center; font-size: 16px; color: #444;">
+                                Composability <span style="color: #4CAF50; font-size: 18px;">▲</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p><br>and our INITIAL taker base is better. In addition to traders, t+ is a GREAT taker venue for solvers, HFTs, market makers, and more.</p>
+                </div>
+                <div class="panel-status-g">
+                    C:\SYSTEM\PRINT-MONEY &gt; <span class="blink">_</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2>Phase 2: An Orderflow Execution Platform</h2>
+    <p>t+ supports arbitrary orderbooks with custom properties, all cleared and settled by the same core system. This means we can offer things like:</p>
+
+    <div class="card-deck">
+        <!-- Card 1 -->
+        <div class="card" id="card1">
+            <div class="card-face card-front">
+                <img src="assets/1836_002.webp" alt="t+ Logo" class="card-logo">
+                <div class="deck-title">Deck of Execution Venues</div>
+            </div>
+            <div class="card-face card-back">
+                <div class="card-title">Compliant Orderbook</div>
+                <div class="card-li"><span class="illegal">&gt; </span>Only entities that have passed KYC/AML can trade</div>
+                <div class="card-li"><span class="illegal">&gt; </span>Essential for institutions entering crypto</div>
+                <div class="card-description">Enables selling <span class="red">t+</span> to mid-tier CEX's as a "backend" to simplify their liquidity and listings</div>
+            </div>
+        </div>
+        
+        <!-- Card 2 -->
+        <div class="card" id="card2">
+            <div class="card-face card-front">
+                <img src="assets/1836_002.webp" alt="t+ Logo" class="card-logo">
+                <div class="deck-title">Deck of Execution Venues</div>
+            </div>
+            <div class="card-face card-back">
+                <div class="card-title">Private Dark Pools</div>
+                <div class="card-li"><span class="illegal">&gt; </span>Manager chooses who can trade and can restrict them to making or taking only</div>
+                <div class="card-li"><span class="illegal">&gt; </span>Manager chooses who can see trade information</div>
+                <div class="card-li"><span class="illegal">&gt; </span>Useful for trading illiquid and sensitive assets</div>
+                <div class="card-description">OTC desks maintain private sales funnels while using <span class="red">t+</span> to lower trust and capital requirements</div>
+            </div>
+        </div>
+        
+        <!-- Card 3 -->
+        <div class="card" id="card3">
+            <div class="card-face card-front">
+                <img src="assets/1836_002.webp" alt="t+ Logo" class="card-logo">
+                <div class="deck-title">Deck of Execution Venues</div>
+            </div>
+            <div class="card-face card-back">
+                <div class="card-title">Options Orderbook</div>
+                <div class="card-li"><span class="illegal">&gt; </span>t+ orderbooks support everything needed by an options book: 
+                    <ul><li class = "card-li">privacy</li><li class = "card-li">prioritized cancels</li><li class = "card-li">margin</li><li class = "card-li">etc</li></ul>
+                </div>
+                <div class="card-li"><span class="illegal">&gt; </span>Modified margin engine that supports exotic collateral (short LP tokens) - improving hedging capital efficiency</div>
+                <div class="card-description">Decentralized options!</div>
+            </div>
+        </div>
+        
+        <!-- Card 4 -->
+        <div class="card" id="card4">
+            <div class="card-face card-front">
+                <img src="assets/1836_002.webp" alt="t+ Logo" class="card-logo">
+                <div class="deck-title">Deck of Execution Venues</div>
+            </div>
+            <div class="card-face card-back">
+                <div class="card-title">Token Warrant and SAFE Orderbooks</div>
+                <div class="card-li"><span class="illegal">&gt; </span>Accredited investors only</div>
+                <div class="card-li"><span class="illegal">&gt; </span>Prove ownership with zktls</div>
+                <div class="card-li"><span class="illegal">&gt; </span>Provides a liquid venue so these locked assets can be used as collateral</div>
+                <div class="card-description"><p>Put the TG groups out of business!</p></div>
+            </div>
+        </div>
+        
+        <!-- Card 5 -->
+        <div class="card" id="card5">
+            <div class="card-face card-front">
+                <img src="assets/1836_002.webp" alt="t+ Logo" class="card-logo">
+                <div class="deck-title">Deck of Execution Venues</div>
+            </div>
+            <div class="card-face card-back">
+                <div class="card-title">Equities Exchange</div>
+                <div class="card-li"><span class="illegal">&gt; </span>KYC/AML compliant participants</div>
+                <div class="card-li"><span class="illegal">&gt; </span>Market makers can cross margin with a tradfi brokerage account</div>
+                <div class="card-li"><span class="illegal">&gt; </span>Market make equities by: 
+                    <ul><li class = "card-li">Selling short on t+</li><li class = "card-li">Hedging on a tradfi brokerage</li><li class = "card-li">Margin engine considers you flat</li></ul>
+                </div>
+                <div class="card-description">Liquid Equities!</div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <h2>"This all sounds great! You guys last raised back in April right? What have you done since?"</h2>
+    <p class="wrapper">A ton, tplus went from being a really cool idea with half a demo written to well on its way to production</p>
+    <ul>
+        <li>We have an internal testnet running - and you can check out what's happening in this Demo</li>
+        <li>We designed an extremely robust risk system</li>
+        <li>Team size more than doubled</li>
+        <li>We've had promising conversations with almost every large market maker and foundation in the industry</li>
+        <li>We've spoken with every large trader we can get our hands on and they're very excited to use us</li>
+        <li>Common thing's we've heard:</li>
+        <ul>
+            <li>When are you going live I can't wait to trade there?</li>
+            <li>If you guys pull this off it's going to completely change market structure for the better</li>
+            <li>Can I please please please get some merch?</li>
+            <li>Can I please please please get some allo?</li>
+            <li>Your team is incredible - smart - high-integrity people, I want to help any way I can</li>
+        </ul>
+    </ul>
+    <p class="wrapper">And of course, we've been building lore and goodwill in the cultural core of crypto</p>
+
+    <!-- Carousel for bullposting and content -->
+    <div class="carousel-container" id="tplus-carousel">
+        <div class="carousel-wrapper">
+            <div class="carousel-slide">
+                <video controls style="max-width: 100%; max-height: 600px;">
+                    <source src="assets/tplus-bullposting-and-content/bullposting-vid-1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-0.png" alt="t+ bullposting 0">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-1.png" alt="t+ bullposting 1">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-2.png" alt="t+ bullposting 2">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-3.png" alt="t+ bullposting 3">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-4.png" alt="t+ bullposting 4">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-5.png" alt="t+ bullposting 5">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-6.png" alt="t+ bullposting 6">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-7.png" alt="t+ bullposting 7">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-8.png" alt="t+ bullposting 8">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-9.png" alt="t+ bullposting 9">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-10.png" alt="t+ bullposting 10">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-11.png" alt="t+ bullposting 11">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-12.png" alt="t+ bullposting 12">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-13.png" alt="t+ bullposting 13">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-14.png" alt="t+ bullposting 14">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-15.png" alt="t+ bullposting 15">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-16.png" alt="t+ bullposting 16">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-17.png" alt="t+ bullposting 17">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-18.png" alt="t+ bullposting 18">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-19.png" alt="t+ bullposting 19">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-20.png" alt="t+ bullposting 20">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-21.jpg" alt="t+ bullposting 21">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-22.jpg" alt="t+ bullposting 22">
+            </div>
+            <div class="carousel-slide">
+                <video controls style="max-width: 100%; max-height: 600px;">
+                    <source src="assets/tplus-bullposting-and-content/bullposting-vid-2.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <button class="carousel-nav prev" onclick="changeSlide(-1)">&lt;</button>
+        <button class="carousel-nav next" onclick="changeSlide(1)">&gt;</button>
+        <div class="carousel-indicators"></div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('#tplus-carousel .carousel-slide');
+        const totalSlides = slides.length;
+        const wrapper = document.querySelector('#tplus-carousel .carousel-wrapper');
+        const indicatorContainer = document.querySelector('#tplus-carousel .carousel-indicators');
+        
+        // Create indicators
+        for (let i = 0; i < totalSlides; i++) {
+            const indicator = document.createElement('div');
+            indicator.className = 'carousel-indicator';
+            if (i === 0) indicator.classList.add('active');
+            indicator.onclick = () => goToSlide(i);
+            indicatorContainer.appendChild(indicator);
+        }
+        
+        function updateCarousel() {
+            wrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            // Update indicators
+            document.querySelectorAll('#tplus-carousel .carousel-indicator').forEach((ind, i) => {
+                ind.classList.toggle('active', i === currentSlide);
+            });
+        }
+        
+        function changeSlide(direction) {
+            currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+            updateCarousel();
+        }
+        
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+        
+        // Auto-play carousel (disabled)
+        // setInterval(() => changeSlide(1), 5000);
+    </script>
+
+    <div class="tpteam-container">
+        <header class="tpteam-header">
+            <h1 class="tpteam-title">t+Team</h1>
+        </header>
+        
+        <main>
+            <ul class="tpteam-list">
+                <li class="tpteam-list-item">Markus (Founder)
+                    <ul class="tpteam-sublist">
+                        <li class="tpteam-list-item">5 years of designing and building DeFi protocols</li>
+                        <li class="tpteam-list-item">Orderflow Supply Chain Research</li>
+                        <li class="tpteam-list-item"><a href="https://x.com/markus_0_">@markus_0_</a></li>
+                    </ul>
+                </li>
+                
+                <li class="tpteam-list-item">Tommaso
+                    <ul class="tpteam-sublist">
+                        <li class="tpteam-list-item">TEE Research</li>
+                        <li class="tpteam-list-item">Distributed Systems Research</li>
+                        <li class="tpteam-list-item">5 years of rust, distributed systems, and VMS</li>
+                    </ul>
+                </li>
+                
+                <li class="tpteam-list-item">Serge
+                    <ul class="tpteam-sublist">
+                        <li class="tpteam-list-item">10 years equities latency arb</li>
+                        <li class="tpteam-list-item">Stint in routing and perps on Solana</li>
+                        <li class="tpteam-list-item">French</li>
+                    </ul>
+                </li>
+                
+                <li class="tpteam-list-item">Charco
+                    <ul class="tpteam-sublist">
+                        <li class="tpteam-list-item">Widely considered the best consumer BD in the industry</li>
+                        <li class="tpteam-list-item">eboy</li>
+                        <li class="tpteam-list-item"><a href="https://x.com/CharcoOnchain">@CharcoOnchain</a></li>
+                    </ul>
+                </li>
+                
+                <li class="tpteam-list-item">Ryan
+                    <ul class="tpteam-sublist">
+                        <li class="tpteam-list-item">7 years systematic trading and searching</li>
+                        <li class="tpteam-list-item">Multicoins first engineering hire</li>
+                    </ul>
+                </li>
+                
+                <li class="tpteam-list-item">Jules
+                    <ul class="tpteam-sublist">
+                        <li class="tpteam-list-item">4 years in low-level EVM working on dev tooling</li>
+                        <li class="tpteam-list-item">Has a very cute dog</li>
+                    </ul>
+                </li>
+                <li class="tpteam-list-item">Eli
+                    <ul class="tpteam-sublist">
+                        <li class="tpteam-list-item">Sold Whitelabel CEXs for Alphapoint</li>
+                        <li class="tpteam-list-item">Knows the institutional landscape like no other</li>
+                        <li class="tpteam-list-item">Hangs out with a shocking number of 3rd world leaders</li>
+                        <li class="tpteam-list-item"><a href="https://x.com/Lazerdoes">@lazerdoes</a></li>
+                    </ul>
+                </li>
+                <li class="tpteam-list-item">Jack
+                    <ul class="tpteam-sublist">
+                        <li class="tpteam-list-item">Former Sigma Prime - rust, block building, chain clients, auditing</li>
+                        <li class="tpteam-list-item">Ex-prop trading</li>
+                        <li class="tpteam-list-item">Recently won his Muay-Thai debut</li>
+                        <li class="tpteam-list-item"><a href="https://x.com/secjack_">@secjack_</a></li>
+                    </ul>
+                </li>
+                <li class="tpteam-list-item">Samuel
+                    <ul class="tpteam-sublist">
+                        <li class="tpteam-list-item">Has been building and designing insane applications since etherdelta was around</li>
+                        <li class="tpteam-list-item">Product engineering perfectionist</li>
+                        <li class="tpteam-list-item"><a href="https://x.com/deomaius">@deomaius</a></li>
+                    </ul>
+                </li>
+                <li class="tpteam-list-item">Arthur
+                    <ul class="tpteam-sublist">
+                        <li class="tpteam-list-item">10 years of Web2 and Web3(defi) product engineering</li>
+                        <li class="tpteam-list-item">Wrote a Hyperliquid UI equivalent in 4 hours to prove a point</li>
+                    </ul>
+                </li>
+                <li class="tpteam-list-item">Latera
+                    <ul class="tpteam-sublist">
+                        <li class="tpteam-list-item">Strategy consultant turned COO</li>
+                        
+                    </ul>
+                </li>
+                <li class="tpteam-list-item">Confidential
+                    <ul class="tpteam-sublist">
+                        <li class="tpteam-list-item">Head/Director of Engineering at multiple large L1s</li>
+                        <li class="tpteam-list-item">TEE trading product engineering</li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <header class="tpteam-header">
+                <h2 class="tpteam-title">t+Advisors</h2>
+            </header>
+            
+            <ul class="tpteam-list">
+                <li class="tpteam-list-item">0xTaker
+                    <ul class="tpteam-sublist">
+                        <li class="tpteam-list-item">Former CTO @Aori</li>
+                        <li class="tpteam-list-item">Former Market Making @GSR</li>
+                        <li class="tpteam-list-item">Former Searcher</li>
+                        <li class="tpteam-list-item">Former CSGO Skin Market Maker</li>
+                        <li class="tpteam-list-item"><a href="https://x.com/0xTaker">@0xTaker</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <header class="tpteam-header">
+                <h2 class="tpteam-title">t+Investors</h2>
+            </header>
+            
+            <ul class="tpteam-list">
+                <li class="tpteam-list-item">Dragonfly</li>
+                <li class="tpteam-list-item">Susquehanna Crypto</li>
+                <li class="tpteam-list-item">[ ] (echo round confirmed but pending)</li>
+                <li class="tpteam-list-item">Tokka Labs</li>
+                <li class="tpteam-list-item">Jezz</li>
+                <li class="tpteam-list-item">Blur</li>
+                <li class="tpteam-list-item">Will Price</li>
+                <li class="tpteam-list-item">Hermeneutic</li>
+                <li class="tpteam-list-item">Nocturnal Labs</li>
+                <li class="tpteam-list-item">Tessa (flashbots)</li>
+                <li class="tpteam-list-item">Alex Watts (fastlane)</li>
+                <li class="tpteam-list-item">Nathan Worsley (euphoria)</li>
+                <li class="tpteam-list-item">Anagram</li>
+                <li class="tpteam-list-item">Tom Zhao (ex-wintermute/rizzolver)</li>
+                <li class="tpteam-list-item">Soup Defi (bicycle)</li>
+                <li class="tpteam-list-item">Scott Byron (forgd)</li>
+                <li class="tpteam-list-item">Volt Capital</li>
+                <li class="tpteam-list-item">Josh Lim (falconX)</li>
+                <li class="tpteam-list-item">Aschwin (BHD)</li>
+                <li class="tpteam-list-item">Vishesh(prolific seed investor)</li>
+
+
+            </ul>
+        </main>
+        
+        <footer class="tpteam-footer">
+            <span class="tpteam-blink">_</span>
+        </footer>
+    </div>
+    <div class="container" style="justify-content: flex-end;">
+    <img src="assets/1836_002.webp" srcset="assets/250.webp 250w, assets/500.webp 500w, assets/1000.webp 1000w, assets/1836_002.webp 1836w" sizes="auto" loading="lazy" width="1836" height="1836" id="hot-0b2b2">
+    </div>
+    <!-- Terminal Overlay -->
+    <div style="display: none;">
+        <style>
+            /* Overlay container */
+            #tplus-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #000;
+                z-index: 9999;
+                font-family: monospace;
+                display: flex;
+                justify-content: center;
+                padding-top: 10vh;
+                color: #ff0000;
+                overflow: auto;
+            }
+
+            /* Main terminal container */
+            #tplus-terminal {
+                width: 100%;
+                max-width: 800px;
+                font-size: 16px;
+            }
+
+            /* Password screen */
+            #tplus-password {
+                padding: 20px;
+            }
+
+            /* Password prompt in yellow */
+            #tplus-prompt {
+                color: #ffff00;
+                margin: 15px 0;
+            }
+
+            /* Input line */
+            #tplus-input-line {
+                display: flex;
+                align-items: flex-end;
+                margin-top: 15px;
+            }
+
+            /* Text input */
+            #tplus-input {
+                background: transparent;
+                border: none;
+                outline: none;
+                color: #ff0000;
+                font-family: monospace;
+                font-size: 20px;
+                width: 80%;
+                margin-left: 5px;
+            }
+
+            /* Cursor */
+            #tplus-cursor {
+                width: 10px;
+                height: 2px;
+                background: #ff0000;
+                display: inline-block;
+                animation: blink 1s step-end infinite;
+            }
+
+            /* Surprise screen */
+            #tplus-surprise {
+                display: none;
+                padding: 20px;
+            }
+
+            /* ASCII art container */
+            #tplus-ascii {
+                color: #ffff00;
+                font-size: 6px;
+                line-height: 1;
+                white-space: pre;
+                text-align: center;
+                margin: 20px 0;
+            }
+
+            /* Welcome message */
+            #tplus-welcome {
+                margin: 20px 0;
+            }
+
+            /* Continue prompt */
+            #tplus-continue {
+                color: #ffff00;
+                margin-top: 20px;
+                animation: blink 1s step-end infinite;
+                cursor: pointer;
+            }
+
+            /* Animation for fade out */
+            .fade-out {
+                animation: fade 1s forwards;
+            }
+
+            @keyframes fade {
+                to { opacity: 0; visibility: hidden; }
+            }
+            
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-10px); }
+                75% { transform: translateX(10px); }
+            }
+        </style>
+
+        <!-- The overlay -->
+        <div id="tplus-overlay">
+            <div id="tplus-terminal">
+                <!-- Password screen -->
+                <div id="tplus-password">
+                    <div>user@t-plus:~$ ./specifications.sh</div>
+                    <div><b>t+ specifications</b></div>
+                    
+                    <div id="tplus-prompt">PASSWORD REQUIRED<br>
+                    Please enter the last paragraph of the conclusion of The Inelastic Market Hypothesis:
+                    A Microstructural Interpretation -
+                    Jean-Philippe Bouchaud</div>
+                    
+                    <div id="tplus-input-line">
+                        &gt; <input type="text" id="tplus-input">
+                        <span id="tplus-cursor"></span>
+                    </div>
+                </div>
+                
+                <!-- Surprise screen -->
+                <div id="tplus-surprise">
+                    <div>user@t-plus:~$ ./specifications.sh</div>
+                    <div id="tplus-welcome">Welcome to perfect markets.</div>
+<pre id="tplus-ascii">****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************
+********************************************+===----===+********************************************
+************************************+=-::::::::::::::::::::::-=+************************************
+********************************+-::::::::::::::::::::::::::::::::-+********************************
+*****************************=::::::::::::::::::::::::::::::::::::::::=+****************************
+**************************+-::::::::::::::::::::::::::::::::::::::::::::-+**************************
+***********************+=::::::::::::::::::::::::::::::::::::::::::::::::::=+***********************
+**********************=::::::::::::::::::::::::::::::::::::::::::::::::::::::=**********************
+********************=::::::::::::::::::::::::::::::::::::::::::::::::::::::::::=********************
+******************+-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::+******************
+*****************=:::::::::::=@@@@@%+::::::::::::::::::::::::::=%@@@@@=:::::::::::=*****************
+****************=::::::::::::=@@@@@%+::::::::::::::::::::::::::=%@@@@@=::::::::::::-****************
+***************-:::::::::::::=@@@@@%+::::::::::::::::::::::::::=%@@@@@=:::::::::::::-***************
+**************-::::::::::::::=@@@@@%+::::::::::::::::::::::::::=%@@@@@=::::::::::::::-**************
+*************-:::::::::::::::=@@@@@%+::::::::::::::::::::::::::+%@@@@@=:::::::::::::::-*************
+************=::::::::::::::::=@@@@@%+::::::::::::::::::::::::::=%@@@@@=::::::::::::::::=************
+***********+::::::=%%%%%%%%%%@@@@@@@@@@@@@@@@@@=::::-%%%%%%%%%%@@@@@@@@@@@@@@@@@%=::::::+***********
+***********-::::::=@@@@@@@@@@@@@@@@@@@@@@@@@@@@=::::-@@@@@@@@@@@@@@@@@@@@@@@@@@@@=::::::-***********
+**********+-::::::=@@@@@@@@@@@@@@@@@@@@@@@@@@@@=::::-@@@@@@@@@@@@@@@@@@@@@@@@@@@@=:::::::+**********
+**********=:::::::=#%%%%%%%%%%@@@@@@%%%%%%%%%%%-::::-%%%%%%%%%%%@@@@@@%##########=:::::::=**********
+**********-::::::::::::::::::=@@@@@@+::::::::::::::::::::::::::=%@@@@@+::::::::::::::::::-**********
+*********+-::::::::::::::::::=@@@@@@+::::::::::::::::::::::::::=%@@@@@+::::::::::::::::::-+*********
+*********+:::::::::::::::::::=@@@@@@+::::::::::::::::::::::::::=%@@@@@+:::::::::::::::::::+*********
+*********+:::::::::::::::::::=@@@@@@+::::::::::::::::::::::::::=%@@@@@+:::::::::::::::::::+*********
+*********+:::::::::::::::::::=@@@@@@+::::::::::::::::::::::::::=%@@@@@+:::::::::::::::::::+*********
+*********+-::::::::::::::::::=%@@@@@+::::::::::::::::::::::::::=%@@@@@+::::::::::::::::::-+*********
+**********-::::::::::::::::::=%@@@@@+::::::::::::::::::::::::::::::::::::::::::::::::::::-**********
+**********=::::::::::::::::::-#@@@@@*::::::::::::::::::::::::::::::::::::::::::::::::::::=**********
+**********+-::::::::::::::::::*@@@@@#-:::::::::::::::::::::::::::::::::::::::::::::::::::+**********
+***********-::::::::::::::::::-%@@@@@*-:::::::::::::::::::::::+++++++:::::::::::::::::::-***********
+***********+:::::::::::::::::::+@@@@@@#-:::::::::::::::::::::#@@@@@@*:::::::::::::::::::+***********
+************=:::::::::::::::::::+@@@@@@@*::::::::::::::::::+@@@@@@@*:::::::::::::::::::=************
+*************-:::::::::::::::::::=@@@@@@@@#-::::::::::::-#@@@@@@@@+:::::::::::::::::::-*************
+**************-:::::::::::::::::::-#@@@@@@@@@%#*===+*%%@@@@@@@@@#-:::::::::::::::::::-**************
+***************-::::::::::::::::::::-%@@@@@@@@@@@@@@@@@@@@@@@@%=::::::::::::::::::::-***************
+****************-::::::::::::::::::::::+@@@@@@@@@@@@@@@@@@@@*::::::::::::::::::::::-****************
+*****************=::::::::::::::::::::::::-*%@@@@@@@@@@%*=::::::::::::::::::::::::=*****************
+******************+-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::+******************
+********************=::::::::::::::::::::::::::::::::::::::::::::::::::::::::::=********************
+**********************-::::::::::::::::::::::::::::::::::::::::::::::::::::::-**********************
+***********************+=::::::::::::::::::::::::::::::::::::::::::::::::::-+***********************
+**************************=::::::::::::::::::::::::::::::::::::::::::::::=**************************
+****************************+=::::::::::::::::::::::::::::::::::::::::=+****************************
+********************************+-::::::::::::::::::::::::::::::::-+********************************
+************************************+=-:::::::::::::::::::::::=+************************************
+*******************************************++==------==++*******************************************
+****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************</pre>
+                    
+                    <div id="tplus-continue">Press enter to continue...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Depth Chart Component
+            initDepthChart();
+            
+            // Sankey Diagram Component
+            initSankeyDiagram();
+            
+            // Modal functionality for buttons
+            initModalButtons();
+            
+            // Cards flip functionality
+            initCardFlip();
+            
+            // Terminal overlay functionality
+            initTerminalOverlay();
+        });
+        
+        function initModalButtons() {
+            // Get the modal
+            var modal = document.getElementById('image-modal');
+            var modalImg = document.getElementById('modal-image');
+            
+            // Get the buttons
+            var depthBtn = document.getElementById('learn-more-depth');
+            var journeyBtn = document.getElementById('learn-more-journey');
+            
+            // When the depth button is clicked, open the modal
+            depthBtn.onclick = function() {
+                modal.style.display = "flex";
+                modalImg.src = "assets/trade-confirmation.webp";
+            }
+            
+            // When the journey button is clicked, open the modal
+            journeyBtn.onclick = function() {
+                modal.style.display = "flex";
+                modalImg.src = "assets/trade-settlement.webp";
+            }
+            
+            // When the user clicks on the modal, close it
+            modal.onclick = function() {
+                modal.style.display = "none";
+            }
+        }
+        
+        function initDepthChart() {
+            // Access the game window
+            var gameWindow = document.getElementById('game-window');
+            if (!gameWindow) {
+                console.error('Game window element not found');
+                return;
+            }
+            
+            var windowWidth = gameWindow.offsetWidth;
+            
+            // Clear any existing content
+            gameWindow.innerHTML = '';
+            
+            // Store bars for collision detection
+            var bars = [];
+            var barCount = 7; // Number of bars on each side
+            var middleGap = 20; // Smaller gap in the middle
+            var spacing = 1; // Minimal spacing between bars
+            
+            // Calculate bar width dynamically to ensure bars fit in window
+            var barWidth = Math.floor((windowWidth - middleGap) / (2 * barCount) - spacing);
+            
+            // Calculate starting positions
+            var leftStart = (windowWidth / 2) - (middleGap / 2) - (barCount * (barWidth + spacing));
+            var rightStart = (windowWidth / 2) + (middleGap / 2);
+            
+            // Maximum height for bars (4/5 of the game window height)
+            var maxHeight = 80; 
+            
+            // Variables for base value generation
+            var minValue = Math.max(Math.floor(maxHeight/7) - 2, 1);
+            var maxValue = Math.floor(maxHeight/7);
+            
+            // Generate bid values (base values for left side)
+            var bidValues = [];
+            for (var i = 0; i < barCount; i++) {
+                // Random number between minValue and maxValue
+                bidValues.push(Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue);
+            }
+            
+            // Generate ask values (base values for right side)
+            var askValues = [];
+            for (var i = 0; i < barCount; i++) {
+                // Random number between minValue and maxValue
+                askValues.push(Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue);
+            }
+            
+            // Create left side bars (bid side) - aggregating from all to fewer
+            for (var i = 0; i < barCount; i++) {
+                // Sum of values from 0 to (barCount-i-1)
+                var aggregateHeight = 0;
+                for (var j = 0; j < barCount - i; j++) {
+                    aggregateHeight += bidValues[j];
+                }
+                
+                // Ensure height doesn't exceed maxHeight
+                aggregateHeight = Math.min(aggregateHeight, maxHeight);
+                
+                var bar = document.createElement('div');
+                bar.className = 'depth-bar';
+                bar.style.left = (leftStart + (i * (barWidth + spacing))) + 'px';
+                bar.style.height = aggregateHeight + 'px';
+                bar.style.width = barWidth + 'px';
+                gameWindow.appendChild(bar);
+                
+                bars.push({
+                    element: bar,
+                    height: aggregateHeight,
+                    x: leftStart + (i * (barWidth + spacing)),
+                    width: barWidth,
+                    baseIndex: i,
+                    side: 'left'
+                });
+            }
+            
+            // Create right side bars (ask side) - aggregating from fewer to all
+            for (var i = 0; i < barCount; i++) {
+                // Sum of values from 0 to i
+                var aggregateHeight = 0;
+                for (var j = 0; j <= i; j++) {
+                    aggregateHeight += askValues[j];
+                }
+                
+                // Ensure height doesn't exceed maxHeight
+                aggregateHeight = Math.min(aggregateHeight, maxHeight);
+                
+                var bar = document.createElement('div');
+                bar.className = 'depth-bar';
+                bar.style.left = (rightStart + (i * (barWidth + spacing))) + 'px';
+                bar.style.height = aggregateHeight + 'px';
+                bar.style.width = barWidth + 'px';
+                gameWindow.appendChild(bar);
+                
+                bars.push({
+                    element: bar,
+                    height: aggregateHeight,
+                    x: rightStart + (i * (barWidth + spacing)),
+                    width: barWidth,
+                    baseIndex: barCount + i,
+                    side: 'right'
+                });
+            }
+            
+            // Function to update aggregate heights when base values change
+            function updateAggregateHeights() {
+                // Update left side (bid)
+                for (var i = 0; i < barCount; i++) {
+                    var aggregateHeight = 0;
+                    for (var j = 0; j < barCount - i; j++) {
+                        aggregateHeight += bidValues[j];
+                    }
+                    // Ensure height doesn't exceed maxHeight
+                    aggregateHeight = Math.min(aggregateHeight, maxHeight);
+                    var bar = bars[i];
+                    bar.height = aggregateHeight;
+                    bar.element.style.height = aggregateHeight + 'px';
+                }
+                
+                // Update right side (ask)
+                for (var i = 0; i < barCount; i++) {
+                    var aggregateHeight = 0;
+                    for (var j = 0; j <= i; j++) {
+                        aggregateHeight += askValues[j];
+                    }
+                    // Ensure height doesn't exceed maxHeight
+                    aggregateHeight = Math.min(aggregateHeight, maxHeight);
+                    var bar = bars[barCount + i];
+                    bar.height = aggregateHeight;
+                    bar.element.style.height = aggregateHeight + 'px';
+                }
+            }
+            
+            // Function to create a falling ball
+            function createBall() {
+                // Create a ball for one of the middle 4 bars only
+                var middleStartIndex = Math.floor(bars.length / 2) - 2;
+                var targetBarIndex = middleStartIndex + Math.floor(Math.random() * 4);
+                
+                var targetBar = bars[targetBarIndex];
+                
+                var ball = document.createElement('div');
+                ball.className = 'ball';
+                
+                // Position ball to fall on the bar
+                var ballX = targetBar.x + (barWidth / 2) - 7.5;
+                ball.style.left = ballX + 'px';
+                ball.style.top = '-15px';
+                
+                // Random fall duration between 1-3 seconds
+                var fallDuration = Math.random() * 1000 + 1000;
+                ball.style.animation = 'fall ' + fallDuration + 'ms linear forwards';
+                
+                gameWindow.appendChild(ball);
+                
+                // Handle ball when animation ends
+                ball.addEventListener('animationend', function() {
+                    // Collision with the targeted bar
+                    var reduceAmount = Math.random() * 2 + 1;
+                    
+                    // Determine which base value to modify based on the bar
+                    if (targetBar.side === 'left') {
+                        bidValues[0] = Math.max(bidValues[0] - reduceAmount, 1);
+                    } else {
+                        var askIndex = Math.min(targetBar.baseIndex - barCount, askValues.length - 1);
+                        askValues[askIndex] = Math.max(askValues[askIndex] - reduceAmount, 1);
+                    }
+                    
+                    // Update all aggregate heights
+                    updateAggregateHeights();
+                    
+                    // Remove ball
+                    ball.remove();
+                });
+            }
+            
+            // Create balls periodically
+            setInterval(createBall, 2000);
+            
+            // Start with initial balls at different positions
+            setTimeout(function() { createBall(); }, 500);
+            setTimeout(function() { createBall(); }, 1000);
+            
+            // Update bar heights occasionally
+            setInterval(function() {
+                // Update 1-2 random bars
+                var numBarsToUpdate = Math.floor(Math.random() * 2) + 1;
+                
+                for (var i = 0; i < numBarsToUpdate; i++) {
+                    // Randomly choose bid or ask side
+                    if (Math.random() < 0.5) {
+                        // Update a bid value
+                        var bidIndex = Math.floor(Math.random() * bidValues.length);
+                        bidValues[bidIndex] = Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
+                    } else {
+                        // Update an ask value
+                        var askIndex = Math.floor(Math.random() * askValues.length);
+                        askValues[askIndex] = Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
+                    }
+                }
+                
+                // Update all aggregate heights
+                updateAggregateHeights();
+            }, 1000);
+        }
+        
+        function initSankeyDiagram() {
+            var sankeyWindow = document.getElementById('sankey-window');
+            if (!sankeyWindow) {
+                console.error('Sankey window element not found');
+                return;
+            }
+            
+            var windowWidth = sankeyWindow.offsetWidth;
+            var windowHeight = sankeyWindow.offsetHeight;
+            
+            // Clear any existing content
+            sankeyWindow.innerHTML = '';
+            
+            // Create the start point (left side)
+            var startNode = document.createElement('div');
+            startNode.className = 'sankey-start';
+            sankeyWindow.appendChild(startNode);
+            
+            // Create 4 end points (right side) with different heights
+            var endPositions = [
+                { top: 10, height: 15 },
+                { top: 30, height: 15 },
+                { top: 50, height: 15 },
+                { top: 70, height: 15 }
+            ];
+            
+            var endNodes = [];
+            
+            for (var i = 0; i < endPositions.length; i++) {
+                var endNode = document.createElement('div');
+                endNode.className = 'sankey-end';
+                endNode.style.top = endPositions[i].top + 'px';
+                endNode.style.height = endPositions[i].height + 'px';
+                sankeyWindow.appendChild(endNode);
+                endNodes.push(endNode);
+            }
+            
+            // Create a single path from start that branches to the 4 ends
+            var pathLength = windowWidth - 80;
+            var startY = 45;
+            
+            // Create the main stem
+            var mainStem = document.createElement('div');
+            mainStem.className = 'sankey-path';
+            mainStem.style.left = '40px';
+            mainStem.style.width = '40px';
+            mainStem.style.top = startY + 'px';
+            sankeyWindow.appendChild(mainStem);
+            
+            // Create the 4 diverging paths
+            for (var i = 0; i < endPositions.length; i++) {
+                var path = document.createElement('div');
+                path.className = 'sankey-path';
+                var endY = endPositions[i].top + 7;
+                
+                // For diagonal lines, we use transform: rotate
+                var dx = pathLength - 40;
+                var dy = endY - startY;
+                var length = Math.sqrt(dx*dx + dy*dy);
+                var angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                
+                // Position and rotate the path
+                path.style.left = '80px';
+                path.style.width = length + 'px';
+                path.style.top = startY + 'px';
+                path.style.transformOrigin = '0 0';
+                path.style.transform = 'rotate(' + angle + 'deg)';
+                
+                sankeyWindow.appendChild(path);
+            }
+            
+            // Function to create a moving ball
+            function createSankeyBall() {
+                // Choose a random end point
+                var endIndex = Math.floor(Math.random() * endNodes.length);
+                var endPosition = endPositions[endIndex];
+                
+                var ball = document.createElement('div');
+                ball.className = 'sankey-ball';
+                
+                // Animation durations
+                var stemDuration = 700;
+                var branchDuration = Math.random() * 1000 + 1300;
+                var endY = endPosition.top + 7;
+                
+                // Create keyframe animations dynamically
+                var keyframes = '';
+                var animName = 'path' + endIndex + Math.floor(Math.random() * 1000);
+                
+                keyframes = '@keyframes ' + animName + ' { ' +
+                    '0% { transform: translate(0, 0); } ' +
+                    '30% { transform: translate(40px, 0); } ' +
+                    '100% { transform: translate(' + (windowWidth - 55) + 'px, ' + (endY - 37) + 'px); } ' +
+                    '}';
+                
+                // Add the keyframes to the document
+                var style = document.createElement('style');
+                style.innerHTML = keyframes;
+                document.head.appendChild(style);
+                
+                // Apply the animation
+                ball.style.animation = animName + ' ' + (stemDuration + branchDuration) + 'ms linear forwards';
+                
+                sankeyWindow.appendChild(ball);
+                
+                // Remove ball and style when animation ends
+                ball.addEventListener('animationend', function() {
+                    ball.remove();
+                    style.remove();
+                });
+            }
+            
+            // Create balls periodically
+            setInterval(createSankeyBall, 2000);
+            
+            // Start with initial balls
+            setTimeout(function() { createSankeyBall(); }, 500);
+            setTimeout(function() { createSankeyBall(); }, 1200);
+        }
+        
+        function initCardFlip() {
+            // Get all cards
+            const cards = document.querySelectorAll('.card');
+            
+            // Allow clicking to flip cards
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Toggle the flipped class
+                    this.classList.toggle('flipped');
+                });
+            });
+        }
+        
+        function initTerminalOverlay() {
+            // Get references to elements
+            const overlay = document.getElementById('tplus-overlay');
+            if (!overlay) return; // No overlay on this page
+            
+            const passwordScreen = document.getElementById('tplus-password');
+            const surpriseScreen = document.getElementById('tplus-surprise');
+            const inputField = document.getElementById('tplus-input');
+            
+            // Remove display:none from parent container to show overlay
+            if (overlay.parentElement) {
+                overlay.parentElement.style.display = 'block';
+            }
+            
+            // Focus the input field
+            if (inputField) {
+                inputField.focus();
+                
+                // Keep focus when clicking anywhere
+                overlay.addEventListener('click', function() {
+                    if (passwordScreen.style.display !== 'none') {
+                        inputField.focus();
+                    }
+                });
+            }
+            
+            // Function to show surprise screen
+            function showSurprise() {
+                passwordScreen.style.display = 'none';
+                surpriseScreen.style.display = 'block';
+                // Add a flag to prevent immediate exit
+                surpriseScreen.dataset.justOpened = 'true';
+                setTimeout(() => {
+                    surpriseScreen.dataset.justOpened = 'false';
+                }, 500);
+            }
+            
+            // Function to remove overlay
+            function removeOverlay() {
+                overlay.classList.add('fade-out');
+                setTimeout(function() {
+                    if (overlay.parentNode) {
+                        overlay.parentNode.removeChild(overlay);
+                    }
+                }, 1000);
+            }
+            
+            // Handle password input
+            inputField.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    const correctPassword = 'In conclusion, we hope that the present reformulation of the Inelastic Market Hypothesis in terms of mechanistic and measurable microstructural effects will shed a complementary light on the origin of financial market fluctuations, and possibly hammer a final nail into the coffin of the Efficient Market Hypothesis.';
+                    
+                    // Normalize function: remove punctuation, convert to lowercase, trim whitespace
+                    function normalizeText(text) {
+                        return text.toLowerCase()
+                                  .replace(/[^\w\s]/g, '') // Remove all punctuation
+                                  .replace(/\s+/g, ' ')    // Replace multiple spaces with single space
+                                  .trim();
+                    }
+                    
+                    const userInput = normalizeText(inputField.value);
+                    const normalizedPassword = normalizeText(correctPassword);
+                    
+                    if (userInput === normalizedPassword) {
+                        showSurprise();
+                    } else {
+                        // Wrong password - clear and shake
+                        inputField.value = '';
+                        inputField.style.animation = 'shake 0.5s';
+                        setTimeout(() => {
+                            inputField.style.animation = '';
+                        }, 500);
+                    }
+                }
+            });
+            
+            // Handle keyboard events on surprise screen
+            document.addEventListener('keydown', function(event) {
+                if (passwordScreen.style.display === 'none' && event.key === 'Enter' && surpriseScreen.dataset.justOpened !== 'true') {
+                    removeOverlay();
+                }
+            });
+            
+            // Handle click events on continue text
+            document.getElementById('tplus-continue').addEventListener('click', function() {
+                removeOverlay();
+            });
+        }
+    </script>
+</body>
+</html>
