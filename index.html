@@ -67,7 +67,7 @@
               </div>
           </div>
     </div>
-        <p class="wrapper ">It’s the Exchange & Prime Broker Stack - decentralized - composable with external liquidity - and using all of defi as it’s
+        <p class="wrapper " style="padding-left: 8%;">It's the Exchange & Prime Broker Stack - decentralized - composable with onchain liquidity - and using all of defi as it's
         ever-expanding product suite.</p>
 
       <hr>
@@ -172,16 +172,13 @@
                 const exampleButton = document.getElementById('example-button');
                 const closeExampleButton = document.getElementById('close-example-modal');
 
-                if (exampleModal && exampleVideo && exampleButton && closeExampleButton) {
+                if (exampleModal && exampleButton && closeExampleButton) {
                     const openExampleModal = () => {
                         exampleModal.style.display = 'flex';
-                        exampleVideo.currentTime = 0;
-                        exampleVideo.play();
                     };
 
                     const closeExampleModal = () => {
                         exampleModal.style.display = 'none';
-                        exampleVideo.pause();
                     };
 
                     exampleButton.addEventListener('click', (event) => {
@@ -566,10 +563,7 @@
       
       <div id="example-modal" class="modal-shell" style="display:none;">
           <button id="close-example-modal" class="modal-close" aria-label="Close example">×</button>
-          <video id="example-video" controls preload="auto" playsinline width="1280" height="720">
-            <source src="assets/tplus-bullposting-and-content/bullposting-vid-2-compressed.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
+          <img id="example-image" src="./assets/tplus-example.png" alt="T+ Example" style="max-width: 90vw; max-height: 80vh; object-fit: contain;">
       </div>
       <div class="console-button-container">
           <a href="wtf.html" class="console-button" target="_self">
