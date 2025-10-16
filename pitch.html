@@ -9,20 +9,23 @@
     <style>
         /* Page-specific styles */
         body {
-            padding: 0 20px 20px 20px;
+            padding: 0 40px 40px 40px;
+              background-color: #ffeeee;
+
         }
 
         /* Make basic paragraph text more readable */
         p {
-            font-weight: 550;
+            font-weight: 500;
             letter-spacing: 0.4px;
-            font-size: 18px;
+            font-size: 16px;
         }
         
         /* Make list items more readable */
         ul li {
-            font-weight: 550;
-            font-size: 16px;
+            font-weight: 500;
+            font-size: 14px;
+            max-width: 1000px;
         }
         
         /* Make headings slightly bolder */
@@ -205,7 +208,7 @@
             </ul>
             Deposit any asset on any chain. We even support some CEXs and Custodians
             <ul class="tpteam-list">
-                <li class="tpteam-list-item">t+ supports all assets instantly (they're even instantly liquid because we're composable with external liquidity)</li>
+                <li class="tpteam-list-item">t+ supports all assets instantly</li>
 
             </ul>
 
@@ -684,23 +687,17 @@
     </div>
 
     <hr>
-    <h2>"This sounds really cool, but it sounds complex, isn't there a lot of risk baked into the system?"</h2>
-    <p class = "wrapper">Good question! We're absolutely managing a lot of risk! As a brokerage we have a lot of inherent leverage and counterparty risk that needs to be considered.</p>
-    <p class = "wrapper">Risk is managed the same way it's managed in any venue with counterparty risk (below is not an exhaustive list): </p>
+    <h2>"This sounds really cool and complex, isn't there a lot of risk in the system?"</h2>
+    <p class = "wrapper">We're absolutely handling a lot of risk! As a brokerage we have a lot of inherent leverage and counterparty risk that's managed the same way it's managed in any venue with counterparty risk:</p>
     <ul>
-        <li>Caps on cross-margining and asset deposits based on the risk of the custodian (CEX's, Chains, L2s, Issuers, etc. are all custodians)</li>
-        <li>Borrow and funding rates are utilized to manage liquidity and exposure skew</li>
-        <ul>
-            <li>Note: t+ has to manage exposure skew more aggressively than say a perp exchange because our margin trades are filled by counter-side margin trades, spot trades, margin trades that are settled onchain (effectively spot trades)</li>
-        </ul>
+        <li>Caps on cross-margining and asset deposits</li>
+        <li>Interest rates to manage liquidity and exposure skew</li>
         <li>Not Every Asset is enabled as collateral! Assets that are supported as collateral have:</li>
         <ul>
             <li>Caps on both spot-margin and derivative based leverage based on asset liquidity</li>
             <li>Maintenance and Initial margin haircuts based on price and liquidity volatility - IM haircuts move up as exposure skew increases</li>
             <li>Cross-margin support is limited to majors</li>
         </ul>
-        <li>Robust oracle that aggregates volume and liquidity weighted prices from multiple on and off chain sources</li>
-        <li>Deposits are rebalanced between vaults to maintain withdrawal and settlement liquidity</li>
         <li>Fills on long-tail assets support optional delayed margin checks to allow market makers to settle onchain before confirming the trade - if settlement fails, the trade reverts (like an RFQ)</li>
     </ul>
     
@@ -740,7 +737,7 @@
         </div>
         <div class="container">
             <div class="p-font-2">
-                <span class="illegal">Decentralized Orderflow Execution Endgame</span>
+                <span class="illegal"> Orderflow Execution Endgame</span>
             </div>
         </div>
     </div>
@@ -881,8 +878,8 @@
                 <div class="panel-text">
                                         <p>This is very achievable for t+</p>
 
-                    <p>Category defining exchange products are extremely profitable. Hyperliquid defined decentralized perps, t+ will define decentralized brokerages.</p>
-                    <p>We have the same initial draw as HyperLiquid (trade new thing here - also look! Liquidity!) - but better since we have every new thing instantly.</p>
+                    <p>Category defining exchange products are extremely profitable. t+ is defining decentralized brokerages.</p>
+                    <p>We have the same initial draw as Hyperliquid (trade new thing here with liquidity) - but better since we have every new thing instantly.</p>
                     <div style="text-align: center; width: 100%;">
                         <h3 class="panel-title-g"><span style="color:#FF0000"> ALSO</span></h3>
                         <div style="display: flex; justify-content: center; flex-wrap: wrap;">
@@ -905,7 +902,7 @@
                             </div>
                         </div>
                     </div>
-                    <p><br>and our INITIAL taker base is better. In addition to traders, t+ is a GREAT taker venue for solvers, HFTs, market makers, and more.</p>
+                    <p><br>and our INITIAL taker base is better. Beyond traders, t+ is a GREAT venue for solvers, HFTs, OTC desks, and more.</p>
                 </div>
                 <div class="panel-status-g">
                     C:\SYSTEM\PRINT-MONEY &gt; <span class="blink">_</span>
@@ -997,21 +994,11 @@
     </div>
     <hr>
     <h2>"This all sounds great! You guys last raised back in April right? What have you done since?"</h2>
-    <p class="wrapper">A ton, tplus went from being a really cool idea with half a demo written to well on its way to production</p>
+    <p class="wrapper">A ton. t+ went from being an idea to well on its way to production</p>
     <ul>
-        <li>We have an internal testnet running - and you can check out what's happening in this Demo</li>
+        <li>We have an internal testnet running - Demo(link)</li>
         <li>We designed an extremely robust risk system</li>
         <li>Team size more than doubled</li>
-        <li>We've had promising conversations with almost every large market maker and foundation in the industry</li>
-        <li>We've spoken with every large trader we can get our hands on and they're very excited to use us</li>
-        <li>Common thing's we've heard:</li>
-        <ul>
-            <li>When are you going live I can't wait to trade there?</li>
-            <li>If you guys pull this off it's going to completely change market structure for the better</li>
-            <li>Can I please please please get some merch?</li>
-            <li>Can I please please please get some allo?</li>
-            <li>Your team is incredible - smart - high-integrity people, I want to help any way I can</li>
-        </ul>
     </ul>
     <p class="wrapper">And of course, we've been building lore and goodwill in the cultural core of crypto</p>
 
