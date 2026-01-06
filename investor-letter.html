@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>t+ Investor Letter</title>
+    <link rel="icon" type="image/png" href="assets/1836.webp">
+    <link rel="stylesheet" href="main.css">
+    <style>
+        body {
+            padding: 40px;
+            background-color: #ffeeee;
+        }
+
+        p {
+            font-weight: 500;
+            letter-spacing: 0.4px;
+            font-size: 16px;
+        }
+
+        ul li {
+            font-weight: 500;
+            font-size: 14px;
+            max-width: 1000px;
+        }
+
+        h2, h3 {
+            font-weight: 600;
+        }
+
+        .team-member {
+            margin-bottom: 20px;
+        }
+
+        .team-member strong {
+            font-size: 16px;
+        }
+
+        .team-member em {
+            color: #666;
+        }
+
+        .stats-table {
+            font-family: monospace;
+            font-size: 13px;
+            white-space: pre;
+            overflow-x: auto;
+            padding: 15px;
+            background: #1a1a1a;
+            color: #00ff00;
+            border-radius: 4px;
+            margin: 20px 0;
+            max-width: 800px;
+        }
+
+        .tweet-links {
+            margin: 20px 0;
+        }
+
+        .tweet-links a {
+            display: block;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <img src="assets/1650.webp" srcset="assets/250.webp 250w, assets/500.webp 500w, assets/1000.webp 1000w, assets/1650.webp 1650w" sizes="auto" loading="lazy" width="1650" height="1050" class="centered-image">
+
+    <h1 class="wrapper">t+2025 Investor Update</h1>
+
+    <p class="wrapper p-font-2">First off - Thank you for believing in us.</p>
+
+    <p class="wrapper">Now, on to the update - I'll keep it brief, if you have any questions reach out!</p>
+
+    <hr>
+
+    <h2 class="wrapper">Where was t+ at the start of 2025</h2>
+    <p class="wrapper"><span class="illegal" style="font-size: 2em;">Zero!</span> Or near it. It was just me, talking about an idea, and working on an unfinished (mostly broken) demo.</p>
+
+    <hr>
+
+    <h2 class="wrapper">Well what happened next?</h2>
+    <p class="wrapper">Scaling and building! - We:</p>
+
+    <ul>
+        <li>Built a 14 person team (mostly engineers)</li>
+        <li>Raised a reasonable runway</li>
+        <li>Gained a huge amount of mindshare within our target market</li>
+        <li>Solved many unique market microstructure design problems</li>
+        <li>Deployed an internal, working version of t+</li>
+    </ul>
+
+    <p class="wrapper">Some details on items I think matter:</p>
+
+    <h3 class="wrapper">Who did we recruit?</h3>
+    <p class="wrapper">A lot of people me and my network knew! Team looks like this now:</p>
+    <p class="wrapper"><em>Preface: These people are all incredibly smart and talented - I'm not going to repeat it every time I describe one.</em></p>
+
+    <div class="tpteam-container">
+        <ul class="tpteam-list">
+            <li class="tpteam-list-item">Tommaso - Backend Engineering and Research
+                <ul class="tpteam-sublist">
+                    <li class="tpteam-list-item">TEE and decentralization models and mechanisms, lots of rust</li>
+                    <li class="tpteam-list-item">Was hired after I told him about t+ and he refused to stop working on it for free</li>
+                </ul>
+            </li>
+
+            <li class="tpteam-list-item">Serge - Backend Engineering
+                <ul class="tpteam-sublist">
+                    <li class="tpteam-list-item">Fast at making things work and then work fast - wrote almost the entire OMS and Orderbook</li>
+                    <li class="tpteam-list-item">10+ years of tradfi latency arbitrage and chewing solana orderflow execution glass</li>
+                </ul>
+            </li>
+
+            <li class="tpteam-list-item">Jules - Backend/Full-stack Engineering
+                <ul class="tpteam-sublist">
+                    <li class="tpteam-list-item">Pragmatic, modular, thoughtful engineer - Critical for t+'s external state machine integrations</li>
+                    <li class="tpteam-list-item">Spent 4 years maintaining Apeworx solo, finally hired her after trying 5 years ago</li>
+                </ul>
+            </li>
+
+            <li class="tpteam-list-item">Ryan - Backend/Full-stack Engineering
+                <ul class="tpteam-sublist">
+                    <li class="tpteam-list-item">The pragmatic force in financial mechanism design on our team  - also trading algos and tooling</li>
+                    <li class="tpteam-list-item">He was such a perfect fit that a competitors recruiter couldn't stop himself from referring him to us</li>
+                </ul>
+            </li>
+
+            <li class="tpteam-list-item">Samuel - Frontend Engineering
+                <ul class="tpteam-sublist">
+                    <li class="tpteam-list-item">State-machine maximalist, won't ship anything that can't perform on an iPhone 6</li>
+                    <li class="tpteam-list-item">Started as contractor, we begged him to come on full time. Gem in an industry full bad frontend engineering</li>
+                </ul>
+            </li>
+
+            <li class="tpteam-list-item">Jack - Backend Engineering
+                <ul class="tpteam-sublist">
+                    <li class="tpteam-list-item">Ex-Sigma Prime: security auditing, Ethereum clients, block building</li>
+                    <li class="tpteam-list-item">I've wanted to work with him for a long time - curious, smart, rust head, glad we got him</li>
+                </ul>
+            </li>
+
+            <li class="tpteam-list-item">Confidential - Devops
+                <ul class="tpteam-sublist">
+                    <li class="tpteam-list-item">Makes things stay up and fast - re-did our entire stack</li>
+                    <li class="tpteam-list-item">Manages devops for a massive chain, joining full time any day now</li>
+                </ul>
+            </li>
+
+            <li class="tpteam-list-item">Jakub - Engineering Director
+                <ul class="tpteam-sublist">
+                    <li class="tpteam-list-item">We scaled a lot and need someone in charge - excellent at TEEs, distributed systems, and rust</li>
+                    <li class="tpteam-list-item">Just joined but used to direct engineering at iota, polygon, and more</li>
+                </ul>
+            </li>
+
+            <li class="tpteam-list-item">Julia - Frontend Engineering
+                <ul class="tpteam-sublist">
+                    <li class="tpteam-list-item">Best web2 founder I know was going to hire her until I begged him for the intro</li>
+                    <li class="tpteam-list-item">Had to enter a max lev monad long AND promise him allo + referral fee before he agreed</li>
+                </ul>
+            </li>
+
+            <li class="tpteam-list-item">Aishwaraya - Automated Testing
+                <ul class="tpteam-sublist">
+                    <li class="tpteam-list-item">Makes sure our code isn't broken</li>
+                    <li class="tpteam-list-item">Very very good at it</li>
+                </ul>
+            </li>
+
+            <li class="tpteam-list-item">Charco - Squeaky Wheel
+                <ul class="tpteam-sublist">
+                    <li class="tpteam-list-item">Makes sure we get the grease - also actually really good at product</li>
+                    <li class="tpteam-list-item">Had to explain t+ to him 3 times in different cities but he decided it's the only thing worth building</li>
+                </ul>
+            </li>
+
+            <li class="tpteam-list-item">Eli - Institutional Squeaky Wheel
+                <ul class="tpteam-sublist">
+                    <li class="tpteam-list-item">I'm not gonna write anything about him</li>
+                    <li class="tpteam-list-item">Have him hard pitch you - that's all you need to see</li>
+                </ul>
+            </li>
+
+            <li class="tpteam-list-item">Latera - COO
+                <ul class="tpteam-sublist">
+                    <li class="tpteam-list-item">Someone needs to run the business around here</li>
+                    <li class="tpteam-list-item">He's good at it</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <h3 class="wrapper">What did you build?</h3>
+    <p class="wrapper">If you had access to our API's you could trade on t+ right now. The trading and accounting systems are all done, and most EVM chain integrations are ready to go. Risk systems are weeks away. This is all being audited as you read this by Zellic!</p>
+
+    <p class="wrapper">In November we launched our internal t+ deployment as a demo-explorer, which you can see at (not actively maintained atm):</p>
+    <div class="console-button-container">
+        <a href="https://perfect.markets" class="console-button" target="_blank">
+            &gt; perfect.markets
+        </a>
+    </div>
+
+    <p class="wrapper">It's kinda hard to convey what a huge achievement this is so here are some github stats:</p>
+
+    <div class="stats-table">Main Repositories by Commits
+
+| Repository         | Commits |
+|--------------------|---------|
+| tplus-core         | 1,485   |
+| demo-repository    | 643     |
+| infra              | 329     |
+| demo-algos         | 268     |
+| tpluspy            | 188     |
+| tplus-contracts    | 178     |
+| tplus-landing-page | 43      |
+| meta-dstack        | 40      |
+| tplus-examples     | 23      |</div>
+
+    <div class="stats-table">Code Changes (All-Time Stats)
+
+| Repository      | Additions | Deletions | Net Change |
+|-----------------|-----------|-----------|------------|
+| tplus-core      | +208,399  | -97,495   | +110,904   |
+| demo-repository | +86,079   | -40,055   | +46,024    |
+| demo-algos      | +37,198   | -22,092   | +15,106    |
+| rate-testing    | +17,702   | -10       | +17,692    |
+| tplus-contracts | +9,343    | -4,400    | +4,943     |
+| Total           | ~358,721  | ~164,052  | +194,669   |</div>
+
+    <div class="stats-table">Top Contributors (tplus-core)
+
+1. farnyser - 632 commits
+2. antazoey - 269 commits
+3. heytdep - 207 commits
+4. manore993 - 93 commits
+5. jmcph4 - 62 commits
+6. emmick4 - 34 commits
+
+// Note: top 3 contributors are the only ones who have
+// been around for a while - I expect us to accelerate
+// significantly from this point</div>
+
+    <div class="stats-table">Monthly Commit Activity (tplus-core)
+
+Mar 2025: 145 commits
+Apr 2025: 164 commits
+May 2025: 142 commits
+Jun 2025: 122 commits
+Jul 2025: 155 commits
+Aug 2025: 239 commits (peak)
+Sep 2025: 119 commits
+Oct 2025:  78 commits
+Nov 2025: 110 commits
+Dec 2025:  25 commits
+
+Primary Languages:
+- Rust - 2.9 MB (tplus-core)
+- Python - 759 KB (tpluspy, demo-algos)
+- Solidity - 145 KB (tplus-contracts)
+- Gherkin - 94 KB (testing specs)</div>
+
+    <p class="wrapper">We also spent a lot of time figuring out our market microstructure. t+ is fairly unique as a decentralized brokerage/CEX:</p>
+
+    <ul>
+        <li>We treat a large number of like-assets as fungible</li>
+        <li>We support cross margining with external venues</li>
+        <li>We're atomically composable with external chains</li>
+        <li>We allow margin and spot traders to trade in the same book but treat margin positions similarly to perp positions</li>
+        <li>We use unique fee and order models to allow market participants that specialize in different strategies to benefit from their specialization</li>
+    </ul>
+
+    <p class="wrapper">All of this was done to drive down costs and improve capital efficiency. But it creates new problems like:</p>
+<ul>
+    <li>"How do we control exposure skew?"</li>
+    <li>"How do we ensure fungible assets are evenly distributed across chains?"</li>
+    <li>"How do we allow margin and spot traders to trade in the same book but treat margin positions similarly to perp positions?"</li>
+    <li>"How do we use unique fee and order models to allow market participants that specialize in different strategies to benefit from their specialization?"</li>
+    <li>"And many more..."</li>
+</ul>
+    <p class="wrapper">These challenges are solved now - and you'll hear a lot more about them in the future as we start shouting about them.</p>
+
+    <hr>
+
+    <h3 class="wrapper">Who cares?</h3>
+    <p class="wrapper">Pretty much everyone we need to care!</p>
+
+    <ul>
+        <li>Show up to a dinner of traders wearing a t+ shirt → it'll be excitedly recognized</li>
+        <li>Show the t+ smiley face to someone at a conference → chances are they've seen it</li>
+        <li>Ask a market participant what new projects they're excited about → we come up</li>
+        <li>See a picture on twitter showing off mutuals they're hanging with → t+ cigarettes are probably on the table</li>
+    </ul>
+
+    <p class="wrapper">We've been lore and goodwill building excessively and it's all going to pay off this year.</p>
+
+    <p class="wrapper">Here's some proof of what we've done:</p>
+
+    <!-- Carousel for bullposting and content -->
+    <div class="carousel-container" id="tplus-carousel">
+        <div class="carousel-wrapper">
+            <div class="carousel-slide">
+                <video controls style="max-width: 100%; max-height: 600px;">
+                    <source src="assets/tplus-bullposting-and-content/bullposting-vid-11.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-0.png" alt="t+ bullposting 0">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-1.png" alt="t+ bullposting 1">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-2.png" alt="t+ bullposting 2">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-3.png" alt="t+ bullposting 3">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-4.png" alt="t+ bullposting 4">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-5.png" alt="t+ bullposting 5">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-6.png" alt="t+ bullposting 6">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-7.png" alt="t+ bullposting 7">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-8.png" alt="t+ bullposting 8">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-9.png" alt="t+ bullposting 9">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-10.png" alt="t+ bullposting 10">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-11.png" alt="t+ bullposting 11">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-12.png" alt="t+ bullposting 12">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-13.png" alt="t+ bullposting 13">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-14.png" alt="t+ bullposting 14">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-15.png" alt="t+ bullposting 15">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-16.png" alt="t+ bullposting 16">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-17.png" alt="t+ bullposting 17">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-18.png" alt="t+ bullposting 18">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-19.png" alt="t+ bullposting 19">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-20.png" alt="t+ bullposting 20">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-21.jpg" alt="t+ bullposting 21">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-22.jpg" alt="t+ bullposting 22">
+            </div>
+            <div class="carousel-slide">
+                <video controls style="max-width: 100%; max-height: 600px;">
+                    <source src="assets/tplus-bullposting-and-content/bullposting-vid-2-compressed.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/tplus-bullposting-23.jpg" alt="t+ bullposting 23">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-24.jpg" alt="t+ bullposting 24">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-25.png" alt="t+ bullposting 25">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-26.png" alt="t+ bullposting 26">
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/tplus-bullposting-and-content/bullposting-27.png" alt="t+ bullposting 27">
+            </div>
+        </div>
+        <button class="carousel-nav prev" onclick="changeSlide(-1)">&lt;</button>
+        <button class="carousel-nav next" onclick="changeSlide(1)">&gt;</button>
+        <div class="carousel-indicators"></div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('#tplus-carousel .carousel-slide');
+        const totalSlides = slides.length;
+        const wrapper = document.querySelector('#tplus-carousel .carousel-wrapper');
+        const indicatorContainer = document.querySelector('#tplus-carousel .carousel-indicators');
+
+        // Create indicators
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('span');
+            dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => goToSlide(i);
+            indicatorContainer.appendChild(dot);
+        }
+
+        function updateCarousel() {
+            wrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+            document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+        }
+
+        function changeSlide(direction) {
+            currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+            updateCarousel();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+    </script>
+
+    <div class="tweet-links wrapper">
+        <div class="console-button-container">
+            <a href="https://x.com/lazersays/status/1990974186810945612" class="console-button" target="_blank">
+                &gt; Guinea Pig Video
+            </a>
+        </div>
+        <div class="console-button-container">
+            <a href="https://x.com/markus_/status/1990879779579465773" class="console-button" target="_blank">
+                &gt; t+Keynote
+            </a>
+        </div>
+        <div class="console-button-container">
+            <a href="https://x.com/charcoded/status/2000705183420932320" class="console-button" target="_blank">
+                &gt; Couch Interview
+            </a>
+        </div>
+    </div>
+
+    <p class="wrapper"><em>One final note that I want to brag about - we didn't pay much for any of this - our most expensive event cost $7k total - our marketing and merch budget is minuscule - we're just authentic people doing something worthwhile and people appreciate that.</em></p>
+
+    <hr>
+
+    <h2 class="wrapper">What's next?</h2>
+
+    <h3 class="wrapper">Product Release</h3>
+    <p class="wrapper">This is the big one - we're planning a public beta release for Q2. Now tech timelines can change but we think we're on track. Timeline is currently as follows:</p>
+
+    <div class="tpteam-container">
+        <ul class="tpteam-list">
+            <li class="tpteam-list-item">Feb 26: Private Alpha Phase 1
+                <ul class="tpteam-sublist">
+                    <li class="tpteam-list-item">Feature complete product internally - start sharing externally for feedback.</li>
+                </ul>
+            </li>
+
+            <li class="tpteam-list-item">March/April 26: Integrators Onboard
+                <ul class="tpteam-sublist">
+                    <li class="tpteam-list-item">This is when we get all our market makers, solvers, and searchers onboarded so our books are nice and fat come beta.</li>
+                </ul>
+            </li>
+
+            <li class="tpteam-list-item">April/May 26: Private Alpha Phase 2
+                <ul class="tpteam-sublist">
+                    <li class="tpteam-list-item">The product is ready for a wider audience - we start funding accounts with $100-$1000 a pop and handing them out to a select group of traders to build interest and gather more feedback.</li>
+                </ul>
+            </li>
+
+            <li class="tpteam-list-item">May/June 26: Public Beta Release
+                <ul class="tpteam-sublist">
+                    <li class="tpteam-list-item">This is go time - we raise deposit caps and allow a select group of traders to invite their friends via ref link referrals. They'll be using the real product - stress tested - performance goals hit (sub ms trades) - first 10 chains live.</li>
+                </ul>
+            </li>
+
+            <li class="tpteam-list-item">Onward
+                <ul class="tpteam-sublist">
+                    <li class="tpteam-list-item">We continue scaling deposit caps and issuing invite codes! Once we're comfortable we move from beta to a full release and let everyone in!</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <h3 class="wrapper">PMM Program</h3>
+    <p class="wrapper">An exchange with an empty book isn't an exchange. To this end, we're finalizing onboarding market participants to our PMM program in Q1.</p>
+
+    <p class="wrapper"><strong>Targets:</strong></p>
+    <ul>
+        <li>Most large solving and searching teams onboarded</li>
+        <li>At least 3 market makers that are active on large CEX's onboarded</li>
+        <li>At least 3 Hyperliquid/Lighter market makers integrated</li>
+    </ul>
+    <p class="wrapper">We've made good progress here and are now in the final stretch.</p>
+
+    <h3 class="wrapper">Lore Building</h3>
+    <p class="wrapper"><em>(from guest writer charco)</em></p>
+
+    <div class="retro-panel">
+        <div class="panel-header">IRL EVENTS</div>
+        <div class="panel-body">
+            <div class="panel-content">
+                <div class="panel-text">
+                    <p>With the Alpha kicking off and our initial cohort of patient but avid market participants beginning to onboard to Tplus for the first time, we will also begin increasing the frequency and diversity of our in person event schedule.</p>
+                    <p>We want our events to continue to be highly curated, intimate, engaging affairs. From exclusive steak dinners to intimate home cooked italian meals, pizza and poker to whatever's after Guinneapig Roulette, attendees will leave having new stories, insights, and a general sense of excitement about the atmosphere we're curating and quality of market participants in attendance.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="retro-panel">
+        <div class="panel-header">LIVESTREAMING</div>
+        <div class="panel-body">
+            <div class="panel-content">
+                <div class="panel-text">
+                    <p>We plan to double down on live media in 2026. From memetic TV style programming to recurring roundtables with top notch guests, our goal is to increase the surface area of entertainment and repackage live broadcasts for shortform on X.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="retro-panel">
+        <div class="panel-header">MANUAL ONBOARDING</div>
+        <div class="panel-body">
+            <div class="panel-content">
+                <div class="panel-text">
+                    <p>Getting their Tplus code should feel like a special moment for the first 100 users, and as many users as possible thereafter. An in person rendezvous with an engraved prefunded hardware wallet set up with access to Tplus.</p>
+                    <p>As word of mouth spreads we will keep a list of traders to onboard, and an even more important list of traders who have been onboarded. Over the coming year, our goal is to provide constant support, updates, product revisions based on their insights, and a steady stream of thoughtful gestures for their contributions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="retro-panel">
+        <div class="panel-header">MERCH</div>
+        <div class="panel-body">
+            <div class="panel-content">
+                <div class="panel-text">
+                    <p>In 2026 we will be launching an at cost merch store, while supplies last. This will be an easy way for us to collect international shipping information and filter for market participants who are brand aligned enough to pay $30 out of pocket for official Tplus merch. Designs will be thoughtful, quality will be top notch, and packages will arrive with more than what was ordered.</p>
+                    <p>We will also continue releasing seasonal merch, premium merch for partners and key traders, and event specific merch.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <h3 class="wrapper">Special Projects!</h3>
+    <p class="wrapper">Minimal detail can be given for now but there are a few special projects we're excited about in the new year:</p>
+
+    <div class="retro-panel">
+        <div class="panel-header">LIVE TRADING PIT COMPETITION</div>
+        <div class="panel-body">
+            <div class="panel-content">
+                <div class="panel-text">
+                    <p>Pretty much what it sounds like, heavily produced multi-day trading pit competition at a major crypto conference. Working with a team that's closer than anyone else to core crypto culture to put it on.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="retro-panel">
+        <div class="panel-header">t+PAMM</div>
+        <div class="panel-body">
+            <div class="panel-content">
+                <div class="panel-text">
+                    <p>We have the best decentralized orderbook in crypto which affords us the best making environment in crypto. A team who understands the prop AMM landscape on Solana better than anyone not actively maintaining one has approached us to partner on a t+ powered PAMM which would effectively re-market our book to Solana routers via a significantly more capital efficient and asset rich PAMM than incumbents.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="retro-panel">
+        <div class="panel-header">t+ AS A BACKEND</div>
+        <div class="panel-body">
+            <div class="panel-content">
+                <div class="panel-text">
+                    <p>In a similar vein - t+'s long term vision has always been to be an orderflow execution platform, not a single exchange. We hope to start launching some of these partnerships with projects requiring unique books and high liquidity environments in late 2026.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <h2 class="wrapper">Are we worried about the broader market?</h2>
+    <p class="wrapper">It's no secret that people are generally scared and bearish right now for a variety of reasons. As a result we get a lot of questions about whether we're worried it's a bad environment to launch a trading product in.</p>
+
+    <p class="wrapper">Our answer is: <strong style="color: red;">"we don't really care about the broader market"</strong> </p>
+    
+    <p class="wrapper"> As a trading platform t+ is of course sensitive to speculative flow (or a lack thereof). But the neat part of t+ is that it's valuable as a market utility as well as a platform. At a baseline, without any UI, t+ is a capital efficiency tool for algorithmic traders. To provide some examples:</p>
+
+    <ul>
+        <li><strong>Solvers</strong> can use us to atomically access external liquidity sources (CEX's or other chains) without having to manage a book or execution in those venues. Just examining cowswap mainnet - an average of <strong style="color: red;">$89 million</strong> is filled per day by PMM's. We can capture a lot of that just by providing a more capital efficient, competitive, alternative to a PMM (which will thus have better quotes).</li>
+        <li><strong>CEX&lt;&gt;DEX arbitrageurs</strong> can use us to reduce their capital cost and non-execution risk. This represents <strong style="color: red;">$70m+</strong> in average daily volume just considering ETH&lt;&gt;USD liquidity on Arbitrum and mainnet.</li>
+    </ul>
+
+    <p class="wrapper">Furthermore, as perp platforms proliferate and equity perps take off we have even more markets of slightly different of like assets to take advantage of pricing inefficiencies in for the benefit of our users.</p>
+
+    
+    
+
+    <div style="border: 3px solid red; padding: 10px; max-width: 400px; margin: 20px 0; box-shadow: 5px 5px 15px rgba(0,0,0,0.3); background: white;">
+        <img src="assets/stale-quotes.jpg" alt="Stale quotes comparison" style="max-width: 100%; display: block;">
+    </div>
+
+<p class="wrapper">Have you seen the spreads on equity perps?:</p>
+    <div class="stats-table">======================================================================
+Asset        BuyImprov   SellImprov    AvgImprov SizeWtImprov
+----------------------------------------------------------------------
+AAPL           2.1944bp     1.4257bp     1.8100bp     1.8024bp
+AMZN           2.4842bp     6.1918bp     4.3380bp     4.0588bp
+COIN          48.8978bp     2.7212bp    25.8095bp     8.6810bp
+CRCL          22.5232bp    10.0558bp    16.2895bp     9.5574bp
+GOOG          18.2371bp     2.9946bp    10.6159bp     6.8987bp
+HOOD           8.9329bp    13.9243bp    11.4286bp     9.3012bp
+META           5.4263bp     8.9716bp     7.1989bp     6.2970bp
+MSFT           2.9234bp    12.1898bp     7.5566bp     7.4996bp
+MSTR          59.0674bp     6.9372bp    33.0023bp    21.4079bp
+NDX           10.3629bp     8.6636bp     9.5132bp    10.2472bp
+NFLX           2.2761bp     7.7405bp     5.0083bp     3.1676bp
+NVDA           2.3167bp    13.3103bp     7.8135bp     6.1339bp
+TSLA           5.8927bp    10.1599bp     8.0263bp     6.7953bp
+----------------------------------------------------------------------
+TOTAL                                                 5.6044bp
+======================================================================</div>
+
+    <p class="wrapper">That's an average of 5 bps of pricing improvement if you can efficiently aggregate the instruments of the leading marketplaces and always source from the cheapest liquidity. Of course there are confounding factors here - the point I'm making is more instruments/assets → less efficient pricing → better for t+'s users.</p>
+
+    <p class="wrapper">Finally, people are exhausted of the perp dex meta - and we're not a perp dex. t+ is a category defining exchange with every single feature market participants want.</p>
+<div class="container">
+    <div class="p-font-2" style="color: red;">
+        it's the new thing
+
+    </div>
+</div>
+    <hr>
+
+    <h2 class="wrapper">How can I help?</h2>
+    <p class="wrapper">Thanks for asking! There's not much we need right now, just trying to finalize deals with market makers. We may also raise a seed in late Q1 if we feel it's useful. So all we need is for you guys to help us keep people excited - just talk about us and use us when we launch :)</p>
+
+    <!-- Password Overlay -->
+    <div style="display: block;">
+        <style>
+            #tplus-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #000;
+                z-index: 9999;
+                font-family: monospace;
+                display: flex;
+                justify-content: center;
+                padding-top: 10vh;
+                color: #ff0000;
+                overflow: auto;
+            }
+
+            #tplus-terminal {
+                width: 100%;
+                max-width: 800px;
+                font-size: 16px;
+            }
+
+            #tplus-password {
+                padding: 20px;
+            }
+
+            #tplus-prompt {
+                color: #ffff00;
+                margin: 15px 0;
+            }
+
+            #tplus-input-line {
+                display: flex;
+                align-items: flex-end;
+                margin-top: 15px;
+            }
+
+            #tplus-input {
+                background: transparent;
+                border: none;
+                outline: none;
+                color: #ff0000;
+                font-family: monospace;
+                font-size: 20px;
+                width: 80%;
+                margin-left: 5px;
+            }
+
+            #tplus-cursor {
+                width: 10px;
+                height: 2px;
+                background: #ff0000;
+                display: inline-block;
+                animation: blink 1s step-end infinite;
+            }
+
+            .fade-out {
+                animation: fade 1s forwards;
+            }
+
+            @keyframes fade {
+                to { opacity: 0; visibility: hidden; }
+            }
+
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-10px); }
+                75% { transform: translateX(10px); }
+            }
+        </style>
+
+        <div id="tplus-overlay">
+            <div id="tplus-terminal">
+                <div id="tplus-password">
+                    <div>user@t-plus:~$ ./investor-update.sh</div>
+                    <div><b>t+ 2025 Investor Update</b></div>
+
+                    <div id="tplus-prompt">PASSWORD REQUIRED</div>
+
+                    <div id="tplus-input-line">
+                        &gt; <input type="password" id="tplus-input" autofocus>
+                        <span id="tplus-cursor"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const overlay = document.getElementById('tplus-overlay');
+            const inputField = document.getElementById('tplus-input');
+
+            if (inputField) {
+                inputField.focus();
+
+                overlay.addEventListener('click', function() {
+                    inputField.focus();
+                });
+
+                inputField.addEventListener('keydown', function(event) {
+                    if (event.key === 'Enter') {
+                        event.preventDefault();
+
+                        if (inputField.value.toLowerCase() === 'thanks') {
+                            overlay.classList.add('fade-out');
+                            setTimeout(function() {
+                                overlay.parentNode.removeChild(overlay);
+                            }, 1000);
+                        } else {
+                            inputField.value = '';
+                            inputField.style.animation = 'shake 0.5s';
+                            setTimeout(() => {
+                                inputField.style.animation = '';
+                            }, 500);
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
