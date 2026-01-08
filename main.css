@@ -1247,11 +1247,12 @@ footer {
 }
 
 .card-description {
-  font-family: 'Press Start 2P', monospace;
+/*  font-family: 'Press+Start+2P', monospace; */
   
   color: #2c2c2c;
   text-align: center;
-  font-size: 10px;
+  font-size: 14px;
+  font-weight: bold;
   font-style: normal;
   letter-spacing: 1px;
   line-height: 1.4;
