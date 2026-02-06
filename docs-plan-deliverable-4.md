@@ -170,7 +170,7 @@ event Withdrew(bytes32 indexed user, uint64 indexed account, uint256 indexed non
 
 ### 4. Settlement Functions and Events
 
-Two modes: batch (two-phase pull/push for netting multiple trades) and atomic (single-tx with callback for RFQ/DEX fills — see §5).
+Two modes: batch (two-phase pull/push for bundle-based settlements) and atomic (single-tx with callback for atomic interactions — see §5).
 
 #### 4.1 pullBatchSettlement (Pull Phase)
 

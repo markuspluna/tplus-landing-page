@@ -11,10 +11,6 @@ Fee schedule and computation reference. Maker/taker model, fee tiers, volume dis
 ## Source Material
 
 - `/Users/markuspaulsonluna/Dev/notion-managment/content/remote/pages/docs/trading-fees-rates-297e.md` — fee tiers, rate schedules
-- `/Users/markuspaulsonluna/Dev/notion-managment/content/remote/pages/docs/preliminary-points-system-2bfe.md` — points system for trading, interest, and engagement incentives
-- `investor-letter.html` — references "minimal market maker costs" and "unique fee models"
-- `pitch.html` — PMM targets, CEX tier verification
-- `/Users/markuspaulsonluna/Dev/tplus-core/` — fee computation logic within OMS or clearing engine (exact module TBD from codebase search)
 
 ---
 
@@ -47,30 +43,10 @@ Zero. May be reassessed post-launch.
 | Tier | 14-Day Weighted Volume (USD) | Taker Fee | Maker Fee |
 |------|------------------------------|-----------|-----------|
 | 0    | —                            | 0.025%    | 0.015%    |
-| 1    | > $5M                        | 0.020%    | 0.050% **[LIKELY TYPO]** |
+| 1    | > $5M                        | 0.020%    | 0.005%    |
 | 2    | > $10M                       | 0.015%    | 0.000%    |
-| 3    | > $25M                       | 0.012%    | 0.000%    |
+| 3    | > $25M                       | 0.008%    | 0.000%    |
 
-Tier 1 maker fee `0.05%` in source — higher than Tier 0's `0.015%`. Likely typo (`0.005%`). Shown as-is; confirm before publishing.
-
-### Points System (Rebates)
-
-Points distributed to makers and takers at match finalization, proportional to fees paid and volume share.
-
-**Order type multipliers** (not finalized):
-
-| Type | Multiplier |
-|------|-----------|
-| Liquidations | 5x |
-| GTC orders | 1.5x |
-| Stop-loss orders | 2x |
-| Take-profit orders | 2x |
-| TWAPs | 3x |
-| AI-agent trades | 10x |
-
-Interest payments also generate points for payer and payee. A fee on interest paid (TBD) funds the points; multiplier scales logarithmically with rate to discourage manipulation. No lockup or cap currently planned.
-
-See D13 for rebalancing incentives.
 
 ### Per-Trade Calculation
 
