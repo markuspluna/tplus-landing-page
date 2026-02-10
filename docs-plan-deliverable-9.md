@@ -4,7 +4,7 @@
 
 How trades settle onchain after offchain confirmation. Covers the settlement lifecycle, settlement types, netting/batching, signing flows, withdrawal mechanics, and SDK/contract execution.
 
-**Boundaries:** Excludes API endpoint signatures (D2, D3), contract ABI details (D4), SDK method signatures (D5), fee mechanics (D6), margin/risk during settlement (D7), order matching (D8), liveness guarantees during settlement failure (D10), and rebalancing fees (D13).
+**Boundaries:** Excludes API endpoint signatures (D2, D3), contract ABI details (D4), SDK method signatures (D5), fee mechanics (D6), margin/risk during settlement (D7), order matching (D8), liveness guarantees during settlement failure (D10), rebalancing fees (D13), and confirmation policies (D15).
 
 ---
 
@@ -18,7 +18,7 @@ How trades settle onchain after offchain confirmation. Covers the settlement lif
 - `/Users/markuspaulsonluna/Dev/tplus-contracts/src/CredentialManager.sol` — ChainConfig (block confirmations)
 - `/Users/markuspaulsonluna/Dev/notion-managment/content/remote/pages/docs/match-finalization-2f2e.md` — match finalization concepts
 - `/Users/markuspaulsonluna/Dev/notion-managment/content/remote/pages/docs/withdrawal-delays-2ebe.md` — withdrawal delay mechanism
-- Cross-references: D4 (contracts), D5 (SDK), D10 (TEE/escape hatches)
+- Cross-references: D4 (contracts), D5 (SDK), D10 (TEE/escape hatches), D15 (confirmation policies)
 
 ---
 
@@ -26,20 +26,14 @@ How trades settle onchain after offchain confirmation. Covers the settlement lif
 
 ### 1. Settlement Lifecycle Overview
 
-Settlement bridges offchain trade finalization to onchain state. Four stages:
+Settlement is the composability mechanism that lets users settle leveraged exposure into external onchain liquidity rather than closing the position in the t+ book — any piece of onchain state (DEX, RFQ, Mint/Redeem contract, auction) can be interacted with. Settlements can be partial and pull from pooled user deposits across chains; makers don't need inventory on the settlement chain. Four stages:
 
-1. **Match finalization** — CE processes a fill, returns `MatchFinalizationResult`. Trade finalized in CE offchain state (see D8).
-2. **Signing** — CE prepares EIP-712 typed-data hash and signs (single admin signature for settlements; quorum for withdrawals).
-3. **Onchain execution** — Settler submits signed settlement to `DepositVault`: verify signature, bump nonce, invoke callback, transfer tokens, emit `Settled`.
-4. **Confirmation & ingestion** — Chain adapter places vault events in `ConfirmationQueue`, releasing to CE after configured block confirmations per `ConfirmationPolicy`.
+1. **Initiation** — Settler signs a request specifying assets, amounts, and chain, and submits it to CE.
+2. **State lock & approval** — CE validates the request, checks that the settlement won't violate margin requirements, and locks the settled assets so they can't be used elsewhere. CE then signs an EIP-712 approval and streams it back to the settler.
+3. **Onchain execution** — Settler calls `executeAtomicSettlement()` on the deposit vault contract deployed on the chain they're executing on with the approval and an arbitrary callback — the callback is where composability happens (DEX swap, RFQ fill, mint/redeem, etc.).
+4. **Confirmation & lock release** — CE ingests the onchain settlement event after sufficient block confirmations, releases the lock, and updates inventory. If the settlement never executes, the lock expires and assets are returned.
 
-**Confirmation policies** — per-chain `ChainConfig` fields (`depositIngestConfirmations`, `settlementIngestConfirmations`, `withdrawalIngestConfirmations`):
-
-- `Blocks(n)` — released after `n` confirmations
-- `Immediate` / `Blocks(0)` — forwarded immediately
-- `Finalized` — waits for slot finality (Solana deposits/withdrawals; Solana settlements use `Immediate`)
-
-Chains: Ethereum, Arbitrum, Base, Optimism, Unichain, BSC, Solana, Bitcoin. `ConfirmationQueue` tracks events keyed by `(vault_address, user, nonce)`, dequeuing on each block head as `AdapterEvent::VaultSettled`, `VaultDeposited`, or `VaultWithdrew`.
+See D15 for confirmation policies and the `ConfirmationQueue` mechanism.
 
 ### 2. Settlement Types
 

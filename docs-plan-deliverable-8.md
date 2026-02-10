@@ -2,7 +2,7 @@
 
 ## Scope
 
-Trade execution reference: order types, TIF, order lifecycle, matching rules, leverage, market microstructure, prioritized maker path.
+Trade execution reference: order types, order lifecycle, matching, leverage, market specifications, synchronous trades.
 
 **Excludes:** API endpoints (D2), SDK functions (D5), fees (D6), margin/liquidation (D7), settlement (D9), interest rates (D14).
 
@@ -18,158 +18,69 @@ Trade execution reference: order types, TIF, order lifecycle, matching rules, le
 - `/Users/markuspaulsonluna/Dev/tpluspy/tplus/model/` — Order types, UserTrade, TradeTarget
 - `/Users/markuspaulsonluna/Dev/notion-managment/content/remote/pages/docs/trigger-orders-overview-255e.md` — Trigger order spec
 - `/Users/markuspaulsonluna/Dev/notion-managment/content/remote/pages/docs/sync-makingtaking-spec-265e.md` — Synchronous trades
-- `pitch.html` — Maker queue, margin-on-match, composable liquidity, synchronous trades
 - Cross-deliverable: D2, D5, D6, D7, D9, D14
 
 ---
 
 ## Content
 
-### 1. Order Types
+### Order Types
 
-Two primary order types: **Limit** and **Market**. Trigger conditions can be attached to either to create stop-loss/take-profit orders.
+#### Limit Orders
 
-| Order Type | Parameters | Behavior |
-|---|---|---|
-| **Limit** | `limit_price`, `quantity`, `time_in_force` | Rests on the book at specified price. Makers must be limit orders. Price/quantity use book-configured decimal precision (`book_price_decimals`, `book_quantity_decimals`). |
-| **Market** | `quantity` (base or quote), `fill_or_kill` | Executes immediately against resting liquidity. |
+A limit order rests on the book at a specified price until it is filled or cancelled. All maker orders must be limit orders. Prices and quantities follow the tick size and lot size configured for each market (see Market Specifications below).
 
-**Market order quantity modes:**
+Limit orders support the following time-in-force options:
 
-- **BaseAsset** — specific base asset quantity. Optional `max_sellable_amount` caps quote spent on buys.
-- **QuoteAsset** — specific quote amount. Optional `max_sellable_quantity` caps base sold on sells.
+- **Good-Til-Cancel (GTC)** — remains on the book until filled or cancelled. This is the default.
+- **Good-Til-Date (GTD)** — remains on the book until a specified expiration time, then auto-expires.
+- **Immediate-or-Cancel (IOC)** — executes immediately against available liquidity; any unfilled portion is cancelled. When used with fill-or-kill, the entire order must fill or it is rejected.
 
-**Trigger orders** attach a `PriceAbove` or `PriceBelow` condition. The order stays dormant until mark price breaches the trigger.
+The **post-only** flag (available on GTC and GTD) ensures the order rests as a maker. If it would cross the book and take liquidity, the order is rejected instead — guaranteeing maker fees.
 
-| Trigger | Condition | Use Case |
-|---|---|---|
-| `PriceAbove { price }` | TakeProfit | Execute when price rises above threshold |
-| `PriceBelow { price }` | StopLoss | Execute when price drops below threshold |
+#### Market Orders
 
-Triggers are stored in the OMS per account and asset, sorted by mark price. Must be reduce-only — OMS verifies sufficient inventory at submission. When a confirmed fill partially invalidates triggers, the OMS iterates from closest-to-mark and reduces or cancels excess quantity (only if total trigger amount exceeds position size). On the orderbook side, triggers are stored per price level and activated when the matching engine crosses the level and mark price (mid) confirms the breach.
+A market order executes immediately at the best available price. Market orders can specify quantity in two ways:
 
-Liquidation triggers (isolated margin) use the same mechanism but may be differentiated for priority. See D7.
+- **Base asset quantity** — buy or sell a specific amount of the base asset. An optional spend cap limits the quote amount on buys.
+- **Quote asset quantity** — buy or sell a specific quote amount. An optional sell cap limits the base amount on sells.
 
-**Order modification:** Replace via signed `ReplaceOrder` (`new_price_limit`, `new_quantity`, or `new_trigger`) or cancel via signed `CancelOrder`. Processed through the same queue as normal orders.
+Market orders use fill-or-kill by default.
 
-### 2. Time-in-Force Options
+#### Stop-Loss and Take-Profit Orders
 
-TIF controls how long an order remains active. Applies to limit orders via `time_in_force`. Market orders use `fill_or_kill` instead.
+Trigger conditions can be attached to any limit or market order to create stop-loss and take-profit orders. The order stays dormant until the mark price breaches the trigger threshold:
 
-| TIF | Variant | Behavior |
-|---|---|---|
-| **GTC** | `GoodTilCancel { post_only }` | On book until filled or cancelled. Default. |
-| **GTD** | `GoodTilDate { post_only, timestamp_ns }` | On book until `timestamp_ns`, then auto-expires. Matching engine rejects expired orders. |
-| **IOC** | `ImmediateOrCancel { fill_or_kill }` | Executes immediately; unfilled portion cancelled. With `fill_or_kill = true`, entire order must fill or is rejected (FOK). |
+- **Take-profit** — triggers when mark price rises above the specified price. Used to lock in gains on a long position or close a profitable short.
+- **Stop-loss** — triggers when mark price falls below the specified price. Used to limit losses on a long position or protect a short entry.
 
-The `post_only` flag (GTC/GTD) ensures the order rests as a maker only. If it would cross, it is rejected.
+Trigger orders are reduce-only. t+ verifies sufficient position size at submission and automatically adjusts or cancels triggers if fills reduce the position below the total triggered amount. See D7 for liquidation triggers on isolated margin positions.
 
-### 3. Order Lifecycle and State Transitions
+#### Modifying and Cancelling Orders
 
-```
-                  ┌──────────┐
-     Submit ───►  │ Pending  │  (trigger orders awaiting activation)
-                  └────┬─────┘
-                       │ trigger touched
-                       ▼
-                  ┌──────────┐
-     Submit ───►  │  Open    │  (resting on the book)
-                  └────┬─────┘
-                       │
-            ┌──────────┼──────────┐
-            ▼          ▼          ▼
-      ┌──────────┐ ┌────────┐ ┌───────────┐
-      │ Partial  │ │Completed│ │ Cancelled │
-      └────┬─────┘ └────────┘ └───────────┘
-           │
-      ┌────┴──────┐
-      ▼           ▼
-┌──────────┐ ┌────────┐
-│ Completed│ │ Closed │  (cancelled with partial fill)
-└──────────┘ └────────┘
-```
+Open orders can be replaced with a new price, quantity, or trigger via a signed replace request. Orders can also be cancelled outright. 
 
-| Status | Meaning |
-|---|---|
-| **Pending** | Trigger order awaiting price condition |
-| **Open** | Resting on the book, no fills |
-| **Partial** | Has confirmed fills; unfilled quantity remains |
-| **Completed** | Fully filled |
-| **Cancelled** | Cancelled with zero fills |
-| **Closed** | Cancelled after partial fills |
+### Matching and Finality
 
-**Fill finality:** Trades have their own lifecycle: `Pending → Confirmed` or `Pending → Rollbacked`. A pending trade means the match occurred but the clearing engine has not finalized it (solvency check pending). If solvency fails, the trade rolls back and the matching engine reverses the fill reservation.
+The t+ order book uses **price-time priority** (FIFO). When a new order crosses the book, the matching engine finds the best-priced resting order on the opposite side. Ties at the same price are broken by time — oldest order fills first. Execution occurs at the maker's price.
 
-Orders track `confirmed_filled_quantity` (finalized) and `pending_filled_quantity` (matched, awaiting confirmation) to support optimistic fill display.
+Your trade is final once it's matched in the orderbook. In rare cases, a trade can be rolled back if a post-match security check fails (e.g. a solvency breach). See D7 for margin and solvency details.
 
-### 4. Matching Engine Rules and Priority
+### Spot and Margin Trading
 
-**Price-time priority** (FIFO) order book operated within a TEE.
+Trades can be either spot or margin. 
 
-**Matching rules:**
+Whitelisted market makers can place post-only margin orders without first passing a margin check — their margin is validated at match ingestion and the trade is rolled back if they fail. If a maker exceeds an acceptable failure ratio, they are offboarded as a market maker. See D7 for margin calculations and liquidation thresholds.
 
-- **Makers must be limit orders.** The engine rejects any match where a maker is a market order.
-- **Price compatibility:** Buy taker's limit price must be >= maker's limit price; sell taker's must be <= maker's. Market orders match any resting price.
-- **Same-asset enforcement:** Taker and makers must share the same `base_asset`.
-- **Opposite-side enforcement:** Taker and makers must be on opposite sides.
-- **Overfill protection:** Cumulative filled quantity tracked per signature. Match rejected as `Overfilled` if it would exceed order total.
+### Market Specifications
 
-**Validation pipeline (clearing engine):**
+Each market defines a **tick size** (minimum price increment) and **lot size** (minimum quantity increment).
 
-1. **Time** — match within `MATCH_TTL_IN_SECS`; orders within `ORDER_TTL_IN_SECS`.
-2. **Conditions** — order enabled (not expired, trigger touched if applicable), override validity, price/side/asset consistency.
-3. **Signature** — ed25519 verified against signing payload and signer public key. Limit overrides require a separate signature.
-4. **Overfill** — cumulative fill per signature; rejected if exceeds total.
-5. **Solvency** — margin engine verifies post-trade solvency. See D7.
+### Synchronous Trades
 
-**Deduplication:** The OMS `OrderbookFilter` rejects duplicate events (creates, cancels, fills) and ensures events come from the active orderbook for each asset.
+For long-tail assets, t+ supports a synchronous trading mode. Unlike standard trades where confirmation happens offchain, synchronous trades defer finality until an associated onchain settlement transaction succeeds. If settlement fails, the trade reverts entirely.
 
-### 5. Leverage and Position Sizing
-
-t+ decouples confirmation from settlement. Orders confirm offchain in under 1ms; settlement happens asynchronously. This enables leverage: positions can exceed deposited collateral.
-
-**Trade targets** determine which balance a trade draws from:
-
-| Target | `account` | `is_spot` | Effect |
-|---|---|---|---|
-| Main account spot | 0 | true | Spot balance, main account |
-| Margin account spot | 1 | true | Spot balance, margin account |
-| Margin account margin | 1 | false | Margin balance (leveraged) |
-
-When trading on margin (`is_spot: false`), the margin engine evaluates solvency based on collateral, haircuts, and open interest. See D7 for margin calculations and liquidation thresholds.
-
-**Margin-on-match:** Margin is not locked when a maker posts a quote. The solvency check runs at match time, so capital is only evaluated on fill — not while orders rest on the book.
-
-### 6. Market Microstructure
-
-**Decimal precision:** Each book defines `book_price_decimals` (tick size) and `book_quantity_decimals` (lot size). Prices and quantities are integers scaled by these fields. Example: `book_price_decimals = 2` means price `10570025` = `105700.25`.
-
-**Mark price resolution:** The `PriceManager` resolves mark price via fallback chain:
-1. Last trade price (orderbook)
-2. Oracle price (external feeds)
-3. Impact price (VWAP from orderbook depth)
-
-If all sources are stale/unavailable, the asset enters circuit breaker — trading and liquidations blocked. State machine: `WarmingUp → Ready → Degraded → CircuitBreaker`, with hysteresis (default: 2 consecutive fresh updates to recover) to prevent flapping. Risk-increasing actions blocked in all states except `Ready`.
-
-**Staleness thresholds (defaults):**
-- Oracle: 1 hour
-- Mark (last trade): 60 seconds
-- Warmup: 3 consecutive fresh oracle updates required before trading
-
-### 7. Prioritized Maker Path
-
-- **Quotes and cancels processed in a faster queue** than taker orders. **[NEEDS SOURCE]** Gives makers priority for updating resting liquidity, reducing adverse selection.
-- **Post-only mode** (`post_only` on GTC/GTD) ensures maker orders never cross the book.
-- **Margin-on-match** — posting a quote does not lock margin. Makers can quote across many price levels without tying up capital.
-
-For long-tail assets with limited liquidity, t+ supports **synchronous trades**. Trade finality is deferred until on-chain settlement succeeds; if settlement fails, the trade reverts. Synchronous makers must maintain 98% fill success rate or be off-boarded; takers require 90%. See D9 for settlement details.
-
----
-
-## Flagged for Review
-
-- Trigger order spec contains internal implementation notes (ingestion, cancellation, cascading) that may warrant separate operator docs.
-- Sync making/taking spec partially marked "out of date" — simplest implementation is via delegated settlements. Verify which model is shipping.
+This mode has stricter reliability requirements: synchronous makers must maintain a 98% fill success rate or face off-boarding. See D9 for settlement details.
 
 ---
 

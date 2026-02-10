@@ -20,15 +20,17 @@ Fee schedule and computation reference. Maker/taker model, fee tiers, volume dis
 
 > **Trading fees are not enforced.** The clearing engine has fee/reward infrastructure (`process_net_fee` in `inventory/liquidity.rs`, protocol `fee_account`, per-user deductions, reward payouts), but `calculate_net_fee` returns `0` with a `TODO: Call Liquidity Manager to calculate fee/reward`. Rates below are **planned day-zero tiers**, subject to change.
 
+**These documents are not final - there are redacted sections that will be added before launch. Proprietary for now.**
+
 ### Fee Model
 
 Fees are deducted from trade proceeds. Rate depends on:
 
 1. **Role** — maker (providing liquidity) or taker (removing liquidity)
-2. **Volume tier** — 14-day weighted trading volume (USD)
+2. **Volume tier** — 14-day rolling trading volume (USD)
 3. **Trade type** — margin or spot
 
-t+ has both pair-specific and global volume tiers. The higher of the two governs the fee.
+t+ has a single orderbook for both spot and margin traders.
 
 ### Fee Tiers
 
@@ -40,12 +42,12 @@ Zero. May be reassessed post-launch.
 
 *Estimated day-zero tiers. Subject to change.*
 
-| Tier | 14-Day Weighted Volume (USD) | Taker Fee | Maker Fee |
-|------|------------------------------|-----------|-----------|
-| 0    | —                            | 0.025%    | 0.015%    |
-| 1    | > $5M                        | 0.020%    | 0.005%    |
-| 2    | > $10M                       | 0.015%    | 0.000%    |
-| 3    | > $25M                       | 0.008%    | 0.000%    |
+| Tier | 14-Day Rolling Volume (USD) | Taker Fee | Maker Fee | Maker Rebate |
+|------|------------------------------|-----------|-----------|--------------|
+| 0    | —                            | 0.025%    | 0.015%    | None         |
+| 1    | > $50M                       | 0.020%    | 0.005%    | None         |
+| 2    | > $100M                      | 0.015%    | 0.000%    | 25% of taker fee |
+| 3    | > $250M                      | 0.010%    | 0.000%    | 50% of taker fee |
 
 
 ### Per-Trade Calculation
@@ -56,7 +58,7 @@ net_received = fill_amount - fee_amount
 ```
 
 - `role` = maker or taker
-- `tier` = max(pair_volume_tier, global_volume_tier) from 14-day weighted volume
+- `tier` = volume tier from 14-day rolling volume
 - `trade_type` = spot (0%) or margin (see tier table)
 
 Multi-fill orders: fees computed per-fill, then summed.
@@ -81,12 +83,6 @@ Off-chain orderbook and clearing engine — no gas for order placement, cancella
 
 See D9 for settlement lifecycle. See D13 for rebalancing fees.
 
-## Flagged for Review
-
-- **Tier 1 maker fee**: Source lists `0.05%`, higher than Tier 0's `0.015%`. Likely typo — confirm.
-- **Fee implementation timeline**: `calculate_net_fee` is a TODO stub returning 0. Confirm activation schedule.
-- **Pair-specific volume tiers**: Source mentions pair-specific tiers but provides no table. Confirm whether global tiers are the only published schedule.
-- **Points multipliers**: All values described as "not finalized" in source.
 
 ---
 
