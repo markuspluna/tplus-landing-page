@@ -468,6 +468,27 @@ footer {
   color: var(--tpteam-red);
 }
 
+.list-header-item {
+  margin: 5px 0;
+  font-size: 18px;
+  font-family: 'Press+Start+2P', monospace;
+  text-transform: none;
+  font-weight: bold;
+  color: #ED1F24;
+  text-decoration: none;
+}
+
+.list-header-item::before {
+  content: "> ";
+  color: #ED1F24;
+  font-size: 1.2em;
+}
+
+.list-header-item span {
+  text-decoration: underline dotted;
+  text-underline-offset: 4px;
+}
+
 /* Arcade Components - Homepage */
 .components-container {
   display: flex;
