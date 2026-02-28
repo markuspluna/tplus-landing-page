@@ -384,6 +384,7 @@ footer {
   text-transform: none;
 }
 
+
 .list-item::before {
   content: "► ";
   color: #000;
@@ -409,6 +410,7 @@ footer {
   padding: 0;
   margin: 0;
 }
+
 
 .wrapper {
   margin: 0;
