@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>t+ Partner Market Maker Program</title>
+    <meta name="description" content="tplus partner market maker program">
+    <link rel="stylesheet" href="main.css">
+    <link rel="icon" type="image/png" href="assets/1836.webp">
+    <script src="assets/index-BH04i9vQ.js" type="module" async></script>
+    <style>
+        body {
+            padding: 0 40px 40px 40px;
+            background-color: #ffeeee;
+        }
+        p {
+            font-weight: 500;
+            letter-spacing: 0.4px;
+            font-size: 14px;
+            line-height: 1.7;
+            max-width: 900px;
+        }
+        ul li, ol li {
+            font-weight: 500;
+            font-size: 14px;
+            max-width: 900px;
+            line-height: 1.7;
+        }
+        h2, h3 {
+            font-weight: 600;
+        }
+        .tpteam-container {
+            background-color: #ffeeee;
+        }
+        .page-content h2 {
+            color: #ED1F24;
+            font-family: 'Press+Start+2P', monospace;
+            font-size: 22px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 1px rgba(204, 0, 0, 0.3);
+        }
+        .page-content h2:first-child {
+            margin-top: 0;
+        }
+        .page-content h3 {
+            font-family: 'Press+Start+2P', monospace;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+        .page-content {
+            padding: 20px;
+            max-width: 1000px;
+        }
+        ol {
+            list-style-type: decimal;
+            padding-left: 24px;
+        }
+        ol li {
+            padding-left: 4px;
+        }
+        ol li::before {
+            content: none !important;
+        }
+        blockquote {
+            border-left: 3px solid #ED1F24;
+            margin: 12px 0;
+            padding: 8px 16px;
+            background: #fff5f5;
+            font-size: 14px;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #ED1F24;
+            margin: 30px 0;
+            max-width: 1000px;
+        }
+        @media (max-width: 768px) {
+            body { padding: 0 6px 10px 6px; }
+            .tpteam-container { padding: 6px 0; }
+            .page-content { padding: 6px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <img src="assets/1836.webp" alt="Left Logo" class="banner-image left-image">
+        <div class="ticker-container">
+            <div class="ticker"> 1 ms confirmations - best possible fills VERIFIABLE - native privacy - every asset - every defi app -  </div>
+            <div class="ticker"> 1 ms confirmations - best possible fills VERIFIABLE - native privacy - every asset - every defi app -  </div>
+            <div class="ticker"> 1 ms confirmations - best possible fills VERIFIABLE - native privacy - every asset - every defi app -  </div>
+            <div class="ticker"> 1 ms confirmations - best possible fills VERIFIABLE - native privacy - every asset - every defi app -  </div>
+        </div>
+        <img src="assets/1836.webp" alt="Right Logo" class="banner-image right-image">
+    </div>
+
+    <div class="tpteam-container">
+        <div class="page-content">
+            <h2>What We Ask</h2>
+
+            <h3>Quoting</h3>
+            <ul>
+                <li>Maintain active buy and sell quotes within 10 basis points of the average bid and ask across your chosen source exchange for the top 15 trading pairs by volume (performance measured by comparing your top-of-book quotes against exchange average).</li>
+                <li>You can set your own quote size per level (for example, $100K increments), and we'll measure performance by checking that your bids and asks stay within 10 basis points of the reference prices at each level of size. For clarity, if your quote size is $100K per level, your first $100K of bid and ask liquidity should be within 10 bps of the top-of-book price, the next $100K within 10 bps of the DEX price one level deeper, and so on for each subsequent level.</li>
+                <li>Compliance will be determined based on a clear lack of effort to meet these spreads, this would mean being out of bounds more than twenty percent of the time.</li>
+            </ul>
+
+            <h3>Uptime and Depth</h3>
+            <ul>
+                <li>Maintain 95% minimum uptime on market making activities.</li>
+                <li>Maintain "reasonable" depth, roughly in line with what's available for that pair on Hyperliquid and other leading decentralized CLOBs (currently Lighter).</li>
+                <li>You're not required to post excessive size, but top pairs should maintain at least $500K of total depth on both sides of the book within 20 bps of midprice. For smaller pairs, depth targets can scale down proportionally. The intent is to ensure traders can execute reasonable orders (&lt;250K) with minimal slippage.
+                    <ul>
+                        <li>As we don't check margin on post only orders, quoting is very capital efficient</li>
+                    </ul>
+                </li>
+                <li>We will not be tracking your trading volume as a performance metric, we are looking for quality quoting and book depth. The goal is liquidity bootstrapping for day one, not volume farming.</li>
+            </ul>
+
+            <h3>Fees and Incentives</h3>
+            <ul>
+                <li>Partner market makers will waive any integration fee they typically charge</li>
+                <li>Partner makers will waive any market making fees for the first 90 days after launch.</li>
+                <li>After the first 90 days we can discuss a long-term market making fee structure.</li>
+            </ul>
+
+            <h3>Deposit &amp; Withdraw Vault Funding</h3>
+            <ul>
+                <li>For launch, we're asking for $1M in vault deposits for USD equivalents (USDC or USDT).
+                    <ul>
+                        <li>These balances are standard deposits and can be margined against</li>
+                    </ul>
+                </li>
+                <li>Day zero deposits will earn yield and be eligible for higher points rewards.
+                    <ul>
+                        <li>Yield should be on-par with the top end of onchain yields
+                            <ul>
+                                <li>15%+ for USD</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>Partner market makers are expected to commit to providing this initial liquidity to enable smooth deposits, withdrawals, and settlements from day one.
+                    <ul>
+                        <li>We will be sourcing significantly more initial deposits from other partners, so you should not expect liquidity issues from being our primary source of deposits.</li>
+                    </ul>
+                </li>
+                <li>These vault funds will serve as part of the initial inventory pool for settlement flow.</li>
+                <li>We'll provide vault addresses and funding windows before mainnet goes live.</li>
+            </ul>
+
+            <h3>Source Exchange Coverage</h3>
+            <ul>
+                <li>We aim for coverage across the top 5 CEXs by volume (Binance, OKX, Bybit, etc.) plus major perp DEXs (Hyperliquid, Lighter, etc.).</li>
+                <li>At least one participating partner MM will represent pricing from each of these venues to keep the Tplus quotes in line with global orderbooks.</li>
+            </ul>
+
+            <hr>
+
+            <h2>What We Offer</h2>
+            <p>Partner Market Maker Status! PMM status comes with exclusive access to the following features:</p>
+            <ul>
+                <li><strong>Cross Margining</strong>: We offer position cross margining support for both major CEXs and Hyperliquid.</li>
+                <li><strong>Margin Free Post Only Orders</strong>: Post only orders placed on Tplus by Partner Market Makers will bypass margin checks improving quoting capital efficiency.</li>
+                <li><strong>Onchain Settlements</strong>: PMM's are whitelisted to execute exposure settlements into external chain liquidity.</li>
+                <li><strong>OMS Bypass</strong>: Direct TLS websocket to the orderbook for post-only orders and cancels. This is equivalent to a taker speed bump (taker orders do not have an OMS bypass).</li>
+            </ul>
+
+            <p>In addition, we want to make your integration as easy as possible. During the integration period (mid-way through closed alpha) we will provide the following resources:</p>
+            <ul>
+                <li><strong>Sample Algos</strong>: We will provide sample algos custom designed for Tplus so that you can have a baseline to create your integration off of.</li>
+                <li><strong>Direct Team Access</strong>: The integration period of our alpha exists to provide PMMs direct access to our team while they build out their integration (aka we won't be too busy to respond quickly).</li>
+            </ul>
+
+            <p>Finally, if you haven't already looked — here are documents outlining our risk and fee/rate systems:</p>
+            <div class="console-button-container">
+                <a href="trading-fees.html?from=onepage" class="console-button">&gt; Trading Fees &amp; Rates</a>
+            </div>
+            <div class="console-button-container">
+                <a href="risk-controls.html?from=onepage" class="console-button">&gt; Risk Controls</a>
+            </div>
+
+            <hr>
+
+            <div class="console-button-container">
+                <a href="javascript:history.back()" class="console-button">&gt; Back</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Password overlay -->
+    <div style="display: none;">
+        <style>
+            #tplus-overlay {
+                position: fixed;
+                top: 0; left: 0;
+                width: 100%; height: 100%;
+                background: #000;
+                z-index: 9999;
+                font-family: monospace;
+                display: flex;
+                justify-content: center;
+                padding-top: 10vh;
+                color: #ff0000;
+                overflow: auto;
+            }
+            #tplus-terminal {
+                width: 100%;
+                max-width: 800px;
+                font-size: 16px;
+            }
+            #tplus-password {
+                padding: 20px;
+            }
+            #tplus-prompt {
+                color: #ffff00;
+                margin: 15px 0;
+            }
+            #tplus-input-line {
+                display: flex;
+                align-items: flex-end;
+                margin-top: 15px;
+            }
+            #tplus-input {
+                background: transparent;
+                border: none;
+                outline: none;
+                color: #ff0000;
+                font-family: monospace;
+                font-size: 20px;
+                width: 80%;
+                margin-left: 5px;
+            }
+            #tplus-cursor {
+                width: 10px;
+                height: 2px;
+                background: #ff0000;
+                display: inline-block;
+                animation: blink 1s step-end infinite;
+            }
+            #tplus-surprise {
+                display: none;
+                padding: 20px;
+            }
+            #tplus-ascii {
+                color: #ffff00;
+                font-size: 6px;
+                line-height: 1;
+                white-space: pre;
+                text-align: center;
+                margin: 20px 0;
+            }
+            #tplus-welcome {
+                margin: 20px 0;
+            }
+            #tplus-continue {
+                color: #ffff00;
+                margin-top: 20px;
+                animation: blink 1s step-end infinite;
+                cursor: pointer;
+            }
+            .fade-out {
+                animation: fade 1s forwards;
+            }
+            @keyframes fade {
+                to { opacity: 0; visibility: hidden; }
+            }
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-10px); }
+                75% { transform: translateX(10px); }
+            }
+        </style>
+
+        <div id="tplus-overlay">
+            <div id="tplus-terminal">
+                <div id="tplus-password">
+                    <div>user@t-plus:~$ ./pmm-program.sh</div>
+                    <div><b>t+ partner market maker program</b></div>
+
+                    <div id="tplus-prompt">PASSWORD REQUIRED<br>
+                    Please enter the last two paragraphs of Dark Pools by Scott Patterson</div>
+
+                    <div id="tplus-input-line">
+                        &gt; <input type="text" id="tplus-input">
+                        <span id="tplus-cursor"></span>
+                    </div>
+                </div>
+
+                <div id="tplus-surprise">
+                    <div>user@t-plus:~$ ./pmm-program.sh</div>
+                    <div id="tplus-welcome">Welcome to perfect markets.</div>
+<pre id="tplus-ascii">****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************
+********************************************+===----===+********************************************
+************************************+=-::::::::::::::::::::::-=+************************************
+********************************+-::::::::::::::::::::::::::::::::-+********************************
+*****************************=::::::::::::::::::::::::::::::::::::::::=+****************************
+**************************+-::::::::::::::::::::::::::::::::::::::::::::-+**************************
+***********************+=::::::::::::::::::::::::::::::::::::::::::::::::::=+***********************
+**********************=::::::::::::::::::::::::::::::::::::::::::::::::::::::=**********************
+********************=::::::::::::::::::::::::::::::::::::::::::::::::::::::::::=********************
+******************+-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::+******************
+*****************=:::::::::::=@@@@@%+::::::::::::::::::::::::::=%@@@@@=:::::::::::=*****************
+****************=::::::::::::=@@@@@%+::::::::::::::::::::::::::=%@@@@@=::::::::::::-****************
+***************-:::::::::::::=@@@@@%+::::::::::::::::::::::::::=%@@@@@=:::::::::::::-***************
+**************-::::::::::::::=@@@@@%+::::::::::::::::::::::::::=%@@@@@=::::::::::::::-**************
+*************-:::::::::::::::=@@@@@%+::::::::::::::::::::::::::+%@@@@@=:::::::::::::::-*************
+************=::::::::::::::::=@@@@@%+::::::::::::::::::::::::::=%@@@@@=::::::::::::::::=************
+***********+::::::=%%%%%%%%%%@@@@@@@@@@@@@@@@@@=::::-%%%%%%%%%%@@@@@@@@@@@@@@@@@%=::::::+***********
+***********-::::::=@@@@@@@@@@@@@@@@@@@@@@@@@@@@=::::-@@@@@@@@@@@@@@@@@@@@@@@@@@@@=::::::-***********
+**********+-::::::=@@@@@@@@@@@@@@@@@@@@@@@@@@@@=::::-@@@@@@@@@@@@@@@@@@@@@@@@@@@@=:::::::+**********
+**********=:::::::=#%%%%%%%%%%@@@@@@%%%%%%%%%%%-::::-%%%%%%%%%%%@@@@@@%##########=:::::::=**********
+**********-::::::::::::::::::=@@@@@@+::::::::::::::::::::::::::=%@@@@@+::::::::::::::::::-**********
+*********+-::::::::::::::::::=@@@@@@+::::::::::::::::::::::::::=%@@@@@+::::::::::::::::::-+*********
+*********+:::::::::::::::::::=@@@@@@+::::::::::::::::::::::::::=%@@@@@+:::::::::::::::::::+*********
+*********+:::::::::::::::::::=@@@@@@+::::::::::::::::::::::::::=%@@@@@+:::::::::::::::::::+*********
+*********+:::::::::::::::::::=@@@@@@+::::::::::::::::::::::::::=%@@@@@+:::::::::::::::::::+*********
+*********+-::::::::::::::::::=%@@@@@+::::::::::::::::::::::::::=%@@@@@+::::::::::::::::::-+*********
+**********-::::::::::::::::::=%@@@@@+::::::::::::::::::::::::::::::::::::::::::::::::::::-**********
+**********=::::::::::::::::::-#@@@@@*::::::::::::::::::::::::::::::::::::::::::::::::::::=**********
+**********+-::::::::::::::::::*@@@@@#-:::::::::::::::::::::::::::::::::::::::::::::::::::+**********
+***********-::::::::::::::::::-%@@@@@*-:::::::::::::::::::::::+++++++:::::::::::::::::::-***********
+***********+:::::::::::::::::::+@@@@@@#-:::::::::::::::::::::#@@@@@@*:::::::::::::::::::+***********
+************=:::::::::::::::::::+@@@@@@@*::::::::::::::::::+@@@@@@@*:::::::::::::::::::=************
+*************-:::::::::::::::::::=@@@@@@@@#-::::::::::::-#@@@@@@@@+:::::::::::::::::::-*************
+**************-:::::::::::::::::::-#@@@@@@@@@%#*===+*%%@@@@@@@@@#-:::::::::::::::::::-**************
+***************-::::::::::::::::::::-%@@@@@@@@@@@@@@@@@@@@@@@@%=::::::::::::::::::::-***************
+****************-::::::::::::::::::::::+@@@@@@@@@@@@@@@@@@@@*::::::::::::::::::::::-****************
+*****************=::::::::::::::::::::::::-*%@@@@@@@@@@%*=::::::::::::::::::::::::=*****************
+******************+-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::+******************
+********************=::::::::::::::::::::::::::::::::::::::::::::::::::::::::::=********************
+**********************-::::::::::::::::::::::::::::::::::::::::::::::::::::::-**********************
+***********************+=::::::::::::::::::::::::::::::::::::::::::::::::::-+***********************
+**************************=::::::::::::::::::::::::::::::::::::::::::::::=**************************
+****************************+=::::::::::::::::::::::::::::::::::::::::=+****************************
+********************************+-::::::::::::::::::::::::::::::::-+********************************
+************************************+=-:::::::::::::::::::::::=+************************************
+*******************************************++==------==++*******************************************
+****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************</pre>
+
+                    <div id="tplus-continue">Press enter to continue...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Skip password if coming from onepage
+            if (new URLSearchParams(window.location.search).get('from') === 'onepage') {
+                return;
+            }
+
+            var overlay = document.getElementById('tplus-overlay');
+            if (!overlay) return;
+
+            var passwordScreen = document.getElementById('tplus-password');
+            var surpriseScreen = document.getElementById('tplus-surprise');
+            var inputField = document.getElementById('tplus-input');
+
+            if (overlay.parentElement) {
+                overlay.parentElement.style.display = 'block';
+            }
+
+            if (inputField) {
+                inputField.focus();
+                overlay.addEventListener('click', function() {
+                    if (passwordScreen.style.display !== 'none') {
+                        inputField.focus();
+                    }
+                });
+            }
+
+            function showSurprise() {
+                passwordScreen.style.display = 'none';
+                surpriseScreen.style.display = 'block';
+                surpriseScreen.dataset.justOpened = 'true';
+                setTimeout(function() {
+                    surpriseScreen.dataset.justOpened = 'false';
+                }, 500);
+            }
+
+            function removeOverlay() {
+                overlay.classList.add('fade-out');
+                setTimeout(function() {
+                    if (overlay.parentNode) {
+                        overlay.parentNode.removeChild(overlay);
+                    }
+                }, 1000);
+            }
+
+            inputField.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    var correctPassword = 'It seemed a long shot. Then again, who would have thought a high-school dropout working out of a cluttered office on 50 Broad could lay low the most powerful forces in the stock market? One thing was clear-the market had to change. It was spinning out of control, plagued by costly glitches, manipulative activity, and plunging investor confidence. If nothing was done to fix it, next time the devastation could be irreversible.';
+
+                    function normalizeText(text) {
+                        return text.toLowerCase().replace(/[^\w]/g, '');
+                    }
+
+                    var userInput = normalizeText(inputField.value);
+                    var normalizedPassword = normalizeText(correctPassword);
+
+                    if (userInput === normalizedPassword) {
+                        showSurprise();
+                    } else {
+                        inputField.value = '';
+                        inputField.style.animation = 'shake 0.5s';
+                        setTimeout(function() {
+                            inputField.style.animation = '';
+                        }, 500);
+                    }
+                }
+            });
+
+            document.addEventListener('keydown', function(event) {
+                if (passwordScreen.style.display === 'none' && event.key === 'Enter' && surpriseScreen.dataset.justOpened !== 'true') {
+                    removeOverlay();
+                }
+            });
+
+            document.getElementById('tplus-continue').addEventListener('click', function() {
+                removeOverlay();
+            });
+        })();
+    </script>
+</body>
+</html>

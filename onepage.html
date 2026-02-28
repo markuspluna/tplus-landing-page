@@ -102,74 +102,6 @@
             max-width: 1000px;
         }
 
-        /* Modal styles */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.8);
-            z-index: 1000;
-            overflow-y: auto;
-            padding: 40px 20px;
-        }
-        .modal-overlay.active {
-            display: flex;
-            justify-content: center;
-        }
-        .modal-panel {
-            background: #ffeeee;
-            max-width: 1000px;
-            width: 100%;
-            padding: 30px;
-            position: relative;
-            border: 3px solid #ED1F24;
-            margin: auto;
-        }
-        .modal-panel .close-btn {
-            position: sticky;
-            top: 0;
-            float: right;
-            font-family: 'Press Start 2P', monospace;
-            font-size: 20px;
-            background: none;
-            border: none;
-            color: #ED1F24;
-            cursor: pointer;
-            z-index: 1001;
-        }
-        .modal-panel h2 {
-            color: #ED1F24;
-            font-family: 'Press+Start+2P', monospace;
-            font-size: 22px;
-            margin-top: 0;
-            margin-bottom: 15px;
-            text-shadow: 0 0 1px rgba(204, 0, 0, 0.3);
-        }
-        .modal-panel h3 {
-            font-family: 'Press+Start+2P', monospace;
-            font-size: 14px;
-            margin-top: 20px;
-        }
-        .modal-panel p, .modal-panel li {
-            font-size: 14px;
-            line-height: 1.7;
-            max-width: 900px;
-        }
-        table {
-            border-collapse: collapse;
-            margin: 12px 0;
-            font-size: 14px;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 8px 14px;
-            text-align: left;
-        }
-        th {
-            background: #ED1F24;
-            color: #fff;
-            font-weight: 600;
-        }
         @media (max-width: 768px) {
             body { padding: 0 6px 10px 6px; }
             .tpteam-container { padding: 6px 0; }
@@ -320,7 +252,7 @@
             </ul>
             <p>A more detailed overview of our risk and liquidation mechanisms:</p>
             <div class="console-button-container">
-                <a href="#" class="console-button" id="risk-controls-btn">&gt; Risk Controls</a>
+                <a href="risk-controls.html?from=onepage" class="console-button">&gt; Risk Controls</a>
             </div>
             <p>In addition - we did a quick thought experiment of how Tplus would have reacted to the 10/10 liquidation cascade which you may find interesting:</p>
             <p><em>Note that our timeline of events is based on what we observed, and thus an educated guess</em></p>
@@ -436,7 +368,10 @@
             </ol>
             <!-- TRADING FEES BUTTON -->
             <div class="console-button-container">
-                <a href="#" class="console-button" id="trading-fees-btn">&gt; Trading Fees &amp; Rates</a>
+                <a href="trading-fees.html?from=onepage" class="console-button">&gt; Trading Fees &amp; Rates</a>
+            </div>
+            <div class="console-button-container">
+                <a href="pmm-program.html?from=onepage" class="console-button">&gt; Partner Market Maker Program</a>
             </div>
         </div>
 
@@ -447,175 +382,6 @@
         </div>
     </div>
 
-    <!-- RISK CONTROLS MODAL -->
-    <div class="modal-overlay" id="risk-controls-modal">
-        <div class="modal-panel">
-            <button class="close-btn" id="close-risk">&times;</button>
-            <h2>Risk Controls</h2>
-            <p>Brief overview of risk controls you should be aware of. Note that these are subject to change as we go into launch.</p>
-            <p>Interest rates are of course an important piece here - see <a href="#" id="fees-link-from-risk">Trading Fees &amp; Rates</a>.</p>
-
-            <h3>Open Interest Caps</h3>
-            <p>Tplus enforces both a total open interest cap and a spot margined open interest cap on pairs. Where:</p>
-            <ul>
-                <li>OI per market = <code>max(margined_liab, margined_credits)*price</code>
-                    <ul>
-                        <li>USD-Notional Cap <code>OI*Price</code></li>
-                        <li>Once the cap is hit: leveraged trades are forced to be reduce-only, spot trades are allowed, post-only leveraged orders are allowed from PMMs</li>
-                    </ul>
-                </li>
-                <li>Spot-margin OI (long/short) = the positive side of:
-                    <ul>
-                        <li>long-spot-OI(Asset) = <code>margined_credits - margined_liabilities</code> (Asset-based cap, once hit leveraged longs limited to reduce-only)</li>
-                        <li>short-spot-OI(Asset) = <code>margined_liabilities - margined_credits</code> (Asset-based cap, once hit leveraged shorts limited to reduce-only)</li>
-                    </ul>
-                </li>
-                <li>Note that spot-margin OI cannot be positive for both sides of a pair</li>
-            </ul>
-
-            <h3>Collateral Caps</h3>
-            <p>Tplus caps the global amount of an asset that can be posted as margin collateral.</p>
-
-            <h3>Deposit Caps</h3>
-            <p>Tplus considers many assets as fungible. For instance, USDC and USDT are both considered "USD", WETH deposited from Optimism, Arbitrum, Mainnet, etc is all considered ETH.</p>
-            <p>We enforce caps on the global amount of specific underlying tokens that can be deposited and still considered fungible. Caps are enforced on both overall amounts and deposits over a specific time frame.</p>
-            <p>EX: we may only allow a total of 800m USDT to be deposited and considered fungible. At the same time, only 100m USDT deposits may be allowed per day.</p>
-            <p>If a user deposits an asset that is "capped" the deposit is still processed, however instead of crediting the users balance of the fungible asset, their balance of the specific underlying asset is credited.</p>
-            <p>This mechanism limits custodian risk (custodians being chains, and asset issuers in this case).</p>
-
-            <h3>Maintenance Margin Requirements</h3>
-            <p>Fairly standard, you're assigned a maintenance margin requirement based on the makeup of your collateral. The relative risk of both your margin positions and posted collateral affects your maintenance margin requirement. If you fall below your maintenance margin requirement your account is liquidated.</p>
-<pre>let account_surplus = sum(spot_holdings_risk_adjusted_notional)
-  + sum(margin_credits_risk_adjusted_notional)
-  - sum(margin_liabilities_risk_adjusted_notional);
-
-// Where
-let collateral_asset_price = max(last_traded_price, oracle_price);
-let liability_asset_price = min(last_traded_price, oracle_price);
-
-let spot_holdings_risk_adjusted_notional =
-  collateral_asset_price * balance * asset_collateral_factor;
-
-let margin_credits_risk_adjusted_notional =
-  collateral_asset_price * margin_credits * asset_collateral_factor
-  - position_margin;
-
-let margin_liabilities_risk_adjusted_notional =
-  liability_asset_price * margin_liabilities / asset_liability_factor
-  + position_margin;</pre>
-
-            <h3>Initial Margin Requirements</h3>
-            <p>Initial margin requirements are calculated effectively the same way as maintenance margin requirement, it will be slightly higher of course.</p>
-            <p>The main difference between Tplus and other platforms is Tplus increases initial margin requirements for trades that increase skew if skew is significantly elevated. This is based on how far we are from spot OI caps.</p>
-            <p>Additionally - rather than using optimistic oracle price for collateral or min for liabilities, we use pessimistic oracle prices for IM checks. IM is checked whenever a user is increasing their leverage.</p>
-
-            <h3>Liquidations, ADL, and Insurance</h3>
-            <p>If your equity balance falls below your maintenance margin requirement your account is liquidated.</p>
-
-            <p><strong>Stage 1 — Orderbook Deleverage</strong></p>
-            <p>The system first attempts to close all of the account's margin positions via IOC limit orders in the orderbook with conservative slippage limits.</p>
-
-            <p><strong>Stage 2 — Backstop AVS Takeover</strong></p>
-            <p>If the account is still insolvent after the initial deleverage, its remaining positions are transferred to a new Backstop Account controlled by the Eigenlayer Backstop AVS. The AVS is provisionally credited with ETH collateral to bring the backstop account to ~2% above maintenance margin. The AVS then runs a clearing algorithm that sells position clips over time into the orderbook using conservative slippage limits. If positions clear profitably, the provisional credit is deleted and no slashing occurs.</p>
-            <p>If the AVS accumulates actual debt (sells ETH at a loss to cover shortfalls), that debt is tracked and eventually triggers Eigenlayer slashing to recoup the losses. This deferred model minimizes unnecessary on-chain operations.</p>
-
-            <p><strong>Stage 3 — Auto-Deleveraging (ADL)</strong></p>
-            <p>If the backstop account falls below maintenance margin despite the provisional collateral, the AVS triggers an ADL. ADL forcibly closes positions of profitable counterside traders to restore backstop solvency:</p>
-            <ul>
-                <li>Counterside positions are ranked by ADL score = <code>account_leverage × position_return</code>. Only positions with positive scores (profitable traders) are eligible.</li>
-                <li>The system selects the market with the largest backstop exposure first and works through highest-scored positions until either the <code>max_adl</code> limit per market is reached or the backstop account is restored to 2% above maintenance margin.</li>
-                <li>ADL executions occur at the worse-for-backstop price: <code>min(oracle, mark)</code> for short positions, <code>max(oracle, mark)</code> for long positions.</li>
-                <li>If the backstop account becomes insolvent again after an ADL, the process repeats: the AVS is credited additional provisional ETH and attempts to continue clearing.</li>
-            </ul>
-            <p>Once all positions are cleared, any remaining collateral in the backstop account is converted to ETH and returned to AVS restakers.</p>
-            <p>In this way the Backstop AVS acts as an insurance fund — it takes over delinquent accounts and clears their debt, slashing restaked ETH only when actual losses are incurred.</p>
-
-            <h3>Isolated Margin Accounts &amp; Sub Accounts</h3>
-            <p>We will have sub-accounts. They can be either cross-margin or isolated. Certain assets are only allowed to be traded with leverage through an isolated-margin sub-account. These sub-account types can only have USD and the isolated asset deposited into them, and can only trade the isolated assets.</p>
-            <p>Most mid-cap and yield bearing tokens will be isolated.</p>
-
-            <h3>Credit Limits</h3>
-            <p>Accounts that are cross-margined with external centralized venues have credit limits on the amount of collateral they can post from their cross-margined positions. These limits are governed by custodian risk, trader credit worthiness, and the amount of control our margin engine has over the account.</p>
-            <p>All parties cross-margined with centralized venues on Tplus must be KYB'd and have cross-margining agreements with the Tplus foundation.</p>
-            <p>We also support cross-margining with external decentralized venues like Hyperliquid. Cross-margining in those cases involves setting up a multisig where a TEE running a cross-margin manager holds a majority of the key shards.</p>
-        </div>
-    </div>
-
-    <!-- TRADING FEES MODAL -->
-    <div class="modal-overlay" id="trading-fees-modal">
-        <div class="modal-panel">
-            <button class="close-btn" id="close-fees">&times;</button>
-            <h2>Trading Fees &amp; Rates</h2>
-            <p>Brief overview of fees and interest rates you should be aware of. Note that these are subject to change as we go into launch.</p>
-
-            <h3>Spot Trading Fees</h3>
-            <p>Initial spot trading fees are zero. These may be re-assessed at a later time. But in general spot traders are an important source of both deposit and book liquidity for t+ so we want to ensure we're an attractive venue for them.</p>
-
-            <h3>Margin Trading Fees</h3>
-            <p><em>Below are estimated day-zero fee tiers. They are subject to change.</em></p>
-            <table>
-                <thead>
-                    <tr><th>Tier</th><th>14-day Rolling Volume (USD)</th><th>Taker Fee</th><th>Maker Fee</th><th>Maker Rebate</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>0</td><td>-</td><td>0.025%</td><td>0.015%</td><td>None</td></tr>
-                    <tr><td>1</td><td>&gt;50m</td><td>0.02%</td><td>0.005%</td><td>None</td></tr>
-                    <tr><td>2</td><td>&gt;100m</td><td>0.015%</td><td>0.00%</td><td>25% of taker fee</td></tr>
-                    <tr><td>3</td><td>&gt;250m</td><td>0.01%</td><td>0.00%</td><td>50% of taker fee</td></tr>
-                </tbody>
-            </table>
-
-            <h3>Utilization-Based Borrow Rates</h3>
-            <p>T+ charges margin traders interest based on the utilization rate of the asset they're borrowing.</p>
-<pre>utilization = liabilities / (min(deposits, spot_oi_cap) + liabilities)</pre>
-            <p>As the utilization rate increases, the borrow rate also increases. Interest is calculated using a kink-based curve similar to those used by lending protocols like Aave. Borrowers pay interest to all spot holders of the borrowed asset. For USD utilization is tracked per-market.</p>
-
-            <h3>Funding Rates</h3>
-            <p>Funding rates are calculated based on skew and mark price deviations.</p>
-<pre>Funding Rate (F) = clamp(
-  K * (Average Skew (S) + clamp(-skew, -skew_cliff, skew_cliff))^2 +
-  Average Premium Index (P) +
-    clamp(base_rate - premium, -0.0005, 0.0005),
-  fr_max, -fr_max);
-
-// Where
-K = skew_factor; // risk-council governed parameter
-Skew = (long_spot_oi_usd - short_spot_oi_usd) / cap_usd;
-Premium = impact_price_difference / oracle_price;
-impact_price_difference =
-  max(impact_bid_px - oracle_px, 0)
-  - max(oracle_px - impact_ask_px, 0);</pre>
-            <p>Funding is charged and re-calculated every hour using average premium and skew.</p>
-
-            <h3>So how much will it cost to long or short on t+?</h3>
-            <p>It's hard to predict of course, but we can infer a few things:</p>
-            <ol>
-                <li>Funding+interest on pairs that are also listed on Hyperliquid will converge to Hyperliquid's funding rate. We have a very deep cross-margining integration with Hyperliquid so basis traders will push rates in line.</li>
-                <li>Funding will typically not exceed the global USD yield + the underlying's borrow rate - the underlying's yield. If it does it becomes profitable for USD holders to purchase the underlying and use it as collateral to short the pair (an internal basis trade).</li>
-                <li>Funding will typically remain above the underlying's borrow rate - otherwise spot holders will sell their spot position and margin long instead.</li>
-            </ol>
-
-            <h3>How much will global USD yield be?</h3>
-            <p>Global USD yield will be an average of profitable basis trades and leveraging yield bearing tokens.</p>
-            <p>Consider the following scenario:</p>
-            <ul>
-                <li>sUSDE yield is 11% (100 mil spot OI cap)</li>
-                <li>pt-USD-something yield is 18% (50 mil spot OI cap)</li>
-                <li>BTC funding on Hyperliquid is 15% annualized (825M Derivative OI, 75M spot-margin long OI)</li>
-                <li>ETH funding on Hyperliquid is 20% annualized (1,225M Derivative OI, 125M spot-margin long OI)</li>
-                <li>500M in USD held, 100M in USD deposits</li>
-            </ul>
-            <p>USD depositors are paid: 0.11*95M + 0.18*47.5M + 0.025*900M + 0.025*1350M = 59.5M/500M = <strong>11.9% APY</strong></p>
-
-            <h3>How about yield on majors?</h3>
-            <p>Consider wstETH loops: wstETH yield 2.5% (500m spot OI cap), 700M of ETH deposited.</p>
-            <p>ETH depositors are paid: .023*475M + .03*1350M = 51.425M/700M = <strong>7.3%</strong></p>
-
-            <h3>Rebalancing Fees</h3>
-            <p>t+ considers many assets as fungible. We want to maintain a balanced distribution of fungible asset underlyings across different chains and issuers based on liquidity demands.</p>
-            <p>Actions that cause an underlying token to be underweight are charged a fee up to 2.5%. Actions that bring token deposits back up to target levels are paid a reward up to 2.5%.</p>
-        </div>
-    </div>
 
     <!-- Risk Image Modal -->
     <div class="modal" id="risk-image-modal">
@@ -636,42 +402,6 @@ impact_price_difference =
                 });
                 riskImgModal.addEventListener('click', function() {
                     riskImgModal.style.display = 'none';
-                });
-            }
-
-            function setupModal(btnId, modalId, closeId) {
-                var btn = document.getElementById(btnId);
-                var modal = document.getElementById(modalId);
-                var closeBtn = document.getElementById(closeId);
-                if (!btn || !modal || !closeBtn) return;
-
-                btn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    modal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                });
-                closeBtn.addEventListener('click', function() {
-                    modal.classList.remove('active');
-                    document.body.style.overflow = '';
-                });
-                modal.addEventListener('click', function(e) {
-                    if (e.target === modal) {
-                        modal.classList.remove('active');
-                        document.body.style.overflow = '';
-                    }
-                });
-            }
-
-            setupModal('risk-controls-btn', 'risk-controls-modal', 'close-risk');
-            setupModal('trading-fees-btn', 'trading-fees-modal', 'close-fees');
-
-            // Link from risk modal to fees modal
-            var feesLink = document.getElementById('fees-link-from-risk');
-            if (feesLink) {
-                feesLink.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    document.getElementById('risk-controls-modal').classList.remove('active');
-                    document.getElementById('trading-fees-modal').classList.add('active');
                 });
             }
         });
@@ -767,7 +497,7 @@ impact_price_difference =
                     <div><b>t+ one page</b></div>
 
                     <div id="tplus-prompt">PASSWORD REQUIRED<br>
-                    Please enter the last paragraph of Dark Pools by Scott Patterson</div>
+                    Please enter the last two paragraphs of Dark Pools by Scott Patterson</div>
 
                     <div id="tplus-input-line">
                         &gt; <input type="text" id="tplus-input">
@@ -884,13 +614,10 @@ impact_price_difference =
             inputField.addEventListener('keydown', function(event) {
                 if (event.key === 'Enter') {
                     event.preventDefault();
-                    var correctPassword = 'The machines had won.';
+                    var correctPassword = 'It seemed a long shot. Then again, who would have thought a high-school dropout working out of a cluttered office on 50 Broad could lay low the most powerful forces in the stock market? One thing was clear-the market had to change. It was spinning out of control, plagued by costly glitches, manipulative activity, and plunging investor confidence. If nothing was done to fix it, next time the devastation could be irreversible.';
 
                     function normalizeText(text) {
-                        return text.toLowerCase()
-                                  .replace(/[^\w\s]/g, '')
-                                  .replace(/\s+/g, ' ')
-                                  .trim();
+                        return text.toLowerCase().replace(/[^\w]/g, '');
                     }
 
                     var userInput = normalizeText(inputField.value);

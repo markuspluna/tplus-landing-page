@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>t+ Risk Controls</title>
+    <meta name="description" content="tplus risk controls">
+    <link rel="stylesheet" href="main.css">
+    <link rel="icon" type="image/png" href="assets/1836.webp">
+    <script src="assets/index-BH04i9vQ.js" type="module" async></script>
+    <style>
+        body {
+            padding: 0 40px 40px 40px;
+            background-color: #ffeeee;
+        }
+        p {
+            font-weight: 500;
+            letter-spacing: 0.4px;
+            font-size: 14px;
+            line-height: 1.7;
+            max-width: 900px;
+        }
+        ul li, ol li {
+            font-weight: 500;
+            font-size: 14px;
+            max-width: 900px;
+            line-height: 1.7;
+        }
+        h2, h3 {
+            font-weight: 600;
+        }
+        .tpteam-container {
+            background-color: #ffeeee;
+        }
+        .page-content h2 {
+            color: #ED1F24;
+            font-family: 'Press+Start+2P', monospace;
+            font-size: 22px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-shadow: 0 0 1px rgba(204, 0, 0, 0.3);
+        }
+        .page-content h3 {
+            font-family: 'Press+Start+2P', monospace;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+        .page-content {
+            padding: 20px;
+            max-width: 1000px;
+        }
+        ol {
+            list-style-type: decimal;
+            padding-left: 24px;
+        }
+        ol li {
+            padding-left: 4px;
+        }
+        ol li::before {
+            content: none !important;
+        }
+        blockquote {
+            border-left: 3px solid #ED1F24;
+            margin: 12px 0;
+            padding: 8px 16px;
+            background: #fff5f5;
+            font-size: 14px;
+        }
+        pre {
+            background: #1a1a1a;
+            color: #0f0;
+            padding: 16px;
+            overflow-x: auto;
+            font-size: 13px;
+            max-width: 900px;
+        }
+        code {
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #ED1F24;
+            margin: 30px 0;
+            max-width: 1000px;
+        }
+        @media (max-width: 768px) {
+            body { padding: 0 6px 10px 6px; }
+            .tpteam-container { padding: 6px 0; }
+            .page-content { padding: 6px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <img src="assets/1836.webp" alt="Left Logo" class="banner-image left-image">
+        <div class="ticker-container">
+            <div class="ticker"> 1 ms confirmations - best possible fills VERIFIABLE - native privacy - every asset - every defi app -  </div>
+            <div class="ticker"> 1 ms confirmations - best possible fills VERIFIABLE - native privacy - every asset - every defi app -  </div>
+            <div class="ticker"> 1 ms confirmations - best possible fills VERIFIABLE - native privacy - every asset - every defi app -  </div>
+            <div class="ticker"> 1 ms confirmations - best possible fills VERIFIABLE - native privacy - every asset - every defi app -  </div>
+        </div>
+        <img src="assets/1836.webp" alt="Right Logo" class="banner-image right-image">
+    </div>
+
+    <div class="tpteam-container">
+        <div class="page-content">
+            <h2>Risk Controls</h2>
+            <p>Brief overview of risk controls you should be aware of. Note that these are subject to change as we go into launch.</p>
+            <p>Interest rates are of course an important piece here - see <a href="trading-fees.html?from=onepage">Trading Fees &amp; Rates</a>.</p>
+
+            <h3>Open Interest Caps</h3>
+            <p>Tplus enforces both a total open interest cap and a spot margined open interest cap on pairs. Where:</p>
+            <ul>
+                <li>OI per market = <code>max(margined_liab, margined_credits)*price</code>
+                    <ul>
+                        <li>USD-Notional Cap <code>OI*Price</code></li>
+                        <li>Once the cap is hit: leveraged trades are forced to be reduce-only, spot trades are allowed, post-only leveraged orders are allowed from PMMs</li>
+                    </ul>
+                </li>
+                <li>Spot-margin OI (long/short) = the positive side of:
+                    <ul>
+                        <li>long-spot-OI(Asset) = <code>margined_credits - margined_liabilities</code> (Asset-based cap, once hit leveraged longs limited to reduce-only)</li>
+                        <li>short-spot-OI(Asset) = <code>margined_liabilities - margined_credits</code> (Asset-based cap, once hit leveraged shorts limited to reduce-only)</li>
+                    </ul>
+                </li>
+                <li>Note that spot-margin OI cannot be positive for both sides of a pair</li>
+            </ul>
+
+            <h3>Collateral Caps</h3>
+            <p>Tplus caps the global amount of an asset that can be posted as margin collateral.</p>
+
+            <h3>Deposit Caps</h3>
+            <p>Tplus considers many assets as fungible. For instance, USDC and USDT are both considered "USD", WETH deposited from Optimism, Arbitrum, Mainnet, etc is all considered ETH.</p>
+            <p>We enforce caps on the global amount of specific underlying tokens that can be deposited and still considered fungible. Caps are enforced on both overall amounts and deposits over a specific time frame.</p>
+            <p>EX: we may only allow a total of 800m USDT to be deposited and considered fungible. At the same time, only 100m USDT deposits may be allowed per day.</p>
+            <p>If a user deposits an asset that is "capped" the deposit is still processed, however instead of crediting the users balance of the fungible asset, their balance of the specific underlying asset is credited.</p>
+            <p>This mechanism limits custodian risk (custodians being chains, and asset issuers in this case).</p>
+
+            <h3>Maintenance Margin Requirements</h3>
+            <p>Fairly standard, you're assigned a maintenance margin requirement based on the makeup of your collateral. The relative risk of both your margin positions and posted collateral affects your maintenance margin requirement. If you fall below your maintenance margin requirement your account is liquidated.</p>
+<pre>let account_surplus = sum(spot_holdings_risk_adjusted_notional)
+  + sum(margin_credits_risk_adjusted_notional)
+  - sum(margin_liabilities_risk_adjusted_notional);
+
+// Where
+let collateral_asset_price = max(last_traded_price, oracle_price);
+let liability_asset_price = min(last_traded_price, oracle_price);
+
+let spot_holdings_risk_adjusted_notional =
+  collateral_asset_price * balance * asset_collateral_factor;
+
+let margin_credits_risk_adjusted_notional =
+  collateral_asset_price * margin_credits * asset_collateral_factor
+  - position_margin;
+
+let margin_liabilities_risk_adjusted_notional =
+  liability_asset_price * margin_liabilities / asset_liability_factor
+  + position_margin;</pre>
+
+            <h3>Initial Margin Requirements</h3>
+            <p>Initial margin requirements are calculated effectively the same way as maintenance margin requirement, it will be slightly higher of course.</p>
+            <p>The main difference between Tplus and other platforms is Tplus increases initial margin requirements for trades that increase skew if skew is significantly elevated. This is based on how far we are from spot OI caps.</p>
+            <p>Additionally - rather than using optimistic oracle price for collateral or min for liabilities, we use pessimistic oracle prices for IM checks. IM is checked whenever a user is increasing their leverage.</p>
+
+            <h3>Liquidations, ADL, and Insurance</h3>
+            <p>If your equity balance falls below your maintenance margin requirement your account is liquidated.</p>
+
+            <p><strong>Stage 1 — Orderbook Deleverage</strong></p>
+            <p>The system first attempts to close all of the account's margin positions via IOC limit orders in the orderbook with conservative slippage limits.</p>
+
+            <p><strong>Stage 2 — Backstop AVS Takeover</strong></p>
+            <p>If the account is still insolvent after the initial deleverage, its remaining positions are transferred to a new Backstop Account controlled by the Eigenlayer Backstop AVS. The AVS is provisionally credited with ETH collateral to bring the backstop account to ~2% above maintenance margin. The AVS then runs a clearing algorithm that sells position clips over time into the orderbook using conservative slippage limits. If positions clear profitably, the provisional credit is deleted and no slashing occurs.</p>
+            <p>If the AVS accumulates actual debt (sells ETH at a loss to cover shortfalls), that debt is tracked and eventually triggers Eigenlayer slashing to recoup the losses. This deferred model minimizes unnecessary on-chain operations.</p>
+
+            <p><strong>Stage 3 — Auto-Deleveraging (ADL)</strong></p>
+            <p>If the backstop account falls below maintenance margin despite the provisional collateral, the AVS triggers an ADL. ADL forcibly closes positions of profitable counterside traders to restore backstop solvency:</p>
+            <ul>
+                <li>Counterside positions are ranked by ADL score = <code>account_leverage × position_return</code>. Only positions with positive scores (profitable traders) are eligible.</li>
+                <li>The system selects the market with the largest backstop exposure first and works through highest-scored positions until either the <code>max_adl</code> limit per market is reached or the backstop account is restored to 2% above maintenance margin.</li>
+                <li>ADL executions occur at the worse-for-backstop price: <code>min(oracle, mark)</code> for short positions, <code>max(oracle, mark)</code> for long positions.</li>
+                <li>If the backstop account becomes insolvent again after an ADL, the process repeats: the AVS is credited additional provisional ETH and attempts to continue clearing.</li>
+            </ul>
+            <p>Once all positions are cleared, any remaining collateral in the backstop account is converted to ETH and returned to AVS restakers.</p>
+            <p>In this way the Backstop AVS acts as an insurance fund — it takes over delinquent accounts and clears their debt, slashing restaked ETH only when actual losses are incurred.</p>
+
+            <h3>Isolated Margin Accounts &amp; Sub Accounts</h3>
+            <p>We will have sub-accounts. They can be either cross-margin or isolated. Certain assets are only allowed to be traded with leverage through an isolated-margin sub-account. These sub-account types can only have USD and the isolated asset deposited into them, and can only trade the isolated assets.</p>
+            <p>Most mid-cap and yield bearing tokens will be isolated.</p>
+
+            <h3>Credit Limits</h3>
+            <p>Accounts that are cross-margined with external centralized venues have credit limits on the amount of collateral they can post from their cross-margined positions. These limits are governed by custodian risk, trader credit worthiness, and the amount of control our margin engine has over the account.</p>
+            <p>All parties cross-margined with centralized venues on Tplus must be KYB'd and have cross-margining agreements with the Tplus foundation.</p>
+            <p>We also support cross-margining with external decentralized venues like Hyperliquid. Cross-margining in those cases involves setting up a multisig where a TEE running a cross-margin manager holds a majority of the key shards.</p>
+
+            <hr>
+
+            <div class="console-button-container">
+                <a href="javascript:history.back()" class="console-button">&gt; Back</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Password overlay -->
+    <div style="display: none;">
+        <style>
+            #tplus-overlay {
+                position: fixed;
+                top: 0; left: 0;
+                width: 100%; height: 100%;
+                background: #000;
+                z-index: 9999;
+                font-family: monospace;
+                display: flex;
+                justify-content: center;
+                padding-top: 10vh;
+                color: #ff0000;
+                overflow: auto;
+            }
+            #tplus-terminal {
+                width: 100%;
+                max-width: 800px;
+                font-size: 16px;
+            }
+            #tplus-password {
+                padding: 20px;
+            }
+            #tplus-prompt {
+                color: #ffff00;
+                margin: 15px 0;
+            }
+            #tplus-input-line {
+                display: flex;
+                align-items: flex-end;
+                margin-top: 15px;
+            }
+            #tplus-input {
+                background: transparent;
+                border: none;
+                outline: none;
+                color: #ff0000;
+                font-family: monospace;
+                font-size: 20px;
+                width: 80%;
+                margin-left: 5px;
+            }
+            #tplus-cursor {
+                width: 10px;
+                height: 2px;
+                background: #ff0000;
+                display: inline-block;
+                animation: blink 1s step-end infinite;
+            }
+            #tplus-surprise {
+                display: none;
+                padding: 20px;
+            }
+            #tplus-ascii {
+                color: #ffff00;
+                font-size: 6px;
+                line-height: 1;
+                white-space: pre;
+                text-align: center;
+                margin: 20px 0;
+            }
+            #tplus-welcome {
+                margin: 20px 0;
+            }
+            #tplus-continue {
+                color: #ffff00;
+                margin-top: 20px;
+                animation: blink 1s step-end infinite;
+                cursor: pointer;
+            }
+            .fade-out {
+                animation: fade 1s forwards;
+            }
+            @keyframes fade {
+                to { opacity: 0; visibility: hidden; }
+            }
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-10px); }
+                75% { transform: translateX(10px); }
+            }
+        </style>
+
+        <div id="tplus-overlay">
+            <div id="tplus-terminal">
+                <div id="tplus-password">
+                    <div>user@t-plus:~$ ./risk-controls.sh</div>
+                    <div><b>t+ risk controls</b></div>
+
+                    <div id="tplus-prompt">PASSWORD REQUIRED<br>
+                    Please enter the last two paragraphs of Dark Pools by Scott Patterson</div>
+
+                    <div id="tplus-input-line">
+                        &gt; <input type="text" id="tplus-input">
+                        <span id="tplus-cursor"></span>
+                    </div>
+                </div>
+
+                <div id="tplus-surprise">
+                    <div>user@t-plus:~$ ./risk-controls.sh</div>
+                    <div id="tplus-welcome">Welcome to perfect markets.</div>
+<pre id="tplus-ascii">****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************
+********************************************+===----===+********************************************
+************************************+=-::::::::::::::::::::::-=+************************************
+********************************+-::::::::::::::::::::::::::::::::-+********************************
+*****************************=::::::::::::::::::::::::::::::::::::::::=+****************************
+**************************+-::::::::::::::::::::::::::::::::::::::::::::-+**************************
+***********************+=::::::::::::::::::::::::::::::::::::::::::::::::::=+***********************
+**********************=::::::::::::::::::::::::::::::::::::::::::::::::::::::=**********************
+********************=::::::::::::::::::::::::::::::::::::::::::::::::::::::::::=********************
+******************+-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::+******************
+*****************=:::::::::::=@@@@@%+::::::::::::::::::::::::::=%@@@@@=:::::::::::=*****************
+****************=::::::::::::=@@@@@%+::::::::::::::::::::::::::=%@@@@@=::::::::::::-****************
+***************-:::::::::::::=@@@@@%+::::::::::::::::::::::::::=%@@@@@=:::::::::::::-***************
+**************-::::::::::::::=@@@@@%+::::::::::::::::::::::::::=%@@@@@=::::::::::::::-**************
+*************-:::::::::::::::=@@@@@%+::::::::::::::::::::::::::+%@@@@@=:::::::::::::::-*************
+************=::::::::::::::::=@@@@@%+::::::::::::::::::::::::::=%@@@@@=::::::::::::::::=************
+***********+::::::=%%%%%%%%%%@@@@@@@@@@@@@@@@@@=::::-%%%%%%%%%%@@@@@@@@@@@@@@@@@%=::::::+***********
+***********-::::::=@@@@@@@@@@@@@@@@@@@@@@@@@@@@=::::-@@@@@@@@@@@@@@@@@@@@@@@@@@@@=::::::-***********
+**********+-::::::=@@@@@@@@@@@@@@@@@@@@@@@@@@@@=::::-@@@@@@@@@@@@@@@@@@@@@@@@@@@@=:::::::+**********
+**********=:::::::=#%%%%%%%%%%@@@@@@%%%%%%%%%%%-::::-%%%%%%%%%%%@@@@@@%##########=:::::::=**********
+**********-::::::::::::::::::=@@@@@@+::::::::::::::::::::::::::=%@@@@@+::::::::::::::::::-**********
+*********+-::::::::::::::::::=@@@@@@+::::::::::::::::::::::::::=%@@@@@+::::::::::::::::::-+*********
+*********+:::::::::::::::::::=@@@@@@+::::::::::::::::::::::::::=%@@@@@+:::::::::::::::::::+*********
+*********+:::::::::::::::::::=@@@@@@+::::::::::::::::::::::::::=%@@@@@+:::::::::::::::::::+*********
+*********+:::::::::::::::::::=@@@@@@+::::::::::::::::::::::::::=%@@@@@+:::::::::::::::::::+*********
+*********+-::::::::::::::::::=%@@@@@+::::::::::::::::::::::::::=%@@@@@+::::::::::::::::::-+*********
+**********-::::::::::::::::::=%@@@@@+::::::::::::::::::::::::::::::::::::::::::::::::::::-**********
+**********=::::::::::::::::::-#@@@@@*::::::::::::::::::::::::::::::::::::::::::::::::::::=**********
+**********+-::::::::::::::::::*@@@@@#-:::::::::::::::::::::::::::::::::::::::::::::::::::+**********
+***********-::::::::::::::::::-%@@@@@*-:::::::::::::::::::::::+++++++:::::::::::::::::::-***********
+***********+:::::::::::::::::::+@@@@@@#-:::::::::::::::::::::#@@@@@@*:::::::::::::::::::+***********
+************=:::::::::::::::::::+@@@@@@@*::::::::::::::::::+@@@@@@@*:::::::::::::::::::=************
+*************-:::::::::::::::::::=@@@@@@@@#-::::::::::::-#@@@@@@@@+:::::::::::::::::::-*************
+**************-:::::::::::::::::::-#@@@@@@@@@%#*===+*%%@@@@@@@@@#-:::::::::::::::::::-**************
+***************-::::::::::::::::::::-%@@@@@@@@@@@@@@@@@@@@@@@@%=::::::::::::::::::::-***************
+****************-::::::::::::::::::::::+@@@@@@@@@@@@@@@@@@@@*::::::::::::::::::::::-****************
+*****************=::::::::::::::::::::::::-*%@@@@@@@@@@%*=::::::::::::::::::::::::=*****************
+******************+-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::+******************
+********************=::::::::::::::::::::::::::::::::::::::::::::::::::::::::::=********************
+**********************-::::::::::::::::::::::::::::::::::::::::::::::::::::::-**********************
+***********************+=::::::::::::::::::::::::::::::::::::::::::::::::::-+***********************
+**************************=::::::::::::::::::::::::::::::::::::::::::::::=**************************
+****************************+=::::::::::::::::::::::::::::::::::::::::=+****************************
+********************************+-::::::::::::::::::::::::::::::::-+********************************
+************************************+=-:::::::::::::::::::::::=+************************************
+*******************************************++==------==++*******************************************
+****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************</pre>
+
+                    <div id="tplus-continue">Press enter to continue...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Skip password if coming from onepage
+            if (new URLSearchParams(window.location.search).get('from') === 'onepage') {
+                return;
+            }
+
+            var overlay = document.getElementById('tplus-overlay');
+            if (!overlay) return;
+
+            var passwordScreen = document.getElementById('tplus-password');
+            var surpriseScreen = document.getElementById('tplus-surprise');
+            var inputField = document.getElementById('tplus-input');
+
+            if (overlay.parentElement) {
+                overlay.parentElement.style.display = 'block';
+            }
+
+            if (inputField) {
+                inputField.focus();
+                overlay.addEventListener('click', function() {
+                    if (passwordScreen.style.display !== 'none') {
+                        inputField.focus();
+                    }
+                });
+            }
+
+            function showSurprise() {
+                passwordScreen.style.display = 'none';
+                surpriseScreen.style.display = 'block';
+                surpriseScreen.dataset.justOpened = 'true';
+                setTimeout(function() {
+                    surpriseScreen.dataset.justOpened = 'false';
+                }, 500);
+            }
+
+            function removeOverlay() {
+                overlay.classList.add('fade-out');
+                setTimeout(function() {
+                    if (overlay.parentNode) {
+                        overlay.parentNode.removeChild(overlay);
+                    }
+                }, 1000);
+            }
+
+            inputField.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    var correctPassword = 'It seemed a long shot. Then again, who would have thought a high-school dropout working out of a cluttered office on 50 Broad could lay low the most powerful forces in the stock market? One thing was clear-the market had to change. It was spinning out of control, plagued by costly glitches, manipulative activity, and plunging investor confidence. If nothing was done to fix it, next time the devastation could be irreversible.';
+
+                    function normalizeText(text) {
+                        return text.toLowerCase().replace(/[^\w]/g, '');
+                    }
+
+                    var userInput = normalizeText(inputField.value);
+                    var normalizedPassword = normalizeText(correctPassword);
+
+                    if (userInput === normalizedPassword) {
+                        showSurprise();
+                    } else {
+                        inputField.value = '';
+                        inputField.style.animation = 'shake 0.5s';
+                        setTimeout(function() {
+                            inputField.style.animation = '';
+                        }, 500);
+                    }
+                }
+            });
+
+            document.addEventListener('keydown', function(event) {
+                if (passwordScreen.style.display === 'none' && event.key === 'Enter' && surpriseScreen.dataset.justOpened !== 'true') {
+                    removeOverlay();
+                }
+            });
+
+            document.getElementById('tplus-continue').addEventListener('click', function() {
+                removeOverlay();
+            });
+        })();
+    </script>
+</body>
+</html>

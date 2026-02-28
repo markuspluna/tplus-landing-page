@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>t+ Trading Fees &amp; Rates</title>
+    <meta name="description" content="tplus trading fees and rates">
+    <link rel="stylesheet" href="main.css">
+    <link rel="icon" type="image/png" href="assets/1836.webp">
+    <script src="assets/index-BH04i9vQ.js" type="module" async></script>
+    <style>
+        body {
+            padding: 0 40px 40px 40px;
+            background-color: #ffeeee;
+        }
+        p {
+            font-weight: 500;
+            letter-spacing: 0.4px;
+            font-size: 14px;
+            line-height: 1.7;
+            max-width: 900px;
+        }
+        ul li, ol li {
+            font-weight: 500;
+            font-size: 14px;
+            max-width: 900px;
+            line-height: 1.7;
+        }
+        h2, h3 {
+            font-weight: 600;
+        }
+        .tpteam-container {
+            background-color: #ffeeee;
+        }
+        .page-content h2 {
+            color: #ED1F24;
+            font-family: 'Press+Start+2P', monospace;
+            font-size: 22px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-shadow: 0 0 1px rgba(204, 0, 0, 0.3);
+        }
+        .page-content h3 {
+            font-family: 'Press+Start+2P', monospace;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+        .page-content {
+            padding: 20px;
+            max-width: 1000px;
+        }
+        ol {
+            list-style-type: decimal;
+            padding-left: 24px;
+        }
+        ol li {
+            padding-left: 4px;
+        }
+        ol li::before {
+            content: none !important;
+        }
+        blockquote {
+            border-left: 3px solid #ED1F24;
+            margin: 12px 0;
+            padding: 8px 16px;
+            background: #fff5f5;
+            font-size: 14px;
+        }
+        pre {
+            background: #1a1a1a;
+            color: #0f0;
+            padding: 16px;
+            overflow-x: auto;
+            font-size: 13px;
+            max-width: 900px;
+        }
+        code {
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #ED1F24;
+            margin: 30px 0;
+            max-width: 1000px;
+        }
+        table {
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 14px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px 14px;
+            text-align: left;
+        }
+        th {
+            background: #ED1F24;
+            color: #fff;
+            font-weight: 600;
+        }
+        @media (max-width: 768px) {
+            body { padding: 0 6px 10px 6px; }
+            .tpteam-container { padding: 6px 0; }
+            .page-content { padding: 6px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <img src="assets/1836.webp" alt="Left Logo" class="banner-image left-image">
+        <div class="ticker-container">
+            <div class="ticker"> 1 ms confirmations - best possible fills VERIFIABLE - native privacy - every asset - every defi app -  </div>
+            <div class="ticker"> 1 ms confirmations - best possible fills VERIFIABLE - native privacy - every asset - every defi app -  </div>
+            <div class="ticker"> 1 ms confirmations - best possible fills VERIFIABLE - native privacy - every asset - every defi app -  </div>
+            <div class="ticker"> 1 ms confirmations - best possible fills VERIFIABLE - native privacy - every asset - every defi app -  </div>
+        </div>
+        <img src="assets/1836.webp" alt="Right Logo" class="banner-image right-image">
+    </div>
+
+    <div class="tpteam-container">
+        <div class="page-content">
+            <h2>Trading Fees &amp; Rates</h2>
+            <p>Brief overview of fees and interest rates you should be aware of. Note that these are subject to change as we go into launch.</p>
+
+            <h3>Spot Trading Fees</h3>
+            <p>Initial spot trading fees are zero. These may be re-assessed at a later time. But in general spot traders are an important source of both deposit and book liquidity for t+ so we want to ensure we're an attractive venue for them.</p>
+
+            <h3>Margin Trading Fees</h3>
+            <p><em>Below are estimated day-zero fee tiers. They are subject to change.</em></p>
+            <table>
+                <thead>
+                    <tr><th>Tier</th><th>14-day Rolling Volume (USD)</th><th>Taker Fee</th><th>Maker Fee</th><th>Maker Rebate</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>0</td><td>-</td><td>0.025%</td><td>0.015%</td><td>None</td></tr>
+                    <tr><td>1</td><td>&gt;50m</td><td>0.02%</td><td>0.005%</td><td>None</td></tr>
+                    <tr><td>2</td><td>&gt;100m</td><td>0.015%</td><td>0.00%</td><td>25% of taker fee</td></tr>
+                    <tr><td>3</td><td>&gt;250m</td><td>0.01%</td><td>0.00%</td><td>50% of taker fee</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Utilization-Based Borrow Rates</h3>
+            <p>T+ charges margin traders interest based on the utilization rate of the asset they're borrowing.</p>
+<pre>utilization = liabilities / (min(deposits, spot_oi_cap) + liabilities)</pre>
+            <p>As the utilization rate increases, the borrow rate also increases. Interest is calculated using a kink-based curve similar to those used by lending protocols like Aave. Borrowers pay interest to all spot holders of the borrowed asset. For USD utilization is tracked per-market.</p>
+
+            <h3>Funding Rates</h3>
+            <p>Funding rates are calculated based on skew and mark price deviations.</p>
+<pre>Funding Rate (F) = clamp(
+  K * (Average Skew (S) + clamp(-skew, -skew_cliff, skew_cliff))^2 +
+  Average Premium Index (P) +
+    clamp(base_rate - premium, -0.0005, 0.0005),
+  fr_max, -fr_max);
+
+// Where
+K = skew_factor; // risk-council governed parameter
+Skew = (long_spot_oi_usd - short_spot_oi_usd) / cap_usd;
+Premium = impact_price_difference / oracle_price;
+impact_price_difference =
+  max(impact_bid_px - oracle_px, 0)
+  - max(oracle_px - impact_ask_px, 0);</pre>
+            <p>Funding is charged and re-calculated every hour using average premium and skew.</p>
+
+            <h3>So how much will it cost to long or short on t+?</h3>
+            <p>It's hard to predict of course, but we can infer a few things:</p>
+            <ol>
+                <li>Funding+interest on pairs that are also listed on Hyperliquid will converge to Hyperliquid's funding rate. We have a very deep cross-margining integration with Hyperliquid so basis traders will push rates in line.</li>
+                <li>Funding will typically not exceed the global USD yield + the underlying's borrow rate - the underlying's yield. If it does it becomes profitable for USD holders to purchase the underlying and use it as collateral to short the pair (an internal basis trade).</li>
+                <li>Funding will typically remain above the underlying's borrow rate - otherwise spot holders will sell their spot position and margin long instead.</li>
+            </ol>
+
+            <h3>How much will global USD yield be?</h3>
+            <p>Global USD yield will be an average of profitable basis trades and leveraging yield bearing tokens.</p>
+            <p>Consider the following scenario:</p>
+            <ul>
+                <li>sUSDE yield is 11% (100 mil spot OI cap)</li>
+                <li>pt-USD-something yield is 18% (50 mil spot OI cap)</li>
+                <li>BTC funding on Hyperliquid is 15% annualized (825M Derivative OI, 75M spot-margin long OI)</li>
+                <li>ETH funding on Hyperliquid is 20% annualized (1,225M Derivative OI, 125M spot-margin long OI)</li>
+                <li>500M in USD held, 100M in USD deposits</li>
+            </ul>
+            <p>USD depositors are paid: 0.11*95M + 0.18*47.5M + 0.025*900M + 0.025*1350M = 59.5M/500M = <strong>11.9% APY</strong></p>
+
+            <h3>How about yield on majors?</h3>
+            <p>Consider wstETH loops: wstETH yield 2.5% (500m spot OI cap), 700M of ETH deposited.</p>
+            <p>ETH depositors are paid: .023*475M + .03*1350M = 51.425M/700M = <strong>7.3%</strong></p>
+
+            <h3>Rebalancing Fees</h3>
+            <p>t+ considers many assets as fungible. We want to maintain a balanced distribution of fungible asset underlyings across different chains and issuers based on liquidity demands.</p>
+            <p>Actions that cause an underlying token to be underweight are charged a fee up to 2.5%. Actions that bring token deposits back up to target levels are paid a reward up to 2.5%.</p>
+
+            <hr>
+
+            <div class="console-button-container">
+                <a href="javascript:history.back()" class="console-button">&gt; Back</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Password overlay -->
+    <div style="display: none;">
+        <style>
+            #tplus-overlay {
+                position: fixed;
+                top: 0; left: 0;
+                width: 100%; height: 100%;
+                background: #000;
+                z-index: 9999;
+                font-family: monospace;
+                display: flex;
+                justify-content: center;
+                padding-top: 10vh;
+                color: #ff0000;
+                overflow: auto;
+            }
+            #tplus-terminal {
+                width: 100%;
+                max-width: 800px;
+                font-size: 16px;
+            }
+            #tplus-password {
+                padding: 20px;
+            }
+            #tplus-prompt {
+                color: #ffff00;
+                margin: 15px 0;
+            }
+            #tplus-input-line {
+                display: flex;
+                align-items: flex-end;
+                margin-top: 15px;
+            }
+            #tplus-input {
+                background: transparent;
+                border: none;
+                outline: none;
+                color: #ff0000;
+                font-family: monospace;
+                font-size: 20px;
+                width: 80%;
+                margin-left: 5px;
+            }
+            #tplus-cursor {
+                width: 10px;
+                height: 2px;
+                background: #ff0000;
+                display: inline-block;
+                animation: blink 1s step-end infinite;
+            }
+            #tplus-surprise {
+                display: none;
+                padding: 20px;
+            }
+            #tplus-ascii {
+                color: #ffff00;
+                font-size: 6px;
+                line-height: 1;
+                white-space: pre;
+                text-align: center;
+                margin: 20px 0;
+            }
+            #tplus-welcome {
+                margin: 20px 0;
+            }
+            #tplus-continue {
+                color: #ffff00;
+                margin-top: 20px;
+                animation: blink 1s step-end infinite;
+                cursor: pointer;
+            }
+            .fade-out {
+                animation: fade 1s forwards;
+            }
+            @keyframes fade {
+                to { opacity: 0; visibility: hidden; }
+            }
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-10px); }
+                75% { transform: translateX(10px); }
+            }
+        </style>
+
+        <div id="tplus-overlay">
+            <div id="tplus-terminal">
+                <div id="tplus-password">
+                    <div>user@t-plus:~$ ./trading-fees.sh</div>
+                    <div><b>t+ trading fees &amp; rates</b></div>
+
+                    <div id="tplus-prompt">PASSWORD REQUIRED<br>
+                    Please enter the last two paragraphs of Dark Pools by Scott Patterson</div>
+
+                    <div id="tplus-input-line">
+                        &gt; <input type="text" id="tplus-input">
+                        <span id="tplus-cursor"></span>
+                    </div>
+                </div>
+
+                <div id="tplus-surprise">
+                    <div>user@t-plus:~$ ./trading-fees.sh</div>
+                    <div id="tplus-welcome">Welcome to perfect markets.</div>
+<pre id="tplus-ascii">****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************
+********************************************+===----===+********************************************
+************************************+=-::::::::::::::::::::::-=+************************************
+********************************+-::::::::::::::::::::::::::::::::-+********************************
+*****************************=::::::::::::::::::::::::::::::::::::::::=+****************************
+**************************+-::::::::::::::::::::::::::::::::::::::::::::-+**************************
+***********************+=::::::::::::::::::::::::::::::::::::::::::::::::::=+***********************
+**********************=::::::::::::::::::::::::::::::::::::::::::::::::::::::=**********************
+********************=::::::::::::::::::::::::::::::::::::::::::::::::::::::::::=********************
+******************+-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::+******************
+*****************=:::::::::::=@@@@@%+::::::::::::::::::::::::::=%@@@@@=:::::::::::=*****************
+****************=::::::::::::=@@@@@%+::::::::::::::::::::::::::=%@@@@@=::::::::::::-****************
+***************-:::::::::::::=@@@@@%+::::::::::::::::::::::::::=%@@@@@=:::::::::::::-***************
+**************-::::::::::::::=@@@@@%+::::::::::::::::::::::::::=%@@@@@=::::::::::::::-**************
+*************-:::::::::::::::=@@@@@%+::::::::::::::::::::::::::+%@@@@@=:::::::::::::::-*************
+************=::::::::::::::::=@@@@@%+::::::::::::::::::::::::::=%@@@@@=::::::::::::::::=************
+***********+::::::=%%%%%%%%%%@@@@@@@@@@@@@@@@@@=::::-%%%%%%%%%%@@@@@@@@@@@@@@@@@%=::::::+***********
+***********-::::::=@@@@@@@@@@@@@@@@@@@@@@@@@@@@=::::-@@@@@@@@@@@@@@@@@@@@@@@@@@@@=::::::-***********
+**********+-::::::=@@@@@@@@@@@@@@@@@@@@@@@@@@@@=::::-@@@@@@@@@@@@@@@@@@@@@@@@@@@@=:::::::+**********
+**********=:::::::=#%%%%%%%%%%@@@@@@%%%%%%%%%%%-::::-%%%%%%%%%%%@@@@@@%##########=:::::::=**********
+**********-::::::::::::::::::=@@@@@@+::::::::::::::::::::::::::=%@@@@@+::::::::::::::::::-**********
+*********+-::::::::::::::::::=@@@@@@+::::::::::::::::::::::::::=%@@@@@+::::::::::::::::::-+*********
+*********+:::::::::::::::::::=@@@@@@+::::::::::::::::::::::::::=%@@@@@+:::::::::::::::::::+*********
+*********+:::::::::::::::::::=@@@@@@+::::::::::::::::::::::::::=%@@@@@+:::::::::::::::::::+*********
+*********+:::::::::::::::::::=@@@@@@+::::::::::::::::::::::::::=%@@@@@+:::::::::::::::::::+*********
+*********+-::::::::::::::::::=%@@@@@+::::::::::::::::::::::::::=%@@@@@+::::::::::::::::::-+*********
+**********-::::::::::::::::::=%@@@@@+::::::::::::::::::::::::::::::::::::::::::::::::::::-**********
+**********=::::::::::::::::::-#@@@@@*::::::::::::::::::::::::::::::::::::::::::::::::::::=**********
+**********+-::::::::::::::::::*@@@@@#-:::::::::::::::::::::::::::::::::::::::::::::::::::+**********
+***********-::::::::::::::::::-%@@@@@*-:::::::::::::::::::::::+++++++:::::::::::::::::::-***********
+***********+:::::::::::::::::::+@@@@@@#-:::::::::::::::::::::#@@@@@@*:::::::::::::::::::+***********
+************=:::::::::::::::::::+@@@@@@@*::::::::::::::::::+@@@@@@@*:::::::::::::::::::=************
+*************-:::::::::::::::::::=@@@@@@@@#-::::::::::::-#@@@@@@@@+:::::::::::::::::::-*************
+**************-:::::::::::::::::::-#@@@@@@@@@%#*===+*%%@@@@@@@@@#-:::::::::::::::::::-**************
+***************-::::::::::::::::::::-%@@@@@@@@@@@@@@@@@@@@@@@@%=::::::::::::::::::::-***************
+****************-::::::::::::::::::::::+@@@@@@@@@@@@@@@@@@@@*::::::::::::::::::::::-****************
+*****************=::::::::::::::::::::::::-*%@@@@@@@@@@%*=::::::::::::::::::::::::=*****************
+******************+-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::+******************
+********************=::::::::::::::::::::::::::::::::::::::::::::::::::::::::::=********************
+**********************-::::::::::::::::::::::::::::::::::::::::::::::::::::::-**********************
+***********************+=::::::::::::::::::::::::::::::::::::::::::::::::::-+***********************
+**************************=::::::::::::::::::::::::::::::::::::::::::::::=**************************
+****************************+=::::::::::::::::::::::::::::::::::::::::=+****************************
+********************************+-::::::::::::::::::::::::::::::::-+********************************
+************************************+=-:::::::::::::::::::::::=+************************************
+*******************************************++==------==++*******************************************
+****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************
+****************************************************************************************************</pre>
+
+                    <div id="tplus-continue">Press enter to continue...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Skip password if coming from onepage
+            if (new URLSearchParams(window.location.search).get('from') === 'onepage') {
+                return;
+            }
+
+            var overlay = document.getElementById('tplus-overlay');
+            if (!overlay) return;
+
+            var passwordScreen = document.getElementById('tplus-password');
+            var surpriseScreen = document.getElementById('tplus-surprise');
+            var inputField = document.getElementById('tplus-input');
+
+            if (overlay.parentElement) {
+                overlay.parentElement.style.display = 'block';
+            }
+
+            if (inputField) {
+                inputField.focus();
+                overlay.addEventListener('click', function() {
+                    if (passwordScreen.style.display !== 'none') {
+                        inputField.focus();
+                    }
+                });
+            }
+
+            function showSurprise() {
+                passwordScreen.style.display = 'none';
+                surpriseScreen.style.display = 'block';
+                surpriseScreen.dataset.justOpened = 'true';
+                setTimeout(function() {
+                    surpriseScreen.dataset.justOpened = 'false';
+                }, 500);
+            }
+
+            function removeOverlay() {
+                overlay.classList.add('fade-out');
+                setTimeout(function() {
+                    if (overlay.parentNode) {
+                        overlay.parentNode.removeChild(overlay);
+                    }
+                }, 1000);
+            }
+
+            inputField.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    var correctPassword = 'It seemed a long shot. Then again, who would have thought a high-school dropout working out of a cluttered office on 50 Broad could lay low the most powerful forces in the stock market? One thing was clear-the market had to change. It was spinning out of control, plagued by costly glitches, manipulative activity, and plunging investor confidence. If nothing was done to fix it, next time the devastation could be irreversible.';
+
+                    function normalizeText(text) {
+                        return text.toLowerCase().replace(/[^\w]/g, '');
+                    }
+
+                    var userInput = normalizeText(inputField.value);
+                    var normalizedPassword = normalizeText(correctPassword);
+
+                    if (userInput === normalizedPassword) {
+                        showSurprise();
+                    } else {
+                        inputField.value = '';
+                        inputField.style.animation = 'shake 0.5s';
+                        setTimeout(function() {
+                            inputField.style.animation = '';
+                        }, 500);
+                    }
+                }
+            });
+
+            document.addEventListener('keydown', function(event) {
+                if (passwordScreen.style.display === 'none' && event.key === 'Enter' && surpriseScreen.dataset.justOpened !== 'true') {
+                    removeOverlay();
+                }
+            });
+
+            document.getElementById('tplus-continue').addEventListener('click', function() {
+                removeOverlay();
+            });
+        })();
+    </script>
+</body>
+</html>
