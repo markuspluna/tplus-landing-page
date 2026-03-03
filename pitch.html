@@ -131,9 +131,10 @@
         }
 
         #hot-dd3ae, #hot-d497c {
-            font-weight: lighter;
+            font-weight: 350;
+            font-size: 14.5px;
             margin-top: -20px;
-            color: #b6b6b6;
+            color: #bfbfbf;
         }
 
         #hot-191b3 {
@@ -303,6 +304,7 @@
         /* Stack consoles vertically on pitch page */
         .components-container { flex-direction: column; }
         .connector { transform: rotate(90deg); margin: 10px 0; }
+        #depth-console { width: 700px; max-width: 95%; }
         #sankey-console { width: 700px; max-width: 95%; }
         #sankey-console .sankey-window { height: 420px; }
 
@@ -672,10 +674,15 @@
             <div class="panel-header"><span class="prompt">t+:</span>A Decentralized Full Service Exchange Stack</div>
             <div class="panel-body">
                 <div class="panel-content">
-                    <h3 class="panel-title">OFFERING:</h3>
+                    <div class="p-font-2">
+                        <span class="illegal">A CLOB in a TEE</span>
+
+                    </div>
+                    <p> </p>
+                    <p id="hot-d497c">(central limit orderbook in a trusted execution environment)</p>
+
                     <div class="panel-text">
                         <ul class="list">
-                            <li class="list-header-item"><span>CLOB in a TEE</span></li>
                             <li class="tpteam-list-item">High-performance offchain trading environment that executes trades in under 1 millisecond</li>
                             <li class="tpteam-list-item">Trustless, permissionless, and private</li>
                         </ul>
@@ -688,9 +695,9 @@
                     <div class="panel-text">
                         <ul class="list">
                             <li class="list-header-item"><span>Composable with External Venues</span></li>
-                                                        <li class="tpteam-list-item">Tplus accounts can interact with external protocols and cross-margin with external
-                                                            exchanges&brokerages</li>
-                            <li class="tpteam-list-item">Instantly supports every asset and product in one box - crypto, equities, commodities, etc..</li>
+                            <li class="tpteam-list-item">Tplus accounts can interact with external protocols and cross-margin with external
+                                exchanges &amp; brokerages</li>
+                            <li class="tpteam-list-item">Instantly supports every asset and product in one box - crypto, equities, commodities, etc.</li>
                             <li class="tpteam-list-item">Composable with everyone else's liquidity → excellent fills </li>
                             <li class="list-header-item"><span>Matched-Book Margin Driven Leverage</span></li>
                             <li class="tpteam-list-item">Perp-style capital efficiency without the volatile funding rates and premiums</li>
@@ -705,7 +712,7 @@
         </div>
     </div>
 
-    <p class="wrapper" id="hot-ecff2">It's the Centralized Exchange &amp; Prime Broker Stack - decentralized - composable with the orderflow supply chain - and using all of defi as it's ever-expanding product suite.</p>
+    <p class="wrapper" id="hot-ecff2">It's the Centralized Exchange &amp; Prime Broker Stack - decentralized - composable with the orderflow supply chain - and using all of defi as its ever-expanding product suite.</p>
     <p class="wrapper p-font-2">it's the new thing</p>
 <!-- <div class="console-button-container">
     <button class="console-button" onclick="openConsoleModal()">
@@ -725,12 +732,12 @@
        
         
         <div style="line-height: 1.6; margin: 20px 0;">
-            <div>Fair question, it's because CEX's are our closest competitors.</div>
+            <div>Fair question, it's because CEXs are our closest competitors.</div>
             <br>
-            <div>CEX's in crypto are a fairly unique financial institution, they're an exchange, brokerage, and clearing house all in one.</div>
+            <div>CEXs in crypto are a fairly unique financial institution, they're an exchange, brokerage, and clearing house all in one.</div>
             <div>Most aren't even primary liquidity venues.</div>
             <br>
-            <div>T+ is all of these things as well, just decentralized, noncustodial, permissionless, private, and fully composable with onchain liquidity sources.</div>
+            <div>t+ is all of these things as well, just decentralized, noncustodial, permissionless, private, and fully composable with onchain liquidity sources.</div>
             <br>
             <div>Interestingly - we're also not a primary liquidity venue. Of course some of our flow will be cleared internally - but most is going to be settled on Hyperliquid, Binance, or various onchain exchanges.</div>
             <br>
@@ -749,7 +756,7 @@
     
     <h2 class = "wrapper" id="hot-386c1">We're fixing orderflow execution</h2>
     <p class = "wrapper" id="hot-dd3ae">(for around the hundredth time)</p>
-    <p class = "wrapper">Orderflow execution in crypto sucks. We've all heard the pitch.</p>
+    <p class = "wrapper">Decentralized orderflow execution sucks. We've all heard the pitch.</p>
     
     <div class="alert-container">
         <div class="basic-terminal">
@@ -765,44 +772,35 @@
         </div>
     </div>
 
-    <p class = "wrapper">Most solutions fail at improving things because they implement N+1 fixes. This has predictable results</p>
+    <p class = "wrapper">Most solutions fail at improving things because they implement N+1 fixes. This has predictable results.</p>
 
     <div class="terminal-container">
         <div class="alert-o">
-            <span class="breaking-prefix">BREAKING NEWS!:</span>
-            <span class="breaking-message">The new super fast isolated execution environment increased liquidity fragmentation</span>
+            <span class="breaking-prefix">BREAKING NEWS:</span>
+            <span class="breaking-message">The new super fast perp dex increased liquidity fragmentation</span>
         </div>
     </div>
     <div class="terminal-container">
         <div class="alert-o">
-            <span class="breaking-prefix">BREAKING NEWS!:</span>
+            <span class="breaking-prefix">BREAKING NEWS:</span>
             <span class="breaking-message">The chain abstraction network increased cost and latency</span>
         </div>
     </div>
     <div class="terminal-container">
-        <div class="alert-o">
-            <span class="breaking-prefix">BREAKING NEWS!:</span>
-            <span class="breaking-message">Another auction that sells the right to pick off market makers had minimal impact</span>
-        </div>
-    </div>
-    <div class="terminal-container">
-        <div class="alert">
+        <div class="alert" style="margin-bottom: 0;">
             <span class="error-prefix">MISSION FAILED:</span>
             <span class="error-message">Orderflow execution still sucks.</span>
         </div>
+        <div class="alert" style="border-left-color: #5ac8c8; border-top-color: #5ac8c8; background-color: rgba(90, 200, 200, 0.08); margin-bottom: 25px;">
+            <span class="error-prefix" style="color: #5ac8c8; text-shadow: none;">BOUNTY INCREASED:</span>
+            <span class="error-message" style="color: #b0e8e8; text-shadow: none;">Onchain RWA issuance is accelerating! The 72nd perp dex was just funded! Finance is finally going onchain!</span>
+        </div>
     </div>
-    <p class="wrapper">This has remained the case even as the problem has become significantly more important to solve:</p>
-    <ul>
-        <li>Liquidity fragmentation continues to accelerate - DEX's like Hyperliquid and Lighter are meanigfully eating into CEX market share. This trend will not reverse now that finance is permissionless.</li>
-        <li>Asset issuance and fragmentation is accelerating with the adoption of tokenized equities and commodities. How many versions of SPX tokens and perps do we have now?</li>
-        <li>The future of finance is decentralized - we need good execution.</li>
-    </ul>
-
-    <p class = "wrapper">Instead of continuing the trend. t+ took a first principles approach, and solved for what user's NEED from their orderflow execution: </p>
+    <p class = "wrapper">Instead of continuing the trend, Tplus took a first principles approach and solved for what users NEED from their orderflow execution:</p>
     <ul>
         <li>Speed!</li>
-        <li>Every asset &amp; protocol in one place!</li>
-        <li>Leverage and cross-margining (ie. capital efficiency)!</li>
+        <li>All assets &amp; liquidity in one place!</li>
+        <li>Leverage and cross-margining (i.e., capital efficiency)!</li>
         <li>Good quotes!</li>
         <li>Permissionless &amp; Trustless!</li>
     </ul>
@@ -814,13 +812,13 @@
     </div>
     <div class="container">
         <div class="p-font-2">
-            we needed to build <span class="illegal">T+</span> - a decentralized full-service exchange stack
+            we needed to build <span class="illegal">t+</span> - a decentralized full-service exchange stack
         </div>
     </div>
     <div class="container">
         <div class="p-font-2">
             that can decouple trade
-            <span class="illegal">Confirmation</span> from <span class="illegal">Settlement </span>
+            <span class="illegal">Confirmation</span> from <span class="illegal">Settlement</span>
         </div>
     </div>
     <div class="container">
@@ -886,7 +884,7 @@
                 </div>
                 <div class="tc-terminal-panel" data-phase="risk">
                     <div class="tc-term-header">Risk Engine Validates</div>
-                    <div class="tc-term-line">Pre-flight checks are ran</div>
+                    <div class="tc-term-line">Pre-flight checks are run</div>
                 </div>
                 <div class="tc-terminal-panel" data-phase="match">
                     <div class="tc-term-header">Orderbook matches trade</div>
@@ -904,18 +902,15 @@
         </div>
 
         <div class="tpteam-container">
-            Trades execute in an offchain orderbook ran in a TEE(trusted execution environment)
+            Trades execute in an offchain orderbook run in a TEE
             <ul class="tpteam-list">
 
-                <li class="tpteam-list-item">Under 1ms time to confirmation</li>
-                <li class="tpteam-list-item">Trustless and private</li>
+                <li class="tpteam-list-item">Under 1ms time to confirmation, private, trustless</li>
 
             </ul>
             Deposit any asset on any chain
             <ul class="tpteam-list">
-                <li class="tpteam-list-item">t+ supports all assets instantly</li>
-                <li class="tpteam-list-item">Trade anything, collateralize many things</li>
-
+                <li class="tpteam-list-item">Tplus supports all assets instantly. Trade anything, collateralize many things</li>
             </ul>
 
         
@@ -999,7 +994,7 @@
 
                 <!-- Right View 3: CLOB in a TEE (internal clear) -->
                 <div class="ts-right-box" id="ts-view3">
-                    <div class="ts-right-label">Clob in a TEE</div>
+                    <div class="ts-right-label">CLOB in a TEE</div>
                     <div class="ts-box" id="ts-ob-rs"><div class="ts-box-label">orderbook.rs</div></div>
                 </div>
 
@@ -2014,16 +2009,16 @@
 
     <div style="display: flex; gap: 20px; flex-wrap: wrap;">
         <div class="retro-panel" style="flex: 1; min-width: 300px; max-width: none; margin: 0;">
-            <div class="title">T+PAMMS</div>
+            <div class="title">t+PAMMS</div>
             <div class="panel-body" style="flex-direction: column;">
                 <div class="panel-text">
-                    <p>The current PAMM models kinda suck. They're very capital inefficient so the number of pairs they can support is limited. But they are fast so we like them.</p>
+                    <p>Current Prop AMMs are very capital inefficient so the number of pairs they can support is limited</p>
                     <p>Tplus' architecture allows us to offer an improved pAMM</p>
                     <ul>
-                        <li>Deposit vaults support a new permissionless settlement type that allows anyone to swap assets with the deposit vault at a specified price. These swaps are funded by pooled user deposits</li>
-                        <li>Price is set based on the offchain book state</li>
-                        <li>A designated market maker ingests the permissionless settlements into their account as margin positions and clears exposure into the t+ book</li>
-                        <li>Tplus traders can take advantage of tplus' composability to hedge their incurred exposure from the onchain flow</li>
+                        <li>Deposit vaults support a new permissionless settlement type that allows anyone to swap assets through it at a price specified by our book state</li>
+                        <li>These swaps are funded by Tplus' pooled user deposits</li>
+                        <li>A designated market maker ingests the settlements into their account as margin positions and clears exposure into the Tplus book</li>
+                        <li>Tplus traders can take advantage of Tplus' composability to hedge exposure incurred from the onchain flow</li>
                     </ul>
                     <p>Thus, Tplus ingests aggregator flow from ALL SUPPORTED CHAINS.</p>
                 </div>
@@ -2034,21 +2029,17 @@
         </div>
 
         <div class="retro-panel" style="flex: 1; min-width: 300px; max-width: none; margin: 0;">
-            <div class="title">T+CUSTODIANS</div>
+            <div class="title">t+CUSTODIANS</div>
             <div class="panel-body" style="flex-direction: column;">
                 <div class="panel-text">
                     <p>Tplus' architecture uniquely supports dedicated custodian prime broker solutions like Copper Clearloop and Fireblocks Off Exchange.</p>
                     <ul>
                         <li>TEEs preserve custodian account balance and credential privacy</li>
                         <li>TEEs easily support arbitrary API interfaces</li>
-                        <li>Our TEE+MPC setup eliminates exchange operator risk. It's impossible for tplus to misuse cross-margined capital.</li>
+                        <li>Our TEE+MPC setup eliminates exchange operator risk. It's impossible for Tplus to misuse cross-margined capital.</li>
                     </ul>
-                    <p>Previously cross-margining with centralized custodians required:</p>
-                    <ul>
-                        <li>Strict credit line limits</li>
-                        <li>KYB and legal contracts with the counterparty</li>
-                    </ul>
-                    <p>Dedication custodian prime-broker integrations remove those dependencies, enabling the feature for all users.</p>
+                    <p>Previously cross-margining with centralized custodians required strict credit limits and legal contracts with the counterparty.</p>
+                    <p>Dedicated custodian prime-broker integrations remove those dependencies, enabling the feature for all users.</p>
                 </div>
                 <div class="panel-status">
                     C:\SYSTEM\CUSTODIANS &gt; <span class="blink">_</span>
@@ -2059,7 +2050,7 @@
 
     <!-- 4. Phase 3 (formerly Phase 2) -->
     <h2>Phase 3: An Orderflow Execution Platform</h2>
-    <p>t+ is secretly a platform play as it's Composable Leverage Network (CLN) supports building multiple arbitrary orderbooks with custom properties on top of it. All cleared and settled by the same core system - thus benefiting from liquidity network effects. This means we can offer things like:</p>
+    <p>t+ is secretly a platform play as its Composable Leverage Network (CLN) supports building multiple arbitrary orderbooks with custom properties on top of it. All cleared and settled by the same core system - thus benefiting from liquidity network effects. This means we can offer things like:</p>
 
     <div class="card-deck">
         <!-- Card 1 -->
@@ -2072,7 +2063,7 @@
                 <div class="card-title">Compliant Orderbook</div>
                 <div class="card-li"><span class="illegal">&gt; </span>Only entities that have passed KYC/AML can trade</div>
                 <div class="card-li"><span class="illegal">&gt; </span>Essential for institutions entering crypto</div>
-                <div class="card-description">Enables selling <span class="red">t+</span> to mid-tier CEX's as a "backend" to simplify their liquidity and listings</div>
+                <div class="card-description">Enables selling <span class="red">t+</span> to mid-tier CEXs as a "backend" to simplify their liquidity and listings</div>
             </div>
         </div>
 
@@ -2141,7 +2132,7 @@
     </div>
 
     <!-- 5. Product doesn't matter + marketing -->
-    <h2>Product doesn't matter - how do we get users?</h3>
+    <h2>Product doesn't matter - how do we get users?</h2>
 
     <div class="retro-panel">
         <div class="panel-header">USER OWNERSHIP</div>
@@ -2224,7 +2215,7 @@
             <div class="panel-content">
                 <div class="panel-text">
                     <p>t+ offers the same UX as a CEX, a broader product, and lower counterparty risk.</p>
-                    <p>Using TEE's we can encumber CEX traders account credentials and trustlessly (and confidentially) verify their volume, fee tier, etc. Then offer them more perks, assets, and incentives than they had on the CEX</p>
+                    <p>Using TEEs we can encumber CEX traders account credentials and trustlessly (and confidentially) verify their volume, fee tier, etc. Then offer them more perks, assets, and incentives than they had on the CEX</p>
                 </div>
                 <div class="panel-status">
                     C:\SYSTEM\REAL-BD &gt; <span class="blink">_</span>
@@ -2282,10 +2273,10 @@
         </div>
     </div>
 
-    <!-- 7. Risk -->
+    <!-- 7. Risk
     <hr>
     <h2>"This sounds really cool and complex, isn't there a lot of risk in the system?"</h2>
-    <p class = "wrapper">We're absolutely handling a lot of risk! T+ has a lot of inherent leverage and counterparty risk that's managed the same way it's managed in any venue with counterparty risk:</p>
+    <p class = "wrapper">We're absolutely handling a lot of risk! t+ has a lot of inherent leverage and counterparty risk that's managed the same way it's managed in any venue with counterparty risk:</p>
     <ul>
         <li>Caps on cross-margining and asset deposits</li>
         <li>Interest rates to manage liquidity and exposure skew</li>
@@ -2300,14 +2291,12 @@
 
 
     <div class="wrapper">
-        <!-- The button -->
         <div class="console-button-container">
             <a href="#" class="console-button" onclick="openModal(); return false;">
                 &gt; How would t+ have handled 10/10/25?
             </a>
         </div>
 
-        <!-- The modal -->
         <div id="imageModal"
             style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.8);">
             <span onclick="closeModal()"
@@ -2326,7 +2315,7 @@
 
 
         </script>
-        </div>
+        </div> -->
     <hr>
     <h2>"This all sounds great! You guys last raised back in April right? What have you done since?"</h2>
     <p class="wrapper">A ton. t+ went from being an idea to well on its way to production</p>
@@ -2533,7 +2522,7 @@
                     <ul class="tpteam-sublist">
                         <li class="tpteam-list-item">Has been shipping frontend and chewing glass in this industry for a decade
                         </li>
-                        <li class="tpteam-list-item"> Gem in an industry full bad frontend engineering</li>
+                        <li class="tpteam-list-item"> Gem in an industry full of bad frontend engineering</li>
 
                     </ul>
                 </li>
@@ -2573,7 +2562,7 @@
                     </ul>
                 </li>
 
-                <li class="tpteam-list-item">Aishwaraya - Automated Testing
+                <li class="tpteam-list-item">Aishwarya - Automated Testing
                     <ul class="tpteam-sublist">
                         <li class="tpteam-list-item">Makes sure our code isn't broken</li>
                     </ul>
@@ -2652,7 +2641,7 @@
                 <li class="tpteam-list-item">Volt Capital</li>
                 <li class="tpteam-list-item">Josh Lim (falconX)</li>
                 <li class="tpteam-list-item">Aschwin (BHD)</li>
-                <li class="tpteam-list-item">Vishesh(prolific seed investor)</li>
+                <li class="tpteam-list-item">Vishesh (prolific seed investor)</li>
 
 
             </ul>
