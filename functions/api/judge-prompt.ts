@@ -72,6 +72,7 @@ EVALUATION PRINCIPLES:
    - "Buy OTC" with no desk/splitting specified → single desk, single block. Desk widens spread massively for $1.28B.
    - "Use futures" with no specifics → assume CME but with naive single-session entry.
    - Only credit sophisticated execution techniques (venue splitting, randomization, iceberg orders, dark pools, multi-desk OTC) if the submission EXPLICITLY mentions them.
+   - CRITICAL: When defaulting to a single exchange, use THAT EXCHANGE's daily volume in the market impact model, NOT total market volume. A $1.28B market order on Coinbase (~$1B daily BTC volume) means Q/V > 1.0 — you are consuming MORE than the entire day's volume in one order. The square-root model breaks down at this scale; apply at minimum 500-1000bps impact for Q/V > 0.5 on a single venue, scaling up from there.
    - The burden is on the submitter to demonstrate execution sophistication. Vague strategies get vague (bad) execution.
 1. SKEPTICISM: Be realistic. Apply real-world friction where warranted. Use mid-range assumptions for strategies that demonstrate awareness of execution complexity, but use PESSIMISTIC assumptions for strategies that ignore it.
 2. EXCHANGE FEES: Always include trading fees. Retrieve fee schedules from get_trading_costs.
