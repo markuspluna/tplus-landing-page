@@ -3,7 +3,7 @@ import type { Env } from '../types';
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const { env, request } = context;
-  const siteUrl = env.SITE_URL || 'https://www.tplus.cx';
+  const siteUrl = env.SITE_URL || 'https://ctf.tplus.cx';
 
   const cookie = request.headers.get('Cookie') || '';
   const match = cookie.match(/bs_session=([^;]+)/);

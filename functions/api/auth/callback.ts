@@ -4,7 +4,7 @@ import { randomId } from '../types';
 
 export const onRequestGet: PagesFunction<Env> = async (context) => {
   const { env, request } = context;
-  const siteUrl = env.SITE_URL || 'https://www.tplus.cx';
+  const siteUrl = env.SITE_URL || 'https://ctf.tplus.cx';
   const url = new URL(request.url);
   const code = url.searchParams.get('code');
   const state = url.searchParams.get('state');

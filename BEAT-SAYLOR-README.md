@@ -51,7 +51,7 @@ Set via `npx wrangler pages secret put <NAME> --project-name tplus-landing-page`
 | `TWITTER_CLIENT_ID` | Twitter OAuth 2.0 Client ID |
 | `TWITTER_CLIENT_SECRET` | Twitter OAuth 2.0 Client Secret |
 | `SESSION_SECRET` | Random hex string for session signing |
-| `SITE_URL` | `https://www.tplus.cx` |
+| `SITE_URL` | `https://ctf.tplus.cx` |
 
 ### D1 Schema
 
@@ -67,8 +67,8 @@ Tables: `users`, `submissions` (see `schema.sql`).
 4. Type: **Web App (Confidential client)**
 5. Callback URLs:
    - `http://localhost:8788/api/auth/callback` (local dev)
-   - `https://www.tplus.cx/api/auth/callback` (production)
-6. Website URL: `https://www.tplus.cx`
+   - `https://ctf.tplus.cx/api/auth/callback` (production)
+6. Website URL: `https://ctf.tplus.cx`
 
 ## Local Development
 

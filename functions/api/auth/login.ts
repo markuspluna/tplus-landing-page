@@ -4,7 +4,7 @@ import { randomId } from '../types';
 
 export const onRequestGet: PagesFunction<Env> = async (context) => {
   const { env } = context;
-  const siteUrl = env.SITE_URL || 'https://www.tplus.cx';
+  const siteUrl = env.SITE_URL || 'https://ctf.tplus.cx';
 
   // Generate PKCE code verifier and challenge
   const codeVerifier = randomId(64);
