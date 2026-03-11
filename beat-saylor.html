@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="beat-saylor.css">
+    <link rel="icon" type="image/png" href="assets/1836.webp">
+    <meta charset="utf-8">
+    <title>Beat Saylor | tplus</title>
+    <meta name="description" content="Can you execute a $1.28B Bitcoin acquisition better than Saylor?">
+    <meta http-equiv="Content-Language" content="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Beat Saylor | tplus">
+    <meta property="og:description" content="Can you execute a $1.28B Bitcoin acquisition better than Saylor?">
+    <meta property="og:url" content="https://www.tplus.cx/beat-saylor">
+    <meta property="og:image" content="https://www.tplus.cx/assets/smileylogo1200x675.png">
+    <meta name="twitter:title" content="Beat Saylor | tplus">
+    <meta name="twitter:description" content="Can you execute a $1.28B Bitcoin acquisition better than Saylor?">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.tplus.cx/assets/smileylogo1200x675.png">
+</head>
+<body class="bs-page">
+    <!-- Banner -->
+    <div class="banner">
+        <img src="assets/1836.webp" alt="Left Logo" class="banner-image left-image">
+        <div class="ticker-container">
+            <div class="ticker"> 1ms confirmations - excellent fills - native privacy - every asset - matched-book margin -</div>
+            <div class="ticker"> 1ms confirmations - excellent fills - native privacy - every asset - matched-book margin -</div>
+            <div class="ticker"> 1ms confirmations - excellent fills - native privacy - every asset - matched-book margin -</div>
+            <div class="ticker"> 1ms confirmations - excellent fills - native privacy - every asset - matched-book margin -</div>
+        </div>
+        <img src="assets/1836.webp" alt="Right Logo" class="banner-image right-image">
+    </div>
+
+    <div class="bs-container">
+
+        <!-- Nav -->
+        <nav class="bs-nav">
+            <a href="#" class="bs-nav-link active" data-view="home">Leaderboard</a>
+            <a href="#" class="bs-nav-link" data-view="submit">Submit</a>
+            <a href="#" class="bs-nav-link" data-view="about">About</a>
+            <div class="bs-nav-spacer"></div>
+            <div id="nav-auth">
+                <button class="bs-nav-x-btn" id="nav-login-btn">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    Connect
+                </button>
+                <div class="bs-nav-user" id="nav-user" style="display: none;">
+                    <button class="bs-nav-handle" id="nav-handle-btn">@</button>
+                    <div class="bs-nav-dropdown" id="nav-dropdown">
+                        <button class="bs-nav-dropdown-item" id="nav-logout-btn">Log out</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- ============ HOME VIEW (Leaderboard-first) ============ -->
+        <div class="bs-view active" id="view-home">
+
+            <!-- Hero — retro panel -->
+            <div class="retro-panel">
+                <div class="panel-header"><span class="prompt">NEW MISSION:</span> Beat Saylor</div>
+                <div class="panel-body">
+                    <div class="panel-content">
+                        <div class="panel-text">
+                            <p>You just got hired to run execution at Strategy. Your first assignment: acquire <strong style="color: #ED1F24;">$1.28 billion</strong> of Bitcoin delta between March 2-8, 2026. Saylor's team did it at an effective cost of <strong style="color: #ED1F24;">$73,429/BTC</strong> (considering risk free rate). Write a 500-character execution strategy and see if you can do better.</p>
+                            <img src="assets/saylor-buy-new.png" alt="Saylor's Bitcoin acquisition tweet" class="bs-saylor-tweet">
+                            <p class="bs-pitch-secondary">Your score is the 1-year effective price per BTC — factoring in execution costs and the cost of capital. Lower is better.</p>
+                        </div>
+                        <div style="margin-top: 10px;">
+                            <button class="console-button" id="cta-submit">> Submit Your Strategy</button>
+                        </div>
+                        <div class="panel-status">
+                            $1.28B EXECUTION CHALLENGE // C:\BEAT-SAYLOR&gt; <span class="blink">_</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leaderboard -->
+            <div class="bs-leaderboard-section retro-panel" style="max-width: 100%;">
+                <div class="panel-header">Leaderboard</div>
+                <table class="bs-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Handle</th>
+                            <th>Effective Price</th>
+                            <th>vs. Saylor</th>
+                            <th>Attempts</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body">
+                    </tbody>
+                </table>
+                <div id="leaderboard-empty" class="bs-empty">
+                    No submissions yet. Be the first to beat Saylor.<span class="blink">_</span>
+                </div>
+                <div id="leaderboard-loading" class="bs-loading-skeleton">
+                    <div class="bs-skeleton-row"></div>
+                    <div class="bs-skeleton-row"></div>
+                    <div class="bs-skeleton-row"></div>
+                    <div class="bs-skeleton-row"></div>
+                    <div class="bs-skeleton-row"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ SUBMIT VIEW ============ -->
+        <div class="bs-view" id="view-submit">
+
+            <!-- Not logged in -->
+            <div id="auth-gate">
+                <div class="bs-auth-prompt">
+                    <p>Log in with X to submit your execution strategy.</p>
+                    <button class="bs-x-button" id="login-btn">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        Log in with X
+                    </button>
+                </div>
+            </div>
+
+            <!-- Logged in — submission form -->
+            <div id="submit-form" style="display: none;">
+                <div class="bs-submit-header">
+                    <span id="user-info" class="bs-user-handle"></span>
+                    <span id="rate-limit-info" class="bs-rate-limit">10 submissions remaining this hour</span>
+                </div>
+
+                <textarea id="strategy-input" class="bs-textarea" maxlength="500" placeholder="Describe your execution strategy. Include instruments, sizing, timing, and venue selection. Be specific — the judge is skeptical."></textarea>
+                <div class="bs-textarea-footer">
+                    <span id="char-count" class="bs-char-count">0 / 500</span>
+                    <button class="bs-submit-btn" id="submit-btn" disabled>Submit</button>
+                </div>
+
+                <!-- Loading -->
+                <div id="loading-section" class="bs-evaluating" style="display: none;">
+                    <div class="bs-loading-bar-container">
+                        <div class="bs-loading-bar"></div>
+                    </div>
+                    <p class="bs-loading-text">Evaluating your strategy<span class="blink">_</span></p>
+                </div>
+
+                <!-- Results -->
+                <div id="results-section" style="display: none;">
+                    <div class="bs-result-card">
+                        <div class="bs-result-top">
+                            <div class="bs-result-rank" id="result-rank"></div>
+                            <div class="bs-result-score-block">
+                                <div class="bs-result-price" id="result-score">$0</div>
+                                <div class="bs-result-delta" id="result-delta"></div>
+                            </div>
+                        </div>
+
+                        <div class="bs-result-cost-breakdown" id="result-cost-breakdown"></div>
+                        <div class="bs-result-feedback" id="result-feedback"></div>
+                        <div class="bs-result-penalties" id="result-penalties"></div>
+
+                        <div class="bs-result-actions">
+                            <button class="bs-action-btn" id="try-again-btn">> Try Again</button>
+                            <button class="bs-action-btn" id="view-leaderboard-btn">> View Leaderboard</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ ABOUT VIEW ============ -->
+        <div class="bs-view" id="view-about">
+            <div class="bs-about">
+                <h2>The Challenge</h2>
+                <p>Between March 2-8, 2026, Michael Saylor's Strategy acquired 17,994 BTC for approximately $1.28 billion at an average price of ~$70,946 per Bitcoin.</p>
+                <p>This challenge asks: could you have done it better?</p>
+
+                <h2>How Scoring Works</h2>
+                <p>Your score is the <strong>1-year effective price per BTC</strong> — a single number that captures both execution quality and capital efficiency.</p>
+                <code class="bs-code-block">Effective Price = (Execution Cost + Net Annual Holding Cost) / BTC Delta</code>
+                <p><strong>Execution cost</strong> is what you actually pay to acquire the delta — including fees, spreads, slippage, and option premiums.</p>
+                <p><strong>Net annual holding cost</strong> is the cost of maintaining your position for one year, minus any yields. Capital sitting in T-bills earns 3.5%. Capital locked in spot BTC or margin doesn't. Perpetual funding rates, futures basis costs, and options theta all count.</p>
+                <p>Saylor bought spot and held. His effective cost: ~$70,946 execution + ~$44.8M opportunity cost (3.5% on $1.28B locked capital) = <strong>$73,429/BTC</strong>.</p>
+
+                <h2>Constraints</h2>
+                <ul>
+                    <li>$1.28B notional BTC delta required (~17,994 BTC)</li>
+                    <li>7-day execution window (March 2-8, 2026)</li>
+                    <li>Any instruments allowed — spot, futures, options, swaps, OTC, whatever</li>
+                    <li>Risk-free rate: 3.5%</li>
+                    <li>Holding costs assumed constant over the hold period</li>
+                </ul>
+
+                <h2>The Judge</h2>
+                <p>Strategies are evaluated by an AI execution specialist. The judge is <strong>skeptical by default</strong> — it estimates realistic market impact, penalizes unrealistic assumptions, and assesses creative strategies from a probability-of-success angle with a skew toward pessimism.</p>
+                <p>$1.28B is a significant portion of daily BTC volume. The judge knows this and will price in the market impact you're creating.</p>
+
+                <h2>Rate Limits</h2>
+                <p>10 submissions per hour. Log in with X to submit.</p>
+
+                <div class="bs-about-footer">
+                    Built by <a href="https://x.com/Tplus_cx">@Tplus_cx</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="bs-footer">
+            <a href="index.html">tplus.cx</a>
+        </div>
+    </div>
+
+    <script src="beat-saylor.js"></script>
+</body>
+</html>

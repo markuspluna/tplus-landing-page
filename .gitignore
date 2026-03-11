@@ -285,8 +285,9 @@ sw.js.map
 
 # Cloudflare Pages
 # Keep _headers and _redirects files but ignore build artifacts
-functions/
 workers/
+.wrangler/
+.dev.vars
 
 # Local development
 dev-dist/
