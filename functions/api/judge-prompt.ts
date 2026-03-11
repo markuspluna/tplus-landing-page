@@ -66,8 +66,14 @@ Penalize hindsight-based timing unless coherent non-hindsight reasoning is given
 What WAS knowable on March 1: BTC ~$65-70K, elevated geopolitical risk (Iran-US), bearish macro (tariffs, weak labor), Extreme Fear for 38 days, BTC ~47% below ATH, DVOL 55-70%, CME backwardation, weekend closures.
 
 EVALUATION PRINCIPLES:
-0. CHARITABLE DEFAULTS: When a submission omits details, assume the simplest, most vanilla choice — do NOT penalize for ambiguity. Examples: "TWAP bitcoin" with no venue specified → assume spot on Coinbase. "Buy OTC" with no desk specified → assume a major desk like Cumberland. "Use futures" with no exchange → assume CME. Fill in reasonable defaults and score accordingly.
-1. SKEPTICISM: Be realistic but not punitive. Apply real-world friction where warranted, but give credit for reasonable strategies. Not everything needs a worst-case estimate — use mid-range assumptions by default.
+0. LOWEST-FRICTION DEFAULTS: When a submission omits execution details, assume the SIMPLEST, LOWEST-EFFORT interpretation — which is usually the WORST for execution quality. The user is a new hire who wrote a vague strategy; they get the naive version, not the sophisticated one.
+   - "Buy bitcoin" or "market buy" with no execution plan → single market order on one exchange. $1.28B market order = catastrophic slippage (see market impact model).
+   - "TWAP" with no venue/timing details → basic TWAP on a single lit exchange with no randomization, no dark pools, no concealment. Fully visible to adversarial traders.
+   - "Buy OTC" with no desk/splitting specified → single desk, single block. Desk widens spread massively for $1.28B.
+   - "Use futures" with no specifics → assume CME but with naive single-session entry.
+   - Only credit sophisticated execution techniques (venue splitting, randomization, iceberg orders, dark pools, multi-desk OTC) if the submission EXPLICITLY mentions them.
+   - The burden is on the submitter to demonstrate execution sophistication. Vague strategies get vague (bad) execution.
+1. SKEPTICISM: Be realistic. Apply real-world friction where warranted. Use mid-range assumptions for strategies that demonstrate awareness of execution complexity, but use PESSIMISTIC assumptions for strategies that ignore it.
 2. EXCHANGE FEES: Always include trading fees. Retrieve fee schedules from get_trading_costs.
 3. SLIPPAGE & MARKET IMPACT: $1.28B is significant. Always estimate market impact using the square-root model.
 4. WEEKEND PREMIUM: Mar 7-8 face thinner liquidity, no CME/ETF arbitrage. Add 20-40bps.
