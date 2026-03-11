@@ -50,13 +50,16 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     return jsonResponse({ error: 'Authentication required. Please log in with X.' }, 401);
   }
 
-  // Rate limiting: 10 per hour
+  // Rate limiting: 10 per hour (increment optimistically to prevent race condition)
   const hourBucket = Math.floor(Date.now() / (60 * 60 * 1000));
   const rateLimitKey = `ratelimit:${session.user_id}:${hourBucket}`;
   const used = parseInt((await env.KV.get(rateLimitKey)) || '0', 10);
   if (used >= 10) {
     return jsonResponse({ error: 'Rate limit exceeded. 10 submissions per hour.', remaining_submissions: 0 }, 429);
   }
+
+  // Increment counter before AI call to close the TOCTOU race window
+  await env.KV.put(rateLimitKey, String(used + 1), { expirationTtl: 3600 });
 
   // Parse input
   let body: { strategy?: string };
@@ -140,15 +143,22 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     }
 
     if (!aiResult) {
+      // Decrement rate limit counter — don't penalize user for AI failure
+      const current = parseInt((await env.KV.get(rateLimitKey)) || '0', 10);
+      if (current > 0) {
+        await env.KV.put(rateLimitKey, String(current - 1), { expirationTtl: 3600 });
+      }
       return jsonResponse({ error: 'AI evaluation produced no result. Please try again.' }, 502);
     }
   } catch (e) {
     console.error('AI error:', e);
+    // Decrement rate limit counter on failure (best-effort)
+    const current = parseInt((await env.KV.get(rateLimitKey)) || '0', 10);
+    if (current > 0) {
+      await env.KV.put(rateLimitKey, String(current - 1), { expirationTtl: 3600 });
+    }
     return jsonResponse({ error: 'AI evaluation failed. Please try again.' }, 502);
   }
-
-  // Increment rate limit counter
-  await env.KV.put(rateLimitKey, String(used + 1), { expirationTtl: 3600 });
 
   // Sanity check the score
   let effectivePrice = aiResult.effective_price_per_btc;

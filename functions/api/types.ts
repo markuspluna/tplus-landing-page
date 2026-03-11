@@ -6,8 +6,7 @@ export interface Env {
   TWITTER_CLIENT_ID: string;
   TWITTER_CLIENT_SECRET: string;
   ANTHROPIC_API_KEY: string;
-  SESSION_SECRET: string;
-  SITE_URL: string; // e.g., https://www.tplus.cx
+  SITE_URL: string; // e.g., https://ctf.tplus.cx
 }
 
 export interface SessionData {
