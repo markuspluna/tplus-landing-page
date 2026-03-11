@@ -1,0 +1,12 @@
+name = "tplus-landing-page"
+pages_build_output_dir = "."
+compatibility_date = "2024-01-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "beat-saylor-db"
+database_id = "108b6439-5953-4066-82c6-c7159bad0d14"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "b09a269e157f4406979d0b858390220d"
