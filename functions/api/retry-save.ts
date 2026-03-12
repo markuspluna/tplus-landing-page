@@ -1,6 +1,6 @@
 // Retry saving a cached submission to D1
 import type { Env } from './types';
-import { getSession, jsonResponse, randomId } from './types';
+import { getSession, jsonResponse } from './types';
 import { SAYLOR_BENCHMARK } from './judge-prompt';
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
@@ -56,6 +56,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   }
 
   try {
+    // Delete KV entry first to prevent duplicate retries
+    await env.KV.delete(pendingKey);
+
     await env.DB.prepare(
       `INSERT INTO submissions (id, user_id, strategy_text, execution_cost_bps, execution_cost_usd,
        annual_holding_cost_usd, effective_price, confidence, feedback, strategy_summary,
@@ -63,7 +66,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
       .bind(
-        randomId(24),
+        data.submissionId,
         data.userId,
         data.strategy,
         data.aiResult.execution_cost_bps,
@@ -98,9 +101,6 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       .bind(userBest)
       .first<{ rank: number }>();
     const rank = (rankResult?.rank ?? 0) + 1;
-
-    // Clean up the KV cache
-    await env.KV.delete(pendingKey);
 
     return jsonResponse({ success: true, rank });
   } catch (dbErr) {

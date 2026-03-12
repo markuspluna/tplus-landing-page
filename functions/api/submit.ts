@@ -58,10 +58,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     return jsonResponse({ error: 'Rate limit exceeded. 10 submissions per hour.', remaining_submissions: 0 }, 429);
   }
 
-  // Increment counter before AI call to close the TOCTOU race window
-  await env.KV.put(rateLimitKey, String(used + 1), { expirationTtl: 3600 });
-
-  // Parse input
+  // Parse and validate input before incrementing rate limit
   let body: { strategy?: string };
   try {
     body = await request.json();
@@ -76,6 +73,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   if (strategy.length > 500) {
     return jsonResponse({ error: 'Strategy must be 500 characters or less' }, 400);
   }
+
+  // Increment counter before AI call to close the TOCTOU race window
+  await env.KV.put(rateLimitKey, String(used + 1), { expirationTtl: 3600 });
 
   // Call Anthropic API with tool-use loop
   let aiResult: AiResult | null = null;
@@ -226,6 +226,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   if (!dbSaved) {
     // Cache the result in KV so the user can retry the DB write without re-prompting
     const pendingKey = `pending:${session.user_id}:${submissionId}`;
+    let kvCached = false;
     try {
       await env.KV.put(pendingKey, JSON.stringify({
         submissionId,
@@ -236,6 +237,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         scoreVsSaylor,
         now,
       }), { expirationTtl: 3600 });
+      kvCached = true;
     } catch {
       // KV write failed too — nothing we can do
     }
@@ -254,8 +256,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       exchange_fees_bps: aiResult.exchange_fees_bps ?? null,
       slippage_bps: aiResult.slippage_bps ?? null,
       cost_breakdown: aiResult.cost_breakdown ?? null,
-      db_error: 'Your score was evaluated but could not be saved to the leaderboard. Click "Retry Save" to try again.',
-      retry_id: submissionId,
+      db_error: kvCached
+        ? 'Your score was evaluated but could not be saved to the leaderboard. Click "Retry Save" to try again.'
+        : 'Your score was evaluated but could not be saved. Please resubmit your strategy.',
+      ...(kvCached ? { retry_id: submissionId } : {}),
     });
   }
 
