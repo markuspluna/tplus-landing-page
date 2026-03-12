@@ -246,7 +246,6 @@
       const data = await res.json();
 
       skeletonEl.classList.remove('active');
-      leaderboardLoaded = true;
 
       const entries = data.entries || [];
 
