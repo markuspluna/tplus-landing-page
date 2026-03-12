@@ -170,53 +170,77 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const submissionId = randomId(24);
   const now = Date.now();
 
-  // Store in D1 (non-blocking — don't crash if DB write fails)
+  // Store in D1 — retry once on failure before giving up
   let rank = 1;
-  try {
-    await env.DB.prepare(
-      `INSERT INTO submissions (id, user_id, strategy_text, execution_cost_bps, execution_cost_usd,
-       annual_holding_cost_usd, effective_price, confidence, feedback, strategy_summary,
-       instruments, penalties, raw_ai_response, created_at, score_vs_saylor)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-    )
-      .bind(
-        submissionId,
-        session.user_id,
-        strategy,
-        aiResult.execution_cost_bps,
-        aiResult.execution_cost_usd,
-        aiResult.annual_holding_cost_usd,
-        effectivePrice,
-        aiResult.confidence,
-        aiResult.feedback,
-        aiResult.strategy_summary,
-        JSON.stringify(aiResult.instruments),
-        JSON.stringify(aiResult.penalties),
-        JSON.stringify(aiResult),
-        now,
-        scoreVsSaylor
+  let dbSaved = false;
+  for (let attempt = 0; attempt < 2 && !dbSaved; attempt++) {
+    try {
+      await env.DB.prepare(
+        `INSERT INTO submissions (id, user_id, strategy_text, execution_cost_bps, execution_cost_usd,
+         annual_holding_cost_usd, effective_price, confidence, feedback, strategy_summary,
+         instruments, penalties, raw_ai_response, created_at, score_vs_saylor)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
       )
-      .run();
-
-    const currentBest = await env.DB.prepare('SELECT best_score FROM users WHERE id = ?')
-      .bind(session.user_id)
-      .first<{ best_score: number | null }>();
-
-    if (!currentBest?.best_score || effectivePrice < currentBest.best_score) {
-      await env.DB.prepare('UPDATE users SET best_score = ? WHERE id = ?')
-        .bind(effectivePrice, session.user_id)
+        .bind(
+          attempt === 0 ? submissionId : randomId(24),
+          session.user_id,
+          strategy,
+          aiResult.execution_cost_bps,
+          aiResult.execution_cost_usd,
+          aiResult.annual_holding_cost_usd,
+          effectivePrice,
+          aiResult.confidence,
+          aiResult.feedback,
+          aiResult.strategy_summary,
+          JSON.stringify(aiResult.instruments),
+          JSON.stringify(aiResult.penalties),
+          JSON.stringify(aiResult),
+          now,
+          scoreVsSaylor
+        )
         .run();
-    }
 
-    const userBest = Math.min(effectivePrice, currentBest?.best_score ?? Infinity);
-    const rankResult = await env.DB.prepare(
-      'SELECT COUNT(*) as rank FROM users WHERE best_score IS NOT NULL AND best_score < ?'
-    )
-      .bind(userBest)
-      .first<{ rank: number }>();
-    rank = (rankResult?.rank ?? 0) + 1;
-  } catch (dbErr) {
-    console.error('D1 write failed (non-fatal):', dbErr);
+      const currentBest = await env.DB.prepare('SELECT best_score FROM users WHERE id = ?')
+        .bind(session.user_id)
+        .first<{ best_score: number | null }>();
+
+      if (!currentBest?.best_score || effectivePrice < currentBest.best_score) {
+        await env.DB.prepare('UPDATE users SET best_score = ? WHERE id = ?')
+          .bind(effectivePrice, session.user_id)
+          .run();
+      }
+
+      const userBest = Math.min(effectivePrice, currentBest?.best_score ?? Infinity);
+      const rankResult = await env.DB.prepare(
+        'SELECT COUNT(*) as rank FROM users WHERE best_score IS NOT NULL AND best_score < ?'
+      )
+        .bind(userBest)
+        .first<{ rank: number }>();
+      rank = (rankResult?.rank ?? 0) + 1;
+      dbSaved = true;
+    } catch (dbErr) {
+      console.error(`D1 write attempt ${attempt + 1} failed:`, dbErr);
+    }
+  }
+
+  if (!dbSaved) {
+    // Return the result but warn the user their score wasn't saved
+    return jsonResponse({
+      id: submissionId,
+      effective_price: effectivePrice,
+      score_vs_saylor: scoreVsSaylor,
+      rank: null,
+      remaining_submissions: Math.max(0, 10 - (used + 1)),
+      feedback: aiResult.feedback,
+      strategy_summary: aiResult.strategy_summary,
+      penalties: aiResult.penalties,
+      instruments: aiResult.instruments,
+      execution_cost_bps: aiResult.execution_cost_bps,
+      exchange_fees_bps: aiResult.exchange_fees_bps ?? null,
+      slippage_bps: aiResult.slippage_bps ?? null,
+      cost_breakdown: aiResult.cost_breakdown ?? null,
+      db_error: 'Your score was evaluated but could not be saved to the leaderboard. Please try submitting again.',
+    });
   }
 
   return jsonResponse({

@@ -148,6 +148,9 @@
 
       document.getElementById('loading-section').style.display = 'none';
       showResults(data);
+      if (data.db_error) {
+        alert(data.db_error);
+      }
     } catch (e) {
       document.getElementById('loading-section').style.display = 'none';
       submitBtn.disabled = false;
