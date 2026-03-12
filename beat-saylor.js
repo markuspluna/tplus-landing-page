@@ -148,8 +148,8 @@
 
       document.getElementById('loading-section').style.display = 'none';
       showResults(data);
-      if (data.db_error) {
-        alert(data.db_error);
+      if (data.db_error && data.retry_id) {
+        showRetrySave(data.retry_id);
       }
     } catch (e) {
       document.getElementById('loading-section').style.display = 'none';
@@ -228,6 +228,48 @@
     }
 
     document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function showRetrySave(retryId) {
+    var existing = document.getElementById('retry-save-banner');
+    if (existing) existing.remove();
+
+    var banner = document.createElement('div');
+    banner.id = 'retry-save-banner';
+    banner.style.cssText = 'background:#2a0a0a;border:1px solid #ff4444;padding:12px 16px;margin:12px 0;display:flex;align-items:center;justify-content:space-between;gap:12px;';
+    banner.innerHTML = '<span style="color:#ff8888;">Score not saved to leaderboard.</span>' +
+      '<button id="retry-save-btn" class="bs-action-btn" style="white-space:nowrap;">> Retry Save</button>';
+
+    var resultsSection = document.getElementById('results-section');
+    resultsSection.insertBefore(banner, resultsSection.firstChild);
+
+    document.getElementById('retry-save-btn').addEventListener('click', async function () {
+      var btn = this;
+      btn.disabled = true;
+      btn.textContent = '> Saving...';
+      try {
+        var res = await fetch(API_BASE + '/retry-save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ retry_id: retryId }),
+        });
+        var result = await res.json();
+        if (res.ok && result.success) {
+          banner.style.borderColor = '#44ff44';
+          banner.innerHTML = '<span style="color:#88ff88;">Score saved to leaderboard! Rank #' + result.rank + '</span>';
+          setTimeout(function () { banner.remove(); }, 5000);
+        } else {
+          btn.disabled = false;
+          btn.textContent = '> Retry Save';
+          alert(result.error || 'Save failed. Try again.');
+        }
+      } catch (e) {
+        btn.disabled = false;
+        btn.textContent = '> Retry Save';
+        alert('Network error: ' + (e.message || e));
+      }
+    });
   }
 
   // --- Leaderboard ---

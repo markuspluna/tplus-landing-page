@@ -224,7 +224,22 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   }
 
   if (!dbSaved) {
-    // Return the result but warn the user their score wasn't saved
+    // Cache the result in KV so the user can retry the DB write without re-prompting
+    const pendingKey = `pending:${session.user_id}:${submissionId}`;
+    try {
+      await env.KV.put(pendingKey, JSON.stringify({
+        submissionId,
+        userId: session.user_id,
+        strategy,
+        aiResult,
+        effectivePrice,
+        scoreVsSaylor,
+        now,
+      }), { expirationTtl: 3600 });
+    } catch {
+      // KV write failed too — nothing we can do
+    }
+
     return jsonResponse({
       id: submissionId,
       effective_price: effectivePrice,
@@ -239,7 +254,8 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       exchange_fees_bps: aiResult.exchange_fees_bps ?? null,
       slippage_bps: aiResult.slippage_bps ?? null,
       cost_breakdown: aiResult.cost_breakdown ?? null,
-      db_error: 'Your score was evaluated but could not be saved to the leaderboard. Please try submitting again.',
+      db_error: 'Your score was evaluated but could not be saved to the leaderboard. Click "Retry Save" to try again.',
+      retry_id: submissionId,
     });
   }
 
