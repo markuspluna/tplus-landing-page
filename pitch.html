@@ -21,18 +21,20 @@
   ║      tc-terminal                                  ~808           ║
   ║      tpteam-container (TC explanation text)        ~823           ║
   ║      console-footer                               ~843           ║
-  ║    Trade Settlement console (#sankey-console)     ~852           ║
+  ║    Composability console (#sankey-console)        ~852           ║
   ║      sankey-window (#sankey-window)               ~854           ║
   ║        ts-pause-btn, ts-title, view dots          ~855           ║
   ║        ts-diagram (CE, RE, MM, right-side views)  ~866           ║
   ║        ts-terminal                                ~933           ║
   ║      tpteam-container (TS explanation text)        ~972           ║
-  ║      MBM animation (#mbm-window)                  ~988           ║
-  ║        mbm-pause-btn, mbm-title                   ~989           ║
-  ║        mbm-diagram (CLN box, risk_engine, bars)   ~991           ║
-  ║        mbm-terminal                               ~1018          ║
-  ║      tpteam-container (MBM explanation text)       ~1035          ║
-  ║      console-footer                               ~1047          ║
+  ║      console-footer                               ~985           ║
+  ║    Capital Efficiency console (#mbm-console)      ~990           ║
+  ║      MBM animation (#mbm-window)                  ~995           ║
+  ║        mbm-pause-btn, mbm-title                   ~996           ║
+  ║        mbm-diagram (MLN box, risk_engine, bars)   ~1000          ║
+  ║        mbm-terminal                               ~1025          ║
+  ║      tpteam-container (MBM explanation text)       ~1040          ║
+  ║      console-footer                               ~1055          ║
   ║                                                                  ║
   ║  SCRIPT BLOCK 1 (pitch page)                      ~1053          ║
   ║    DOMContentLoaded                               ~1054          ║
@@ -307,6 +309,7 @@
         #depth-console { width: 700px; max-width: 95%; }
         #sankey-console { width: 700px; max-width: 95%; }
         #sankey-console .sankey-window { height: 420px; }
+        #mbm-console { width: 700px; max-width: 95%; }
 
         .ts-title {
             font: bold 13px monospace; color: #cc0000;
@@ -489,6 +492,7 @@
         @media (max-width: 600px) {
             #sankey-console { width: 95%; max-width: 100%; }
             #sankey-console .sankey-window { height: 640px; }
+            #mbm-console { width: 95%; max-width: 100%; }
 
             /* Title: let it wrap to two lines, keep clear of dots */
             .ts-title { max-width: 60%; font-size: 12px; }
@@ -545,7 +549,7 @@
         }
 
         /* ── MBM (Matched-Book-Margin) Animation ── */
-        #mbm-window { height: 380px; }
+        #mbm-window { height: 480px; }
 
         .mbm-title {
             font: bold 13px monospace; color: #cc0000;
@@ -591,6 +595,7 @@
             flex: 1; display: flex; align-items: flex-end;
             justify-content: center; gap: 80px;
             padding: 4px 8px 8px; position: relative;
+            overflow: hidden;
         }
 
         /* Individual exposure bar wrapper */
@@ -775,25 +780,33 @@
     </div>
     <div class="container">
         <div class="p-font-2">
-            we needed to build <span class="illegal">t+</span> - a decentralized full-service exchange stack
+            we needed to build a decentralized Prime Exchange
         </div>
     </div>
     <div class="container">
         <div class="p-font-2">
-            that can decouple trade
-            <span class="illegal">Confirmation</span> from <span class="illegal">Settlement</span>
-        </div>
+            that offers
+            <span class="illegal">A High Performance Trading Venue</span> 
+        </div></div>
+
+        <div class="container">
+            <div class="p-font-2">
+            that is <span class="illegal">Composable with External Venues</span> 
+            </div></div>
+
+            <div class="container">
+                <div class="p-font-2">
+                   
+                    and <span class="illegal">Extremely Capital Efficient</span>
+                </div></div>
+
     </div>
-    <div class="container">
-        <div class="p-font-2">
-            and optimize each separately
-        </div>
-    </div>
+    
     
 <div class="components-container">
     <!-- Left component (Personal Onboarding) -->
     <div class="arcade-console" id="depth-console">
-        <h1 class="title">TRADE CONFIRMATION</h1>
+        <h1 class="title">TRADING</h1>
 
         <div class="game-window" id="game-window">
             <button class="anim-pause-btn playing" id="tc-pause-btn" title="Play" style="position:absolute;top:6px;left:8px;z-index:12;"></button>
@@ -835,8 +848,8 @@
 
             </div>
 
-            <!-- CLN exit label on right edge -->
-            <div class="tc-cln-label">CLN &#8594;</div>
+            <!-- MLN exit label on right edge -->
+            <div class="tc-cln-label">MLN &#8594;</div>
 
             <!-- Terminal text panel -->
             <div class="tc-terminal" id="tc-terminal">
@@ -857,8 +870,8 @@
                     <div class="tc-term-header">Trade confirmed</div>
                     <div class="tc-term-line">User balance is updated</div>
                 </div>
-                <div class="tc-terminal-panel" data-phase="cln">
-                    <div class="tc-term-header">Match sent to CLN</div>
+                <div class="tc-terminal-panel" data-phase="mln">
+                    <div class="tc-term-header">Match sent to MLN</div>
                     <div class="tc-term-line">This is a proposed state mutation</div>
                 </div>
             </div>
@@ -882,7 +895,7 @@
 
 
         <div class="console-footer">
-            <div class="console-program">C:\SYSTEM\OPTIMAL-CONFIRMATION &gt; </div>
+            <div class="console-program">C:\SYSTEM\OPTIMAL-TRADING &gt; </div>
         </div>
     </div>
 
@@ -891,7 +904,7 @@
 
     <!-- Right component (User Journey) -->
     <div class="arcade-console" id="sankey-console">
-        <h1 class="title">TRADE SETTLEMENT</h1>
+        <h1 class="title">COMPOSABILITY</h1>
 
         <div class="sankey-window" id="sankey-window">
             <div style="display:flex;align-items:center;gap:6px;padding:6px 10px 4px;">
@@ -909,7 +922,7 @@
             <div class="ts-diagram">
                 <!-- Left: CLN box -->
                 <div class="ts-cln">
-                    <div class="ts-cln-label">Composable Leverage<br>Network</div>
+                    <div class="ts-cln-label">Margined Liquidity<br>Network</div>
                     <div class="ts-tdx-label">INTEL TDX VM</div>
                     <div class="ts-ce" id="ts-ce">
                         <div class="ts-ce-label">clearing_engine.rs</div>
@@ -1018,12 +1031,24 @@
                     external on/offchain liquidity because we're composable with it</li>
             </ul>
 
-            Onchain interactions can be performed using any user deposits
+            Onchain interactions are funded using global, pooled t+ deposits
             <ul class="tpteam-list">
                 <li class="tpteam-list-item">Market makers have negligible rebalancing or capital costs, as well as no
                     need to hold inventory of assets they want to quote</li>
             </ul>
         </div>
+
+        <div class="console-footer">
+            <div class="console-program">C:\SYSTEM\OPTIMAL-SETTLEMENT &gt; </div>
+        </div>
+    </div>
+
+    <!-- Connector between components -->
+    <div class="connector">&gt;</div>
+
+    <!-- Capital Efficiency console -->
+    <div class="arcade-console" id="mbm-console">
+        <h1 class="title">CAPITAL EFFICIENCY</h1>
 
         <!-- MBM Animation -->
         <div class="sankey-window" id="mbm-window">
@@ -1034,7 +1059,7 @@
 
             <div class="mbm-diagram">
                 <div class="mbm-cln">
-                    <div class="mbm-cln-label">Composable Leverage Network</div>
+                    <div class="mbm-cln-label">Margined Liquidity Network</div>
                     <div class="mbm-tdx-label">INTEL TDX VM</div>
 
                     <div class="mbm-re" id="mbm-re">
@@ -1079,14 +1104,14 @@
             <ul class="tpteam-list">
                 <li class="tpteam-list-item">Scales open interest without volatile funding rates — flow imbalances lead to exposure skews rather than the premiums/discounts seen with perps</li>
                 <li class="tpteam-list-item">Leverage positions remain fungible with spot market liquidity as they are non-synthetic which improves liquidity and enables a unified book! </li>
-                
+
             </ul>
             Skew-based funding rates incentivize cross-side leverage flow to keep exposure balanced
-            
+
         </div>
 
         <div class="console-footer">
-            <div class="console-program">C:\SYSTEM\OPTIMAL-SETTLEMENT &gt; </div>
+            <div class="console-program">C:\SYSTEM\CAPITAL-EFFICIENCY &gt; </div>
         </div>
     </div>
 </div>
@@ -1269,7 +1294,7 @@
                                 userEl.classList.add('flash');
                                 tcDelay(3000, function() {
                                     userEl.classList.remove('flash');
-                                    setPanel('cln');
+                                    setPanel('mln');
                                     animateBall(exitX, riskCenterY, 1800, function() {
                                         ball.style.display = 'none';
                                         var growIdx = Math.floor(Math.random() * totalBars);
@@ -1935,9 +1960,8 @@
     </div>
 
     <!-- 2. Phase 1 -->
-    <h2>Phase 1: A Very Good DEX</h2>
-    <p id="hot-d497c">(bet you never heard of one of these)</p>
-    <p>t+'s exchange offering, as a decentralized full-service exchange, is the best on market.</p>
+    <h2>Phase 1: Building the First Prime Exchange</h2>
+    <p>t+'s exchange offering, as a prime exchange, is the best on market.</p>
 
     <div class="alert-container">
         <div class="basic-terminal">
@@ -1966,8 +1990,7 @@
     <p>It'll be offered initially via website UI, and high-performance api</p>
 
     <!-- 3. Phase 2 -->
-    <h2>Phase 2: An Even Better DEX</h2>
-    <p><em>(it's really possible)</em></p>
+    <h2>Phase 2: Making it Even Better</h2>
     <p>After the initial release, we plan to fast-follow with a few key features:</p>
 
     <div style="display: flex; gap: 20px; flex-wrap: wrap;">
@@ -2012,8 +2035,8 @@
     </div>
 
     <!-- 4. Phase 3 (formerly Phase 2) -->
-    <h2>Phase 3: An Orderflow Execution Platform</h2>
-    <p>t+ is secretly a platform play as its Composable Leverage Network (CLN) supports building multiple arbitrary orderbooks with custom properties on top of it. All cleared and settled by the same core system - thus benefiting from liquidity network effects. This means we can offer things like:</p>
+    <h2>Phase 3: A Prime Exchange Network</h2>
+    <p>t+ is secretly a platform play as its Margined Liquidity Network supports building multiple arbitrary orderbooks with custom properties on top of it. All cleared and settled by the same core system - thus benefiting from liquidity network effects. This means we can enable things like:</p>
 
     <div class="card-deck">
         <!-- Card 1 -->
@@ -3006,7 +3029,7 @@
                                     userEl.classList.add('flash');
                                     tcDelay(3000, function() {
                                         userEl.classList.remove('flash');
-                                        setPanel('cln');
+                                        setPanel('mln');
                                         animateBall(exitX, riskCenterY, 1800, function() {
                                             ball.style.display = 'none';
                                             var growIdx = Math.floor(Math.random() * totalBars);
