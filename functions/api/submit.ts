@@ -39,11 +39,13 @@ interface AnthropicResponse {
   stop_reason: string;
 }
 
-const MAX_TOOL_ROUNDS = 5;
+const MAX_TOOL_ROUNDS = 3;
+const ANTHROPIC_TIMEOUT_MS = 25_000; // 25s per API call to stay within Worker limits
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const { env, request } = context;
 
+  try {
   // Auth required
   const session = await getSession(request, env);
   if (!session) {
@@ -89,21 +91,32 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     ];
 
     for (let round = 0; round < MAX_TOOL_ROUNDS; round++) {
-      const anthropicRes = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': env.ANTHROPIC_API_KEY,
-          'anthropic-version': '2023-06-01',
-        },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-6',
-          max_tokens: 4096,
-          system: JUDGE_SYSTEM_PROMPT,
-          tools: JUDGE_TOOLS,
-          messages,
-        }),
-      });
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), ANTHROPIC_TIMEOUT_MS);
+      let anthropicRes: Response;
+      try {
+        anthropicRes = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': env.ANTHROPIC_API_KEY,
+            'anthropic-version': '2023-06-01',
+          },
+          body: JSON.stringify({
+            model: 'claude-sonnet-4-6',
+            max_tokens: 4096,
+            system: JUDGE_SYSTEM_PROMPT,
+            tools: JUDGE_TOOLS,
+            messages,
+          }),
+          signal: controller.signal,
+        });
+      } catch (fetchErr) {
+        clearTimeout(timeout);
+        console.error('Anthropic fetch failed (timeout or network):', fetchErr);
+        return jsonResponse({ error: 'AI evaluation timed out. Please try again.' }, 504);
+      }
+      clearTimeout(timeout);
 
       if (!anthropicRes.ok) {
         const errText = await anthropicRes.text();
@@ -278,4 +291,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     slippage_bps: aiResult.slippage_bps ?? null,
     cost_breakdown: aiResult.cost_breakdown ?? null,
   });
+
+  } catch (fatal) {
+    console.error('Unhandled error in submit handler:', fatal);
+    return jsonResponse({ error: 'An unexpected error occurred. Please try again.' }, 500);
+  }
 };
