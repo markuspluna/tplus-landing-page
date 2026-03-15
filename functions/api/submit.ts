@@ -40,7 +40,7 @@ interface AnthropicResponse {
 }
 
 const MAX_TOOL_ROUNDS = 3;
-const ANTHROPIC_TIMEOUT_MS = 55_000; // 55s per API call — Anthropic tool-use with large prompts can be slow
+const ANTHROPIC_TIMEOUT_MS = 120_000; // 2 min per API call
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const { env, request } = context;
@@ -104,7 +104,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
           },
           body: JSON.stringify({
             model: 'claude-sonnet-4-6',
-            max_tokens: 2048,
+            max_tokens: 4096,
             system: JUDGE_SYSTEM_PROMPT,
             tools: JUDGE_TOOLS,
             messages,
