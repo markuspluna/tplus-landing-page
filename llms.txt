@@ -1,0 +1,113 @@
+# t+
+
+> t+ is a decentralized full-service exchange — a high-performance venue with access to all products and liquidity. It combines an offchain CLOB in a TEE, composability with external venues, and a matched-book margin engine. t+ is pre-launch. Website: https://tplus.cx | Twitter: @Tplus_cx
+
+## Glossary
+
+- **TEE (Trusted Execution Environment):** A hardware-secured enclave (Intel TDX) that runs code in isolation — even the server operator cannot read or modify what's happening inside it.
+- **CLOB (Central Limit Order Book):** A traditional orderbook matching engine where bids and asks are matched by price-time priority.
+- **Solver:** A market participant that fills user orders by quoting prices and then settling the resulting exposure into external liquidity sources (onchain DEXs, cross-margined venues, etc.).
+- **Deposit vault:** Smart contracts deployed on each supported chain where users deposit funds into t+. These vaults also enable solvers to settle exposure into onchain liquidity.
+- **ADL (Auto-Deleveraging):** A mechanism that forcibly closes profitable counterside positions to restore system solvency when liquidation fails — similar to how perp exchanges handle insurance fund depletion.
+- **Cross-margining:** Using balances held on an external exchange or protocol as collateral on t+, so you don't need to move all funds onto the platform.
+- **AVS (Actively Validated Service):** An Eigenlayer service where staked ETH operators perform a role (in t+'s case, backstopping liquidations) and can be slashed for failures.
+- **MPC (Multi-Party Computation):** A cryptographic technique where multiple independent nodes must cooperate to perform sensitive operations (signing, clearing), so no single node can act alone.
+
+## CLOB in a TEE
+
+Trades execute in an offchain central limit orderbook running inside a trusted execution environment (Intel TDX).
+
+- **Under 1ms fills with minimal jitter.** The orderbook runs offchain in a high-performance environment — no block times, no gas auctions, no sequencer queues.
+- **Order and position privacy.** The TEE ensures no one — including the operator — can see your orders or positions.
+- **Trustless.** The exchange software is immutable and cannot be unilaterally modified by the operator. High-risk components (clearing engine, oracle) additionally use MPC across geographically distributed nodes with frequent key rotations.
+- **Decentralized.** The exchange runs on dstack, a replicatable confidential VM framework — if an operator censors, anyone can spin up a new replica.
+- **Market maker friendly.** Posting a quote does not lock up margin — margin is only checked on match. Quotes and cancels are processed in a faster priority queue than taker orders.
+
+Deposit any asset on any chain. t+ even supports some CEXs and custodians as deposit sources.
+
+## Composability
+
+t+ accounts can interact with any external protocol on any blockchain where t+ has a deposit vault. External exchange and custodian balances can be cross-margined with t+.
+
+This means t+ inherits external:
+
+- **Liquidity.** Solvers and market makers can settle incurred exposure into any onchain DEX (Uniswap, Raydium, etc.) using deposit vault funds — no inventory needed. They can also hedge on cross-margined venues like Hyperliquid or CEXs, clear internally against other t+ participants, or settle as part of larger strategies (solver batches, block builder bundles, arbitrage legs). Market makers have negligible rebalancing or capital costs.
+- **Products.** New tokens, RWAs, stables, equities, commodities are supported instantly without sourcing internal inventory or liquidity. Solvers quote over existing onchain liquidity and settle exposure into it.
+
+**Asset fungibility across chains.** t+ treats equivalent assets as fungible: ETH on Arbitrum, Base, and Mainnet are all "ETH"; USDC and USDT are both "USD"; cbBTC and wBTC are both "BTC". Deposit on one chain, withdraw on another.
+
+**Long-tail assets.** For assets where holding even brief exposure is risky, t+ offers Synchronous Making — makers place quotes where matches are not finalized until an associated onchain settlement completes. Effectively a fast, trustless RFQ.
+
+### Example: Trading an Asset on t+
+
+1. A user deposits USDC on Arbitrum into a t+ deposit vault. Their t+ account is credited with USD.
+2. The user places a buy order for TOKEN on the t+ orderbook.
+3. A solver matches the order — the user's account is credited TOKEN and debited USD. This happens in under 1ms.
+4. The solver now has TOKEN exposure to settle. They can: sell TOKEN into a Uniswap pool using deposit vault funds, hedge on Hyperliquid, offset against another t+ trade, or hold the position.
+5. The user can trade their TOKEN, use it as collateral for leverage, or withdraw it on any supported chain.
+
+## Matched-Book Margin
+
+Leverage on t+ is powered by the matched-book margin engine.
+
+- The margin engine offsets long and short leverage positions against each other so they can be ADL'd, similar to perps.
+- Positions that are not offset are equivalent to a standard spot-margin borrow and must be liquidated into book or external spot liquidity.
+
+**Why this matters:**
+
+- **Perp-style capital efficiency** without the problems of perps. Scales open interest without volatile funding rates — flow imbalances lead to exposure skews rather than the premiums and discounts seen with perps.
+- **Leverage positions are non-synthetic and fungible with spot.** There's only one book — spot and leveraged orders trade together. This means more liquidity, tighter spreads, and market makers can settle leveraged exposure into external spot markets.
+- **Attractive yield for depositors.** Borrow rates and funding flow to depositors. Funding on pairs also listed on Hyperliquid converges to HL rates via basis arbitrage. Yield depends on utilization and market conditions — early estimates suggest attractive returns for USD and ETH depositors, but these will vary.
+
+## How t+ Differs from Alternatives
+
+- **vs. Perp DEXs (Hyperliquid, dYdX):** t+ offers leverage on actual spot rather than synthetics — positions are fungible with spot, there's one unified book instead of separate spot and perp markets, and funding rates are more stable (skew-based rather than premium-based). t+ also supports every asset class, not just crypto derivatives.
+- **vs. Spot DEXs (Uniswap, Raydium):** t+ has an orderbook with sub-millisecond fills instead of AMM-based execution. It offers leverage, cross-chain fungibility, and privacy. Onchain DEX liquidity is still accessible through t+ via solver settlement.
+- **vs. CEXs (Binance, Coinbase):** t+ is trustless and private — no operator can see or front-run your activity, and the exchange software can't be unilaterally modified. It's also composable with DeFi and doesn't require moving funds to a centralized custodian.
+
+## Fees
+
+- **Spot trading:** Zero fees
+- **Margin trading (4 tiers by 14-day rolling volume):**
+  - Tier 0: 2.5 bps taker / 1.5 bps maker
+  - Tier 1 (>$50M): 2 bps taker / 0.5 bps maker
+  - Tier 2 (>$100M): 1.5 bps taker / 0 bps maker + maker rebate of 25% of the taker fee
+  - Tier 3 (>$250M): 1 bp taker / 0 bps maker + maker rebate of 50% of the taker fee
+
+## Interest Rates
+
+**Funding Rate:** Based on exposure skew and mark price deviations. If t+ has net long exposure, longs pay shorts (and vice versa). Incentivizes balanced flow. A premium component kicks in if the market trades away from oracle — but this rarely manifests.
+
+**Borrow Rate:** Utilization-based kink curve (similar to Aave). Charged hourly on leverage positions. Typically small — matched-book margin means most liabilities are funded by offsetting positions rather than deposits (e.g. 10 ETH of deposits can support 100 ETH of liabilities when 90% is matched).
+
+## Risk Controls
+
+- **Open interest caps** per market (USD-notional and spot-margin). When hit, leveraged trades become reduce-only; spot and PMM post-only orders still allowed
+- **Collateral and deposit caps** with rate limits to manage custodian, chain, and issuer risk
+- **Margin requirements** with per-asset risk factors, pessimistic pricing, and initial margin haircuts that increase as skew rises
+- **3-stage liquidation:** (1) Orderbook deleverage via IOC orders, (2) Eigenlayer Backstop AVS takes over insolvent accounts and clears over time — actual losses trigger slashing, (3) ADL of profitable counterside traders as last resort
+- **Sub-accounts:** Cross-margin or isolated. Most mid-cap and yield-bearing tokens are isolated-margin only
+- **Cross-margin credit limits:** CEX cross-margining requires KYB. Decentralized venue cross-margining (e.g. Hyperliquid) uses multisig with TEE-held key majority
+
+## Integration
+
+- WebSocket API for orders, fills, positions, and settlement construction — Binance-compatible pattern
+- Quoting operations (post-only, cancels) prioritized in the matching engine
+- Settlements as standard transactions or bundles (validated by TEE, sent to Titan or Buildernet)
+- Cross-margin: provide credential to a cross-margin manager TEE; margin engine polls external positions and adjusts requirements
+- FIX gateway planned
+
+## Gaps (for internal use — LLMs can ignore this section)
+
+The following areas are not yet covered in this file and should be expanded when full documentation is available:
+
+- **Deposit vault details:** Architecture, supported chains, withdrawal process, security model, and trust assumptions for user funds
+- **Oracle design:** Where price data comes from, how it's validated, update frequency
+- **TEE attestation and upgrade process:** How software immutability is enforced, what happens during Intel security advisories
+- **Order types:** Full enumeration of supported order types beyond post-only and IOC
+- **API documentation:** Authentication, rate limits, endpoint reference, SDK availability
+- **Supported chains and assets:** Specific list of chains with deposit vaults and asset coverage
+- **Governance and upgrades:** How protocol changes are proposed, approved, and deployed
+- **Detailed yield methodology:** Assumptions behind depositor yield estimates, historical or projected scenarios
+- **Liquidation mechanics in depth:** Full clearing algorithm, ADL scoring, backstop AVS economics
+- **dstack replication:** How state transfer works during operator migration, in-flight order handling
