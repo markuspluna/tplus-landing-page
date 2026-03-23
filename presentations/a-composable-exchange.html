@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>A Composable Exchange — T+ Product Day 2026</title>
+    <link rel="icon" type="image/png" href="../assets/1836.webp">
+    <style>
+        /* no pixel fonts */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #000; overflow: hidden; font-family: 'Courier New', monospace; color: #111; }
+
+        /* ── Slides ── */
+        .slide {
+            position: fixed; inset: 0;
+            display: none; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 36px 5vw;
+            background: #ffeeee;
+            opacity: 0; transition: opacity 0.35s ease;
+        }
+        .slide.active { display: flex; opacity: 1; }
+        .slide.align-start { align-items: flex-start; }
+
+        /* ── Chrome ── */
+        .progress-bar { position: fixed; top: 0; left: 0; height: 4px; background: #ED1F24; z-index: 100; transition: width 0.4s ease; }
+        .slide-counter { position: fixed; bottom: 16px; right: 24px; font: bold 21px 'Courier New', monospace; color: #999; z-index: 100; user-select: none; }
+        .nav-hint { position: fixed; bottom: 16px; left: 24px; font: 20px 'Courier New', monospace; color: #bbb; z-index: 100; user-select: none; transition: opacity 2s ease; }
+
+        /* ── Typography ── */
+        .t-impact { font-family: Impact, sans-serif; color: #ED1F24; }
+        .slide-headline {
+            font: bold 54px Impact, 'Arial Narrow', sans-serif;
+            color: #111; line-height: 1.2; margin-bottom: 20px;
+            letter-spacing: 0.5px; text-transform: uppercase;
+            width: 100%;
+        }
+        .slide-subtext { font: bold 42px 'Courier New', monospace; color: #333; line-height: 1.4; width: 100%; }
+        .stat-callout { font-family: Impact, sans-serif; font-size: 80px; color: #ED1F24; line-height: 1.2; margin: 20px 0 24px; }
+        .slide-emphasis { font-family: Impact, sans-serif; color: #ED1F24; font-size: 52px; margin-top: 28px; line-height: 1.3; }
+
+        /* ═══ SLIDE 1: Title ═══ */
+        .title-logo { width: 140px; margin-bottom: 36px; image-rendering: pixelated; }
+        .title-main { font-family: Impact, sans-serif; font-size: 100px; color: #ED1F24; line-height: 1; margin-bottom: 24px; letter-spacing: 3px; text-transform: uppercase; }
+        .title-sub { font: bold 24px 'Courier New', monospace; color: #666; letter-spacing: 3px; line-height: 1.8; text-align: center; text-transform: uppercase; }
+        .title-series { font: 24px 'Courier New', monospace; color: #999; margin-top: 24px; }
+
+        /* ═══ SLIDE 2: Definition Table ═══ */
+        .def-table { border-collapse: collapse; width: 100%; margin: 24px 0; }
+        .def-table th, .def-table td { padding: 20px 32px; text-align: left; font: 500 36px 'Courier New', monospace; border: 2px solid #ddd; }
+        .def-table th { background: #ED1F24; color: #fff; font: bold 20px 'Courier New', monospace; text-transform: uppercase; letter-spacing: 2px; }
+        .def-table th:first-child { background: #f5f5f5; color: #888; font: bold 20px 'Courier New', monospace; }
+        .def-table td:first-child { font-weight: bold; color: #888; background: #f9f9f9; font-size: 27px; }
+        .def-table .col-full { background: rgba(237, 31, 36, 0.04); }
+        .def-takeaway { font: bold 45px 'Courier New', monospace; color: #333; margin-top: 32px; }
+
+        /* ── Bullet list ── */
+        .slide-bullets { list-style: none; padding: 0; margin: 20px 0; width: 100%; }
+        .slide-bullets li { font: 500 45px 'Courier New', monospace; color: #333; padding: 12px 0; }
+        .slide-bullets li::before { content: "> "; color: #ED1F24; font-weight: bold; }
+
+        /* ═══ SLIDES 4–5: Chart ═══ */
+        .chart-slide { justify-content: flex-start; padding-top: 28px; padding-bottom: 16px; }
+        .chart-header { width: 100%; margin-bottom: 8px; }
+        .chart-label { font: bold 20px 'Courier New', monospace; color: #888; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+        .chart-area { width: 100%; flex: 1; min-height: 0; position: relative; }
+        .chart-area canvas { width: 100%; height: 100%; display: block; }
+
+        /* ═══ SLIDES 6–10: Composable Flow ═══ */
+        .example-header { font: bold 24px 'Courier New', monospace; color: #ED1F24; margin-bottom: 8px; letter-spacing: 3px; text-transform: uppercase; }
+        .example-title { font: bold 48px Impact, sans-serif; color: #111; margin-bottom: 12px; text-transform: uppercase; }
+
+        /* Flow-of-funds diagrams */
+        .fof { display: flex; gap: 40px; width: 100%; flex: 1; min-height: 0; }
+        .fof-track { flex: 1; display: flex; flex-direction: column; }
+        .fof-label { font: bold 24px 'Courier New', monospace; color: #aaa; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px; }
+        .fof-track.comp .fof-label { color: #ED1F24; }
+        .fof-steps { display: flex; flex-direction: column; gap: 0; flex: 1; }
+        .fof-box { padding: 14px 24px; border: 3px solid #ddd; background: #fff; font: 500 30px 'Courier New', monospace; color: #555; }
+        .fof-box.hl { border-color: #ED1F24; background: rgba(237,31,36,0.06); color: #ED1F24; font-weight: bold; }
+        .fof-arr { text-align: center; padding: 4px 0; font-size: 24px; color: #ccc; }
+        .fof-track.comp .fof-arr { color: #ED1F24; }
+        .fof-result { font: bold 30px 'Courier New', monospace; color: #aaa; margin-top: auto; padding: 16px 0 0; border-top: 3px dashed #ddd; line-height: 1.4; }
+        .fof-track.comp .fof-result { color: #ED1F24; }
+        .fof-result.lose { color: #ccc; }
+
+        /* Combinatorial discovery */
+        .combo { display: flex; gap: 40px; width: 100%; flex: 1; min-height: 0; }
+        .combo-track { flex: 1; display: flex; flex-direction: column; }
+        .combo-label { font: bold 24px 'Courier New', monospace; color: #aaa; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px; }
+        .combo-track.comp .combo-label { color: #ED1F24; }
+        .combo-item { padding: 14px 24px; border: 3px solid #ddd; background: #fff; font: 500 28px 'Courier New', monospace; color: #999; display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+        .combo-item .ico { font-size: 28px; flex-shrink: 0; }
+        .combo-item .reason { font-size: 22px; color: #bbb; margin-left: auto; }
+        .combo-track.comp .combo-item { border-color: #ED1F24; color: #333; background: rgba(237,31,36,0.04); }
+        .combo-track.comp .combo-item .ico { color: #ED1F24; }
+        .combo-bundle-arr { font: bold 48px 'Courier New', monospace; color: #ED1F24; text-align: center; padding: 12px 0; }
+        .combo-result { font: bold 28px 'Courier New', monospace; color: #ED1F24; padding: 18px; border: 3px solid #ED1F24; background: rgba(237,31,36,0.04); line-height: 1.5; }
+
+        /* Formal result */
+        .formal-box { background: #f5f5f5; border: 3px solid #ddd; padding: 28px 36px; width: 100%; margin: 28px 0; }
+        .formal-box p { font: 500 33px 'Courier New', monospace; color: #444; line-height: 1.5; margin-bottom: 10px; }
+        .formal-cite { font: italic 27px 'Courier New', monospace; color: #888; }
+
+        /* ═══ SLIDE 7: Mechanism List ═══ */
+        .mechanism-list { list-style: none; padding: 0; margin: 40px 0; }
+        .mechanism-list li { font: 500 54px 'Courier New', monospace; color: #333; padding: 28px 0; display: flex; align-items: center; gap: 24px; }
+        .mechanism-list .num { font: bold 24px 'Courier New', monospace; color: #ED1F24; background: rgba(237,31,36,0.08); padding: 14px 22px; border: 3px solid #ED1F24; }
+        .mechanism-list .mech-arr { color: #ED1F24; font-weight: bold; font-size: 42px; }
+
+        /* ═══ SLIDE 8: Settlement Flow ═══ */
+        .settlement-flow { display: flex; flex-direction: column; gap: 0; width: 100%; margin: 24px 0; }
+        .settlement-step { display: flex; align-items: center; gap: 20px; padding: 20px 28px; background: #fff; border: 3px solid #ddd; position: relative; }
+        .settlement-step:not(:last-child) { margin-bottom: 16px; }
+        .settlement-step:not(:last-child)::after { content: '▼'; position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%); color: #ED1F24; font-size: 12px; }
+        .settlement-step .step-num { font: bold 24px 'Courier New', monospace; color: #ED1F24; flex-shrink: 0; }
+        .settlement-step .step-text { font: 500 39px 'Courier New', monospace; color: #333; }
+        .settlement-atomic { font: bold 44px Impact, sans-serif; color: #ED1F24; margin-top: 28px; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* ═══ SLIDE 9: Re-org Panels ═══ */
+        .reorg-panels { display: flex; gap: 20px; width: 100%; margin: 20px 0; flex: 1; min-height: 0; }
+        .reorg-panel { flex: 1; border: 3px solid #ddd; background: #fff; overflow: hidden; transition: opacity 0.4s ease; display: flex; flex-direction: column; }
+        .reorg-panel.danger { border-color: #ED1F24; }
+        .reorg-panel.resolved { border-color: #2a9d2a; }
+        .reorg-panel-label { font: bold 18px 'Courier New', monospace; color: #888; padding: 14px 16px 8px; letter-spacing: 2px; text-transform: uppercase; }
+        .reorg-panel.danger .reorg-panel-label { color: #ED1F24; }
+        .reorg-panel.resolved .reorg-panel-label { color: #2a9d2a; }
+        .reorg-panel canvas { flex: 1; width: 100%; min-height: 0; }
+
+        .reorg-punch { font: bold 42px 'Courier New', monospace; color: #ED1F24; margin-top: 16px; width: 100%; opacity: 0; transition: opacity 0.4s ease; }
+        .reorg-punch.visible { opacity: 1; }
+
+        /* ═══ SLIDE 10: Cross-Margin ═══ */
+        .xm-bullets { list-style: none; padding: 0; margin: 24px 0; width: 100%; }
+        .xm-bullets li { font: 500 48px 'Courier New', monospace; color: #333; padding: 18px 0; border-bottom: 1px dotted #ddd; }
+        .xm-bullets li::before { content: "→ "; color: #ED1F24; font-weight: bold; }
+        .xm-bullets li:last-child { border-bottom: none; }
+
+        /* ═══ SLIDE 11: Encumbrance ═══ */
+        .tee-props { display: flex; gap: 30px; margin: 20px 0; width: 100%; }
+        .tee-prop { flex: 1; padding: 20px; border: 3px solid #ED1F24; }
+        .tee-prop-label { font: bold 20px 'Courier New', monospace; color: #ED1F24; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; }
+        .tee-prop-text { font: 500 33px 'Courier New', monospace; color: #333; line-height: 1.4; }
+
+        .enc-table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        .enc-table th, .enc-table td { padding: 16px 24px; text-align: left; font: 500 30px 'Courier New', monospace; border: 2px solid #ddd; }
+        .enc-table th { background: #ED1F24; color: #fff; font: bold 18px 'Courier New', monospace; text-transform: uppercase; letter-spacing: 2px; }
+        .enc-table .level-full { background: rgba(237,31,36,0.05); }
+        .enc-table .trust-none { color: #ED1F24; font-weight: bold; }
+
+        .vision-text { font: italic 36px 'Courier New', monospace; color: #888; margin-top: 24px; }
+
+        /* ── Section markers ── */
+        .section-tag { font: bold 18px 'Courier New', monospace; color: #fff; background: #ED1F24; display: inline-block; padding: 8px 20px; margin-bottom: 16px; letter-spacing: 4px; text-transform: uppercase; }
+
+        /* ── Reveal animations ── */
+        .reveal { opacity: 0; transform: translateY(12px); transition: opacity 0.4s ease, transform 0.4s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+<div class="slide-counter" id="counter"></div>
+<div class="nav-hint" id="navHint">← → navigate &nbsp;|&nbsp; SPACE advance &nbsp;|&nbsp; F fullscreen</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 1: Title                         -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-1">
+    <img src="../assets/250.webp" class="title-logo" alt="t+">
+    <div class="title-main">A Composable Exchange</div>
+    <div class="title-sub">ALL PRODUCTS &amp; LIQUIDITY IN ONE BOX<br>+ INCREASING FLOW VALUE</div>
+    <div class="title-series">Talk 2 of 3 — Composability Deep-Dive</div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 2: What Composability Means      -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-2" data-clicks="1">
+    <div class="slide-headline" style="text-align:center;">What composability means</div>
+    <table class="def-table" id="s2-table">
+        <tr><th></th><th>READ-ONLY (PARTIAL)</th><th>READ + WRITE (FULL)</th></tr>
+        <tr><td>Does</td><td>Observe external state</td><td class="col-full">Atomically read AND write</td></tr>
+        <tr><td>Example</td><td>Oracle price feeds</td><td class="col-full">Multi-step atomic bundle</td></tr>
+        <tr><td>Value</td><td>Information</td><td class="col-full"><strong style="color:#ED1F24;">Execution</strong></td></tr>
+    </table>
+    <div class="def-takeaway reveal" id="s2-takeaway">t+ = full composability</div>
+    <ul class="slide-bullets reveal" id="s2-bullets">
+        <li>All products and liquidity in one box</li>
+        <li>More valuable flow</li>
+    </ul>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 3: Fragmentation is Expensive    -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide align-start" id="slide-3" data-clicks="4">
+    <div class="section-tag">PART I</div>
+    <div class="slide-headline">Fragmentation is expensive</div>
+    <div class="slide-subtext" style="margin-bottom:24px;">No single venue has all the products or all the liquidity.</div>
+    <ul class="slide-bullets">
+        <li class="reveal" id="s3-b1">Working capital on every venue</li>
+        <li class="reveal" id="s3-b2">Rebalancing capital between them</li>
+        <li class="reveal" id="s3-b3">~20% annual hurdle on all of it</li>
+    </ul>
+    <div class="slide-subtext reveal" id="s3-pay" style="color:#888; margin-top:36px;">MMs pay for this. You pay through worse fills.</div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 4: ETH Liquidity Cost Curve      -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide align-start chart-slide" id="slide-4">
+    <div class="chart-header" style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <div class="slide-headline" style="font-size:36px; margin-bottom:8px;">Liquidity fragmentation is expensive</div>
+        <div style="text-align:right; flex-shrink:0;">
+            <div class="chart-label">ETH SPOT ±2% DEPTH</div>
+            <div style="font:bold 30px 'Courier New',monospace; color:#333;">$173M across 13 venues <span style="color:#888; font-size:24px;">(5 DEX chains, 8 CEXs)</span></div>
+        </div>
+    </div>
+    <div class="chart-area" id="liq-chart-area">
+        <canvas id="liq-chart"></canvas>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 5: Product Access Cost Curve     -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide align-start chart-slide" id="slide-5">
+    <div class="chart-header" style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <div class="slide-headline" style="font-size:36px; margin-bottom:8px;">Product fragmentation is expensive</div>
+        <div style="text-align:right; flex-shrink:0;">
+            <div class="chart-label">TOP 100 INSTRUMENTS BY VOLUME</div>
+            <div style="font:bold 30px 'Courier New',monospace; color:#333;">15+ venues to access them all</div>
+        </div>
+    </div>
+    <div class="chart-area" id="prod-chart-area">
+        <canvas id="prod-chart"></canvas>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 6: Composable Flow Thesis        -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide align-start" id="slide-6" data-clicks="3">
+    <div class="section-tag">PART II</div>
+    <div class="slide-headline">Composable flow is worth more</div>
+    <div class="slide-subtext" style="color:#888; margin-bottom:28px;">Composable flow = trades that can atomically interact with external state and operations</div>
+    <div class="slide-subtext reveal" id="s6-linear" style="margin-bottom:28px;">Non-composable: each fill valued in isolation. <span class="t-impact" style="font-size:42px;">LINEAR.</span></div>
+    <div class="slide-subtext reveal" id="s6-super">Composable: each fill valued as part of the best bundle. <span class="t-impact" style="font-size:42px;">SUPERLINEAR.</span></div>
+    <div class="slide-subtext reveal" id="s6-n" style="color:#888; margin-top:40px; font-size:33px;">N composable operations → O(2<sup>N</sup>) possible bundles</div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 7: Example 1 — Flow = Capital    -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide align-start" id="slide-7" style="padding-top:28px;" data-clicks="4">
+    <div class="example-header">EXAMPLE 1</div>
+    <div class="example-title">Flow substitutes for capital</div>
+    <div class="fof">
+        <div class="fof-track">
+            <div class="fof-label">NON-COMPOSABLE</div>
+            <div class="fof-steps">
+                <div class="fof-box reveal" id="s7-l1">MM fills client buy order</div>
+                <div class="fof-arr reveal" id="s7-la1">↓</div>
+                <div class="fof-box reveal" id="s7-l2">MM funds trade with <strong>own capital</strong></div>
+                <div class="fof-arr reveal" id="s7-la2">↓</div>
+                <div class="fof-box reveal" id="s7-l3">MM clears exposure through Uniswap</div>
+            </div>
+            <div class="fof-result reveal" id="s7-lr">MM needs capital. Cost center.</div>
+        </div>
+        <div class="fof-track comp">
+            <div class="fof-label">COMPOSABLE</div>
+            <div class="fof-steps">
+                <div class="fof-box reveal" id="s7-r1">MM fills client buy order</div>
+                <div class="fof-arr reveal" id="s7-ra1">↓</div>
+                <div class="fof-box hl reveal" id="s7-r2">MM swaps <strong>user's capital</strong> atomically through Uniswap</div>
+                <div class="fof-arr reveal" id="s7-ra2">↓</div>
+                <div class="fof-box reveal" id="s7-r3">User receives acquired funds</div>
+            </div>
+            <div class="fof-result reveal" id="s7-rr">Zero MM capital. Flow IS the capital.</div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 8: Example 2 — Combinatorial     -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide align-start" id="slide-8" style="padding-top:28px;" data-clicks="4">
+    <div class="example-header">EXAMPLE 2</div>
+    <div class="example-title">Combinatorial discovery</div>
+    <div class="fof">
+        <div class="fof-track">
+            <div class="fof-label">EVALUATED ALONE</div>
+            <div class="fof-steps">
+                <div class="fof-box reveal" id="s8-l1">MM short 10 ETH <span style="float:right;color:#ccc;">❌ cost center</span></div>
+                <div class="fof-arr reveal" id="s8-la1" style="color:#ddd;">no connection</div>
+                <div class="fof-box reveal" id="s8-l2">BTC liquidation available <span style="float:right;color:#ccc;">❌ need capital</span></div>
+                <div class="fof-arr reveal" id="s8-la2" style="color:#ddd;">no connection</div>
+                <div class="fof-box reveal" id="s8-l3">Mispriced BTC/ETH quote <span style="float:right;color:#ccc;">❌ not worth standalone</span></div>
+            </div>
+            <div class="fof-result lose reveal" id="s8-lr">Each rejected individually. No value captured.</div>
+        </div>
+        <div class="fof-track comp">
+            <div class="fof-label">BUNDLED ATOMICALLY</div>
+            <div class="fof-steps">
+                <div class="fof-box reveal" id="s8-r1">MM short 10 ETH — pull USDC collateral</div>
+                <div class="fof-arr reveal" id="s8-ra1">↓ USDC</div>
+                <div class="fof-box hl reveal" id="s8-r2">Fill BTC liquidation — repay debt with collateral, receive BTC</div>
+                <div class="fof-arr reveal" id="s8-ra2">↓ BTC</div>
+                <div class="fof-box hl reveal" id="s8-r3">Swap BTC through mispriced BTC/ETH quote → receive ETH</div>
+                <div class="fof-arr reveal" id="s8-ra3">↓ ETH</div>
+                <div class="fof-box reveal" id="s8-r4">Close short. Cost center resolved.</div>
+            </div>
+            <div class="fof-result reveal" id="s8-rr">Profitable. Remove any leg and it breaks.</div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 9: Example 3 — Winner-take-all   -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide align-start" id="slide-9" style="padding-top:28px;" data-clicks="4">
+    <div class="example-header">EXAMPLE 3</div>
+    <div class="example-title">Wins winner-take-all</div>
+    <div class="fof">
+        <div class="fof-track">
+            <div class="fof-label">BUILDER A</div>
+            <div class="fof-steps">
+                <div class="fof-box reveal" id="s9-l1">Mempool txs, arbs, liquidations</div>
+                <div class="fof-arr reveal" id="s9-la1">↓</div>
+                <div class="fof-box reveal" id="s9-l2">Builds block from available operations</div>
+                <div class="fof-arr reveal" id="s9-la2">↓</div>
+                <div class="fof-box reveal" id="s9-l3">Submits to auction</div>
+            </div>
+            <div class="fof-result lose reveal" id="s9-lr">Loses auction.</div>
+        </div>
+        <div class="fof-track comp">
+            <div class="fof-label">BUILDER B</div>
+            <div class="fof-steps">
+                <div class="fof-box reveal" id="s9-r1">Mempool txs, arbs, liquidations</div>
+                <div class="fof-arr reveal" id="s9-ra1">+</div>
+                <div class="fof-box hl reveal" id="s9-r2">Composable private orderflow</div>
+                <div class="fof-arr reveal" id="s9-ra2">↓</div>
+                <div class="fof-box reveal" id="s9-r3">Bundles orderflow into more efficient solutions</div>
+            </div>
+            <div class="fof-result reveal" id="s9-rr">Wins every time. Not marginal — categorical.</div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 10: Formal Result                -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide align-start" id="slide-10" data-clicks="2">
+    <div class="slide-headline" style="font-size:36px;">For CFMMs, optimal bundles are provably ≥ isolated trades</div>
+    <div class="formal-box reveal" id="s10-box">
+        <p>Multi-asset CFMM optimization is <strong>convex</strong> — a larger composable set cannot produce a worse optimum.</p>
+        <p>Adding a composable asset expands the feasible set, never shrinks it.</p>
+        <div class="formal-cite">Angeris, Agrawal, Evans, Chitra, Boyd (2021) — arXiv:2107.12484</div>
+    </div>
+    <div class="slide-emphasis reveal" id="s10-punch" style="font-size:40px; margin-top:20px;">Each fill worth more → MMs quote tighter → better prices</div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 11: Implementation Transition    -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-11" data-clicks="1">
+    <div class="slide-headline" style="text-align:center;">How t+ implements full composability</div>
+    <ul class="mechanism-list">
+        <li><span class="num">1</span><span>Chains</span><span style="color:#888;">(programmable)</span><span class="mech-arr">→</span><strong>Settlements</strong></li>
+        <li class="reveal" id="s11-m2"><span class="num">2</span><span>Exchanges</span><span style="color:#888;">(non-programmable)</span><span class="mech-arr">→</span><strong>Cross-Margining</strong></li>
+    </ul>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 12: Settlements                  -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide align-start" id="slide-12" data-clicks="5">
+    <div class="section-tag">PART III</div>
+    <div class="slide-headline">Composability via settlements</div>
+    <div class="slide-subtext" style="color:#888; margin-bottom:20px; font-size:33px;">Flash-loan style interactions using deposit vault funds</div>
+    <div class="settlement-flow">
+        <div class="settlement-step reveal" id="s12-s1"><span class="step-num">01</span><span class="step-text">User requests settlement → CE validates safety</span></div>
+        <div class="settlement-step reveal" id="s12-s2"><span class="step-num">02</span><span class="step-text">Pull funds from deposit vault (e.g. USDC)</span></div>
+        <div class="settlement-step reveal" id="s12-s3"><span class="step-num">03</span><span class="step-text">Execute interaction (swap, LP, liquidation...)</span></div>
+        <div class="settlement-step reveal" id="s12-s4"><span class="step-num">04</span><span class="step-text">Return funds to deposit vault (e.g. ETH)</span></div>
+    </div>
+    <div class="slide-subtext reveal" id="s12-atomic" style="color:#888; margin-top:12px; font-size:28px;">Atomic. Any step fails → everything reverts.</div>
+    <div class="slide-emphasis reveal" id="s12-ingest" style="font-size:40px;">t+ ingests the liquidity and products of every settlement-accessible chain.</div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 13: Re-org Safety                -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide align-start" id="slide-13" style="justify-content:flex-start; padding-top:28px;" data-clicks="2">
+    <div class="slide-headline" style="font-size:36px;">Re-org safety — optimistic execution</div>
+    <div class="slide-subtext" style="color:#888; margin-bottom:12px; font-size:30px;">Same finality risk every CEX has.</div>
+    <div class="slide-subtext" style="margin-bottom:12px; font-size:30px;"><strong style="color:#ED1F24;">Optimistic Finalization:</strong> optimistically finalize state transitions and prune unsafe ones if a re-org occurs</div>
+    <div class="slide-subtext" style="margin-bottom:18px; font-size:30px;">Two balances: <strong>effective</strong> (for trading) and <strong>finalized</strong> (for withdrawals)</div>
+    <div class="reorg-panels">
+        <div class="reorg-panel" id="rp-1"><div class="reorg-panel-label">1. PENDING TREES FORM</div><canvas id="rc-1"></canvas></div>
+        <div class="reorg-panel danger" id="rp-2" style="opacity:0.25;"><div class="reorg-panel-label">2. RE-ORG HITS TX₁</div><canvas id="rc-2"></canvas></div>
+        <div class="reorg-panel resolved" id="rp-3" style="opacity:0.25;"><div class="reorg-panel-label">3. AFTER RESOLUTION</div><canvas id="rc-3"></canvas></div>
+    </div>
+    <div class="reorg-punch" id="reorg-punch">Re-org's only revert unsafe state.</div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 14: Cross-Margining              -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide align-start" id="slide-14" data-clicks="4">
+    <div class="section-tag">PART IV</div>
+    <div class="slide-headline">Composability via cross-margining</div>
+    <div class="stat-callout" style="font-size:60px;">External exchange accounts = t+ margin</div>
+    <ul class="xm-bullets">
+        <li class="reveal" id="s14-b1">Quote on t+ against CEX liquidity</li>
+        <li class="reveal" id="s14-b2">Hedge on the CEX</li>
+        <li class="reveal" id="s14-b3">Zero additional capital on t+ side</li>
+    </ul>
+    <div class="slide-emphasis reveal" id="s14-ingest" style="font-size:40px;">t+ ingests the liquidity and products of every cross-margin accessible venue.</div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 15: Account Encumbrance          -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide align-start" id="slide-15" data-clicks="3">
+    <div class="slide-headline" style="font-size:36px;">Account encumbrance — TEE integrity &amp; privacy</div>
+    <div class="slide-subtext" style="color:#888; margin-bottom:14px; font-size:30px;">TEE-based adapters manage external account credentials</div>
+    <div class="tee-props reveal" id="s15-props">
+        <div class="tee-prop"><div class="tee-prop-label">INTEGRITY</div><div class="tee-prop-text">Code is attested. Adapter does exactly what it claims.</div></div>
+        <div class="tee-prop"><div class="tee-prop-label">PRIVACY</div><div class="tee-prop-text">Data never leaves enclave. t+ sees margin, not positions.</div></div>
+    </div>
+    <table class="enc-table reveal" id="s15-table">
+        <tr><th>LEVEL</th><th>MECHANISM</th><th>ENFORCES</th><th>TRUST</th></tr>
+        <tr><td>Observe</td><td>Read-only API keys</td><td>Balance reporting</td><td>Credit limits</td></tr>
+        <tr><td>Veto</td><td>Multisig (user + adapter)</td><td>Block risky withdrawals</td><td>Credit limits</td></tr>
+        <tr class="level-full"><td><strong>Full</strong></td><td>Adapter holds signing majority</td><td>Force-liquidation</td><td class="trust-none">None</td></tr>
+    </table>
+    <div class="slide-emphasis reveal" id="s15-punch" style="font-size:36px;">Full = permissionless. No KYB. No credit limits. No bad debt.</div>
+    <div class="slide-subtext reveal" id="s15-note" style="color:#888; font-size:24px; margin-top:8px;">TEE trust model covered in the Performance deep-dive</div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 16: Not a Router — Internal CLOB -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide align-start" id="slide-16" style="padding-top:28px;" data-clicks="2">
+    <div class="slide-headline" style="font-size:48px; color:#888;">"So you built a fancy router?"</div>
+    <div class="stat-callout" style="font-size:100px; margin:0 0 12px;">NO.</div>
+    <div class="formal-box" style="flex:1; min-height:0; display:flex; flex-direction:column; margin:0;">
+        <div class="slide-headline" style="font-size:36px; color:#ED1F24; margin-bottom:8px;">Internal CLOB + matching engine</div>
+        <ul class="slide-bullets" style="margin-bottom:12px;">
+            <li class="reveal" id="s16-b1">Native liquidity first — external only when cheaper</li>
+            <li class="reveal" id="s16-b2">Facilitates cooperative execution</li>
+        </ul>
+        <div class="reveal" id="s16-sankey" style="width:100%; flex:1; min-height:0; position:relative;">
+            <canvas id="sankey-router" style="width:100%; height:100%; display:block;"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 17: Not a Router — Leverage      -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide align-start" id="slide-17" style="padding-top:28px;" data-clicks="2">
+    <div class="slide-headline" style="font-size:48px; color:#888;">"So you built a fancy router?"</div>
+    <div class="stat-callout" style="font-size:100px; margin:0 0 12px;">NO.</div>
+    <div class="formal-box" style="flex:1; min-height:0; display:flex; flex-direction:column; margin:0;">
+        <div class="slide-headline" style="font-size:36px; color:#ED1F24; margin-bottom:8px;">Leverage makes composability sing</div>
+        <ul class="slide-bullets" style="margin-bottom:16px;">
+            <li class="reveal" id="s17-b1">MBM: capital efficiency of perps, fungibility of spot</li>
+            <li class="reveal" id="s17-b2">Take large exposure, clear into composable markets</li>
+        </ul>
+        <div class="reveal" id="s17-fof" style="display:flex; align-items:center; flex-wrap:nowrap; gap:0; margin-top:auto;">
+            <div class="fof-box hl" style="flex:none; text-align:center; font-size:26px; padding:16px 20px;">$100M short<br>on t+</div>
+            <div class="fof-arr" style="padding:0 12px; font-size:36px; color:#ED1F24;">→</div>
+            <div class="fof-box" style="flex:none; text-align:center; font-size:26px; padding:16px 20px;">MBM leverage<br>holds position</div>
+            <div class="fof-arr" style="padding:0 12px; font-size:36px; color:#ED1F24;">→</div>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+                <div class="fof-box" style="font-size:24px; padding:10px 18px;">JIT LP on Uniswap</div>
+                <div class="fof-box" style="font-size:24px; padding:10px 18px;">Sell into onchain demand</div>
+                <div class="fof-box" style="font-size:24px; padding:10px 18px;">Sandwich onchain buys</div>
+            </div>
+            <div class="fof-arr" style="padding:0 12px; font-size:36px; color:#ED1F24;">→</div>
+            <div class="fof-box hl" style="flex:none; text-align:center; font-size:26px; padding:16px 20px;">Exposure<br>cleared</div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 18: Not a Router — Privacy       -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide align-start" id="slide-18" style="padding-top:28px;" data-clicks="2">
+    <div class="slide-headline" style="font-size:48px; color:#888;">"So you built a fancy router?"</div>
+    <div class="stat-callout" style="font-size:100px; margin:0 0 12px;">NO.</div>
+    <div class="formal-box" style="flex:1; min-height:0; display:flex; flex-direction:column; margin:0;">
+        <div class="slide-headline" style="font-size:36px; color:#ED1F24; margin-bottom:8px;">TEEs make composability survivable</div>
+        <ul class="slide-bullets">
+            <li class="reveal" id="s18-b1">Composability without privacy means you leak signals and die</li>
+            <li class="reveal" id="s18-b2">We're trading in the most adversarial markets in history</li>
+        </ul>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 19: Closing                      -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide align-start" id="slide-19" data-clicks="1">
+    <img src="../assets/250.webp" class="title-logo" alt="t+">
+    <div class="formal-box" style="margin:0 0 24px;">
+        <div class="slide-headline" style="font-size:36px; color:#ED1F24; margin-bottom:8px;">t+ delivers</div>
+        <ul class="slide-bullets">
+            <li><strong style="color:#ED1F24;">Composable markets</strong> — all products and liquidity accessible from one venue</li>
+            <li><strong style="color:#ED1F24;">More valuable orderflow</strong> — every fill is worth more as part of a bundle</li>
+        </ul>
+    </div>
+    <div class="slide-subtext reveal" id="s19-callback" style="color:#888;">This is what a Prime Exchange offers. Settlements compose with chains. Cross-margining composes with exchanges.</div>
+</div>
+
+
+<script>
+(function() {
+    var TOTAL = 19;
+    var cur = 1;
+    var cs = {};
+
+    function go(n, initClicks) {
+        if (n < 1 || n > TOTAL) return;
+        var prev = document.getElementById('slide-' + cur);
+        if (prev) prev.classList.remove('active');
+        cur = n;
+        if (initClicks !== undefined) cs[cur] = initClicks;
+        else cs[cur] = 0;
+        var slide = document.getElementById('slide-' + cur);
+        if (slide) { slide.classList.add('active'); apply(cur, cs[cur]); }
+        document.getElementById('counter').textContent = cur + ' / ' + TOTAL;
+        document.getElementById('progress').style.width = ((cur / TOTAL) * 100) + '%';
+        if (cur > 1) document.getElementById('navHint').style.opacity = '0';
+
+        // Slide-specific init
+        if (n === 4) { chartDrawn.liq = false; drawChart('liq'); }
+        if (n === 5) { chartDrawn.prod = false; drawChart('prod'); }
+        if (n === 13) { reorgDrawn = false; drawReorg(); }
+        if (n === 16) { sankeyDrawn = false; drawRouterSankey(); }
+    }
+
+    function mc(n) {
+        var s = document.getElementById('slide-' + n);
+        return s ? parseInt(s.getAttribute('data-clicks') || '0') : 0;
+    }
+
+    function advance() {
+        if (cs[cur] < mc(cur)) { cs[cur]++; apply(cur, cs[cur]); }
+        else go(cur + 1);
+    }
+
+    function retreat() {
+        if (cs[cur] > 0) { cs[cur]--; apply(cur, cs[cur]); }
+        else if (cur > 1) go(cur - 1, mc(cur - 1));
+    }
+
+    function v(id, on) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        if (on) el.classList.add('visible');
+        else el.classList.remove('visible');
+    }
+
+    function apply(s, c) {
+        switch(s) {
+            case 2:
+                v('s2-takeaway', c >= 1); v('s2-bullets', c >= 1);
+                break;
+            case 3:
+                v('s3-b1', c >= 1); v('s3-b2', c >= 2); v('s3-b3', c >= 3);
+                v('s3-pay', c >= 4);
+                break;
+            case 6:
+                v('s6-linear', c >= 1); v('s6-super', c >= 2);
+                v('s6-n', c >= 3);
+                break;
+            case 7: // Flow = Capital: parallel reveal, both sides together
+                v('s7-l1', c >= 1); v('s7-r1', c >= 1);                           // step 1: both "MM fills"
+                v('s7-la1', c >= 2); v('s7-l2', c >= 2); v('s7-ra1', c >= 2); v('s7-r2', c >= 2); // step 2: own capital vs user's capital
+                v('s7-la2', c >= 3); v('s7-l3', c >= 3); v('s7-ra2', c >= 3); v('s7-r3', c >= 3); // step 3: clears vs receives
+                v('s7-lr', c >= 4); v('s7-rr', c >= 4);                           // results
+                break;
+            case 8: // Combinatorial: parallel reveal
+                v('s8-l1', c >= 1); v('s8-r1', c >= 1);                           // step 1: short ETH (same starting point)
+                v('s8-la1', c >= 2); v('s8-l2', c >= 2); v('s8-ra1', c >= 2); v('s8-r2', c >= 2); // step 2: liquidation rejected vs filled
+                v('s8-la2', c >= 3); v('s8-l3', c >= 3); v('s8-ra2', c >= 3); v('s8-r3', c >= 3); // step 3: quote rejected vs swapped
+                v('s8-lr', c >= 4); v('s8-ra3', c >= 4); v('s8-r4', c >= 4); v('s8-rr', c >= 4);  // results + close short
+                break;
+            case 9: // Winner-take-all: parallel reveal
+                v('s9-l1', c >= 1); v('s9-r1', c >= 1);                           // step 1: both have mempool
+                v('s9-la1', c >= 2); v('s9-l2', c >= 2); v('s9-ra1', c >= 2); v('s9-r2', c >= 2); // step 2: builds block vs +composable flow
+                v('s9-la2', c >= 3); v('s9-l3', c >= 3); v('s9-ra2', c >= 3); v('s9-r3', c >= 3); // step 3: submits vs bundles
+                v('s9-lr', c >= 4); v('s9-rr', c >= 4);                           // results: loses vs wins
+                break;
+            case 10:
+                v('s10-box', c >= 1); v('s10-punch', c >= 2);
+                break;
+            case 11:
+                v('s11-m2', c >= 1);
+                break;
+            case 12: // Settlement steps one by one
+                v('s12-s1', c >= 1); v('s12-s2', c >= 2);
+                v('s12-s3', c >= 3); v('s12-s4', c >= 4);
+                v('s12-atomic', c >= 5); v('s12-ingest', c >= 5);
+                break;
+            case 13:
+                document.getElementById('rp-2').style.opacity = c >= 1 ? '1' : '0.25';
+                document.getElementById('rp-3').style.opacity = c >= 2 ? '1' : '0.25';
+                v('reorg-punch', c >= 2);
+                break;
+            case 14:
+                v('s14-b1', c >= 1); v('s14-b2', c >= 2); v('s14-b3', c >= 3);
+                v('s14-ingest', c >= 4);
+                break;
+            case 15:
+                v('s15-props', c >= 1);
+                v('s15-table', c >= 2); v('s15-punch', c >= 3); v('s15-note', c >= 3);
+                break;
+            case 16:
+                v('s16-b1', c >= 1);
+                v('s16-b2', c >= 2); v('s16-sankey', c >= 2);
+                break;
+            case 17:
+                v('s17-b1', c >= 1);
+                v('s17-b2', c >= 2); v('s17-fof', c >= 2);
+                break;
+            case 18:
+                v('s18-b1', c >= 1);
+                v('s18-b2', c >= 2);
+                break;
+            case 19:
+                v('s19-callback', c >= 1);
+                break;
+        }
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); advance(); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); retreat(); }
+        else if (e.key === 'f' || e.key === 'F') {
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+            else document.exitFullscreen();
+        }
+    });
+    document.addEventListener('click', advance);
+
+    // ══════════════════════════════════
+    // CHART DRAWING (shared for both)
+    // ══════════════════════════════════
+    var chartDrawn = { liq: false, prod: false };
+
+    function drawChart(id) {
+        if (chartDrawn[id]) return;
+        chartDrawn[id] = true;
+
+        var canvas = document.getElementById(id + '-chart');
+        var container = document.getElementById(id + '-chart-area');
+        var rect = container.getBoundingClientRect();
+        var dpr = window.devicePixelRatio || 1;
+        var W = Math.round(rect.width);
+        var H = Math.round(rect.height);
+        canvas.width = W * dpr; canvas.height = H * dpr;
+        var ctx = canvas.getContext('2d');
+        ctx.scale(dpr, dpr);
+
+        if (id === 'liq') drawLiq(ctx, W, H);
+        else drawProd(ctx, W, H);
+    }
+
+    function drawLiq(ctx, W, H) {
+        var pad = { t: 30, b: 90, l: Math.max(70, W * 0.06), r: 30 };
+        var cW = W - pad.l - pad.r, cH = H - pad.t - pad.b;
+
+        var sq = [
+            [0,0],[555e3,31.4e6],[1102e3,61.4e6],[1623e3,89.2e6],[1972e3,104.7e6],
+            [2323e3,119.9e6],[2617e3,131.6e6],[2885e3,141.6e6],[3118e3,149.5e6],
+            [3344e3,156.9e6],[3569e3,164e6],[3717e3,167.4e6],[3858e3,170.4e6],[3988e3,173e6]
+        ];
+        var tp = [
+            [0,66.3e6],[500e3,97.7e6],[952e3,125.5e6],[1242e3,140.7e6],[1478e3,152.4e6],
+            [1654e3,160.3e6],[1818e3,167.4e6],[1908e3,170.4e6],[1988e3,173e6]
+        ];
+        var maxX = 4.2e6, maxY = 180e6;
+        function xP(v) { return pad.l + (v / maxX) * cW; }
+        function yP(v) { return pad.t + cH - (v / maxY) * cH; }
+
+        drawGrid(ctx, W, H, pad, cW, cH,
+            [0,30,60,90,120,150,180], function(d) { return '$' + d + 'M'; }, maxY, 1e6,
+            [0,1,2,3,4], function(c) { return '$' + c + 'M'; }, maxX, 1e6,
+            'Annual cost', 'Cumulative ±2% depth'
+        );
+        drawCurves(ctx, sq, tp, xP, yP, cW, cH, pad, maxX, maxY);
+
+        // Annotations
+        var fs = Math.max(14, Math.round(W * 0.016));
+        ctx.fillStyle = '#ED1F24'; ctx.font = 'bold ' + fs + 'px "Courier New"';
+        ctx.textAlign = 'left'; ctx.textBaseline = 'bottom';
+        ctx.fillText('$66.3M FREE', xP(0) + 10, yP(66.3e6) - 6);
+        ctx.fillStyle = '#888'; ctx.font = Math.round(fs * 0.8) + 'px "Courier New"'; ctx.textBaseline = 'top';
+        ctx.fillText('38% via settlements', xP(0) + 10, yP(66.3e6) + 4);
+
+        drawLegend(ctx, W, pad);
+    }
+
+    function drawProd(ctx, W, H) {
+        var pad = { t: 30, b: 90, l: Math.max(56, W * 0.05), r: 30 };
+        var cW = W - pad.l - pad.r, cH = H - pad.t - pad.b;
+
+        // Status quo: per-asset cost, linear within each hedging venue, jumps between venues
+        // Ordered cheapest venue first. Each segment = linear (assets added at avg cost).
+        // Horizontal segments = venue jump (cost to set up new venue, no new instruments).
+        var sq = [
+            [0, 0],
+            [0.8e6, 5],       // DEX chains: 5 assets done
+            [0.9e6, 5],       // venue jump → Bybit/Bitget/MEXC
+            [1.6e6, 10],      // Bybit/Bitget/MEXC: 5 assets done
+            [1.7e6, 10],      // venue jump → OKX
+            [2.5e6, 15],      // OKX: 5 assets done
+            [2.7e6, 15],      // venue jump → Binance
+            [21e6, 100]        // Binance: 85 assets, linear at ~$215K/asset/yr
+        ];
+        // t+: 63 free via settlements, then cross-margin assets added linearly
+        var tp = [
+            [0, 63],
+            [1.8e6, 100]       // 37 cross-margin assets at ~$49K/asset/yr
+        ];
+        var maxX = 22e6, maxY = 105;
+        function xP(v) { return pad.l + (v / maxX) * cW; }
+        function yP(v) { return pad.t + cH - (v / maxY) * cH; }
+
+        drawGrid(ctx, W, H, pad, cW, cH,
+            [0,20,40,60,80,100], function(d) { return '' + d; }, maxY, 1,
+            [0,5,10,15,20], function(c) { return '$' + c + 'M'; }, maxX, 1e6,
+            'Annual cost', 'Instruments'
+        );
+
+        // Area fills (straight lines, not steps)
+        function fillLineArea(data, color) {
+            ctx.globalAlpha = 0.08; ctx.beginPath();
+            ctx.moveTo(xP(data[0][0]), yP(data[0][1]));
+            for (var i = 1; i < data.length; i++) ctx.lineTo(xP(data[i][0]), yP(data[i][1]));
+            ctx.lineTo(xP(data[data.length-1][0]), yP(0));
+            ctx.lineTo(xP(0), yP(0)); ctx.closePath();
+            ctx.fillStyle = color; ctx.fill(); ctx.globalAlpha = 1;
+        }
+        fillLineArea(sq, '#888');
+        fillLineArea(tp, '#ED1F24');
+
+        // Draw lines (straight, not step)
+        function drawLine(data, color, w) {
+            ctx.beginPath(); ctx.strokeStyle = color; ctx.lineWidth = w;
+            ctx.moveTo(xP(data[0][0]), yP(data[0][1]));
+            for (var i = 1; i < data.length; i++) ctx.lineTo(xP(data[i][0]), yP(data[i][1]));
+            ctx.stroke();
+            data.forEach(function(pt) {
+                ctx.beginPath(); ctx.arc(xP(pt[0]), yP(pt[1]), 3.5, 0, Math.PI * 2);
+                ctx.fillStyle = color; ctx.fill();
+            });
+        }
+        drawLine(sq, '#aaa', 2.5);
+        drawLine(tp, '#ED1F24', 3);
+
+        // Annotations
+        var fs = Math.max(14, Math.round(W * 0.016));
+        ctx.fillStyle = '#ED1F24'; ctx.font = 'bold ' + fs + 'px "Courier New"';
+        ctx.textAlign = 'left'; ctx.textBaseline = 'bottom';
+        ctx.fillText('63 FREE', xP(0) + 10, yP(63) - 6);
+        ctx.fillStyle = '#888'; ctx.font = Math.round(fs * 0.8) + 'px "Courier New"'; ctx.textBaseline = 'top';
+        ctx.fillText('via settlements', xP(0) + 10, yP(63) + 4);
+
+        // Venue labels along the status quo line
+        var lfs = Math.round(fs * 0.65);
+        ctx.font = lfs + 'px "Courier New"'; ctx.fillStyle = '#aaa'; ctx.textBaseline = 'bottom';
+        ctx.textAlign = 'center';
+        ctx.fillText('DEXs', xP(0.4e6), yP(2.5) - 4);
+        ctx.fillText('OKX', xP(2.1e6), yP(12.5) - 4);
+        ctx.textAlign = 'left';
+        ctx.fillText('Binance (85 assets)', xP(2.7e6) + 10, yP(15) - 4);
+
+        drawLegend(ctx, W, pad);
+    }
+
+    function drawGrid(ctx, W, H, pad, cW, cH, yTicks, yFmt, maxY, yMul, xTicks, xFmt, maxX, xMul, xLabel, yLabel) {
+        var fs = Math.max(12, Math.round(W * 0.012));
+        ctx.strokeStyle = '#e8e0e0'; ctx.lineWidth = 1;
+        yTicks.forEach(function(d) {
+            var y = pad.t + cH - (d * (yMul === 1 ? 1 : yMul) / (maxY)) * cH;
+            if (yMul === 1) y = pad.t + cH - (d / maxY) * cH;
+            else y = pad.t + cH - (d * yMul / maxY) * cH;
+            ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(W - pad.r, y); ctx.stroke();
+            ctx.fillStyle = '#aaa'; ctx.font = fs + 'px "Courier New"'; ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+            ctx.fillText(yFmt(d), pad.l - 8, y);
+        });
+        xTicks.forEach(function(c) {
+            var x = pad.l + (c * xMul / maxX) * cW;
+            ctx.beginPath(); ctx.moveTo(x, pad.t); ctx.lineTo(x, H - pad.b); ctx.stroke();
+            ctx.fillStyle = '#aaa'; ctx.font = fs + 'px "Courier New"'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+            ctx.fillText(xFmt(c), x, H - pad.b + 8);
+        });
+        var lfs = Math.max(12, Math.round(W * 0.013));
+        ctx.fillStyle = '#888'; ctx.font = 'bold ' + lfs + 'px "Courier New"';
+        ctx.textAlign = 'center'; ctx.fillText(xLabel, pad.l + cW / 2, H - pad.b + 50);
+        ctx.save(); ctx.translate(14, pad.t + cH / 2); ctx.rotate(-Math.PI / 2);
+        ctx.textAlign = 'center'; ctx.fillText(yLabel, 0, 0); ctx.restore();
+    }
+
+    function drawCurves(ctx, sq, tp, xP, yP, cW, cH, pad, maxX, maxY) {
+        function fillArea(data, color) {
+            ctx.globalAlpha = 0.08; ctx.beginPath();
+            data.forEach(function(pt, i) {
+                var x = xP(pt[0]), y = yP(pt[1]);
+                if (i === 0) ctx.moveTo(x, y);
+                else { ctx.lineTo(x, yP(data[i-1][1])); ctx.lineTo(x, y); }
+            });
+            ctx.lineTo(xP(data[data.length-1][0]), yP(0));
+            ctx.lineTo(xP(0), yP(0)); ctx.closePath();
+            ctx.fillStyle = color; ctx.fill(); ctx.globalAlpha = 1;
+        }
+        fillArea(sq, '#888');
+        fillArea(tp, '#ED1F24');
+
+        function drawSteps(data, color, w) {
+            ctx.beginPath(); ctx.strokeStyle = color; ctx.lineWidth = w;
+            data.forEach(function(pt, i) {
+                var x = xP(pt[0]), y = yP(pt[1]);
+                if (i === 0) ctx.moveTo(x, y);
+                else { ctx.lineTo(x, yP(data[i-1][1])); ctx.lineTo(x, y); }
+            });
+            ctx.stroke();
+            data.forEach(function(pt) {
+                ctx.beginPath(); ctx.arc(xP(pt[0]), yP(pt[1]), 3.5, 0, Math.PI * 2);
+                ctx.fillStyle = color; ctx.fill();
+            });
+        }
+        drawSteps(sq, '#aaa', 2.5);
+        drawSteps(tp, '#ED1F24', 3);
+    }
+
+    function drawLegend(ctx, W, pad) {
+        var fs = Math.max(13, Math.round(W * 0.014));
+        ctx.fillStyle = '#ED1F24'; ctx.fillRect(W - pad.r - 200, pad.t + 6, 16, 4);
+        ctx.font = 'bold ' + fs + 'px "Courier New"'; ctx.textAlign = 'left';
+        ctx.fillText('t+', W - pad.r - 178, pad.t + 10);
+        ctx.fillStyle = '#aaa'; ctx.fillRect(W - pad.r - 200, pad.t + 24, 16, 3);
+        ctx.fillText('Status quo', W - pad.r - 178, pad.t + 28);
+    }
+
+    // ══════════════════════════════════
+    // RE-ORG PANELS
+    // ══════════════════════════════════
+    // Each tree models dependency propagation from a pending settlement.
+    // Root = settlement tx. Users who trade on pending balances branch out.
+    // Those users trade with others → dependency fans out across rows.
+    // 3 trees, each 7 nodes across 3 rows, different branching patterns.
+    //
+    // Re-org on tree 0: root reverts. Walk tree — if a node's finalized
+    // balance covers its positions, it survives (green). If not, it and
+    // its downstream trades get rolled back (red).
+
+    var reorgDrawn = false;
+    function drawReorg() {
+        if (reorgDrawn) return; reorgDrawn = true;
+        [1, 2, 3].forEach(function(p) {
+            var canvas = document.getElementById('rc-' + p);
+            var rect = canvas.parentElement.getBoundingClientRect();
+            var dpr = window.devicePixelRatio || 1;
+            var W = Math.round(rect.width);
+            var H = Math.round(rect.height - 40);
+            canvas.width = W * dpr; canvas.height = H * dpr;
+            var ctx = canvas.getContext('2d');
+            ctx.scale(dpr, dpr);
+            drawReorgPanel(ctx, W, H, p);
+        });
+    }
+
+    // Tree definitions: nodes as [row, cx_fraction], edges as [from_idx, to_idx]
+    // row 0 = root at bottom, higher rows = dependency spreading upward
+    // cx_fraction relative to tree center, scaled by treeW
+    //
+    // tx₁: 7 rows, max 3 wide. root→A→B→fans to 3(C,D,E)→fans to 3(H,I,J)
+    //       with E also connecting up to F, then F→G at top
+    // tx₂: 5 rows, max 2 wide. root→A→fans to 2(B,C)→fans to 2(D,E)
+    // tx₃: 6 rows, max 3 wide. root→A→B→fans to 3(C,D,E)→D connects to G and H
+
+    var treeDefs = [
+        { // tx₁: 7 rows tall, 11 nodes, max 3 wide
+          // 0=root, 1=A, 2=B, 3=C, 4=D, 5=E, 6=F, 7=G, 8=H, 9=I, 10=J
+            nodes: [
+                [0, 0],       // 0: root
+                [1, 0],       // 1: A
+                [2, 0],       // 2: B
+                [3, -0.4],    // 3: C
+                [3, 0],       // 4: D
+                [3, 0.4],     // 5: E
+                [4, -0.4],    // 6: F (from C)
+                [4, 0],       // 7: G (from D)
+                [4, 0.4],     // 8: H (from E)
+                [5, -0.4],    // 9: I (from F)
+                [5, 0],       // 10: J (from G)
+            ],
+            edges: [[0,1],[1,2],[2,3],[2,4],[2,5],[4,6],[4,7],[5,8],[6,9],[7,10]],
+            maxRow: 5,
+            // survive: root reverted. A=yes(MM, well-capitalized). B=yes.
+            // C=yes, D=no(not safe), E=yes, F=yes, G=no(downstream of D),
+            // H=yes(safe independently), I=yes, J=no
+            survive: [false, true, true, true, false, true, true, false, true, true, false]
+        },
+        { // tx₂: 5 rows tall, 6 nodes, max 2 wide
+          // 0=root, 1=A, 2=B, 3=C, 4=D, 5=E
+            nodes: [
+                [0, 0],       // 0: root
+                [1, 0],       // 1: A
+                [2, -0.25],   // 2: B
+                [2, 0.25],    // 3: C
+                [3, -0.25],   // 4: D (from B)
+                [3, 0.25],    // 5: E (from C)
+            ],
+            edges: [[0,1],[1,2],[1,3],[2,4],[3,5]],
+            maxRow: 3,
+            survive: null
+        },
+        { // tx₃: 6 rows tall, 8 nodes, max 3 wide
+          // 0=root, 1=A, 2=B, 3=C, 4=D, 5=E, 6=G, 7=H
+            nodes: [
+                [0, 0],       // 0: root
+                [1, 0],       // 1: A
+                [2, 0],       // 2: B
+                [3, -0.4],    // 3: C
+                [3, 0],       // 4: D
+                [3, 0.4],     // 5: E
+                [4, -0.15],   // 6: G (from D)
+                [4, 0.2],     // 7: H (from D)
+            ],
+            edges: [[0,1],[1,2],[1,5],[2,3],[2,4],[4,6],[4,7]],
+            maxRow: 4,
+            survive: null
+        }
+    ];
+
+    function drawReorgPanel(ctx, W, H, panel) {
+        var baseH = Math.round(H * 0.14);
+        var baseY = H - baseH;
+
+        // Finality base
+        ctx.fillStyle = '#e8e8e8';
+        ctx.fillRect(8, baseY, W - 16, baseH);
+        ctx.strokeStyle = '#ccc'; ctx.lineWidth = 1;
+        ctx.strokeRect(8, baseY, W - 16, baseH);
+        var fs = Math.max(9, Math.round(W * 0.032));
+        ctx.fillStyle = '#999'; ctx.font = 'bold ' + fs + 'px "Courier New"';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText('FINALITY BASE', W / 2, baseY + baseH / 2);
+
+        // Scale row height so tallest tree (7 rows = maxRow 5, since root is row 0)
+        // fits in the available space
+        var available = baseY - 40;
+        var rowH = available / 6.5; // enough room for 7 rows + label
+        var treeW = Math.min(W * 0.12, 55);
+        var nodeR = Math.max(4, Math.round(W * 0.013));
+        var lw = Math.max(2, Math.round(W * 0.008));
+        var lfs = Math.max(9, Math.round(W * 0.028));
+        var treeXs = [W * 0.2, W * 0.5, W * 0.8];
+        var labels = ['tx\u2081', 'tx\u2082', 'tx\u2083'];
+
+        function absNodes(def, cx) {
+            return def.nodes.map(function(n) {
+                return { x: cx + n[1] * treeW, y: baseY - 12 - n[0] * rowH };
+            });
+        }
+
+        var allNodes = treeDefs.map(function(d, i) { return absNodes(d, treeXs[i]); });
+
+        // Label y = just above the topmost node of that tree
+        function labelY(nodes) {
+            var minY = Infinity;
+            nodes.forEach(function(n) { if (n.y < minY) minY = n.y; });
+            return minY - 14;
+        }
+
+        if (panel === 1) {
+            treeDefs.forEach(function(def, ti) {
+                drawLabel(ctx, treeXs[ti], labelY(allNodes[ti]), labels[ti], '#333', lfs);
+                drawAllEdges(ctx, allNodes[ti], def.edges, '#333', lw);
+                drawAllNodes(ctx, allNodes[ti], '#333', nodeR);
+            });
+        } else if (panel === 2) {
+            var n0 = allNodes[0], d0 = treeDefs[0];
+            // Red dashed box around tree 0
+            var minX = Infinity, maxX = -Infinity, minY = Infinity;
+            n0.forEach(function(n) { minX = Math.min(minX, n.x); maxX = Math.max(maxX, n.x); minY = Math.min(minY, n.y); });
+            var bp = 10;
+            ctx.strokeStyle = '#ED1F24'; ctx.lineWidth = 2.5; ctx.setLineDash([6, 4]);
+            ctx.strokeRect(minX - bp, minY - bp - lfs - 4, maxX - minX + bp * 2, baseY - 6 - minY + bp + lfs + 8);
+            ctx.setLineDash([]);
+
+            drawLabel(ctx, treeXs[0], labelY(n0), 'RE-ORG', '#ED1F24', lfs);
+            // Edges: green if both survive, red otherwise
+            d0.edges.forEach(function(e) {
+                var s = d0.survive[e[0]] && d0.survive[e[1]];
+                ctx.strokeStyle = s ? '#2a9d2a' : '#ED1F24';
+                ctx.globalAlpha = s ? 1 : 0.5;
+                ctx.lineWidth = lw + (s ? 1 : 0);
+                ctx.beginPath(); ctx.moveTo(n0[e[0]].x, n0[e[0]].y); ctx.lineTo(n0[e[1]].x, n0[e[1]].y); ctx.stroke();
+            });
+            ctx.globalAlpha = 1;
+            n0.forEach(function(n, i) {
+                ctx.fillStyle = d0.survive[i] ? '#2a9d2a' : '#ED1F24';
+                ctx.globalAlpha = d0.survive[i] ? 1 : 0.5;
+                ctx.beginPath(); ctx.arc(n.x, n.y, nodeR, 0, Math.PI * 2); ctx.fill();
+            });
+            ctx.globalAlpha = 1;
+
+            for (var i = 1; i < 3; i++) {
+                drawLabel(ctx, treeXs[i], labelY(allNodes[i]), labels[i], '#333', lfs);
+                drawAllEdges(ctx, allNodes[i], treeDefs[i].edges, '#333', lw);
+                drawAllNodes(ctx, allNodes[i], '#333', nodeR);
+            }
+        } else {
+            var n0 = allNodes[0], d0 = treeDefs[0];
+            drawLabel(ctx, treeXs[0], labelY(n0), labels[0], '#333', lfs);
+            d0.edges.forEach(function(e) {
+                if (d0.survive[e[0]] && d0.survive[e[1]]) {
+                    ctx.strokeStyle = '#2a9d2a'; ctx.lineWidth = lw + 1;
+                    ctx.beginPath(); ctx.moveTo(n0[e[0]].x, n0[e[0]].y); ctx.lineTo(n0[e[1]].x, n0[e[1]].y); ctx.stroke();
+                }
+            });
+            n0.forEach(function(n, i) {
+                if (d0.survive[i]) {
+                    ctx.fillStyle = '#2a9d2a';
+                    ctx.beginPath(); ctx.arc(n.x, n.y, nodeR, 0, Math.PI * 2); ctx.fill();
+                }
+            });
+
+            for (var i = 1; i < 3; i++) {
+                drawLabel(ctx, treeXs[i], labelY(allNodes[i]), labels[i], '#333', lfs);
+                drawAllEdges(ctx, allNodes[i], treeDefs[i].edges, '#333', lw);
+                drawAllNodes(ctx, allNodes[i], '#333', nodeR);
+            }
+        }
+    }
+
+    function drawLabel(ctx, x, y, text, color, fs) {
+        ctx.fillStyle = color; ctx.font = 'bold ' + fs + 'px "Courier New"';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+        ctx.fillText(text, x, y);
+    }
+    function drawAllEdges(ctx, nodes, edges, color, lw) {
+        ctx.strokeStyle = color; ctx.lineWidth = lw;
+        edges.forEach(function(e) {
+            ctx.beginPath(); ctx.moveTo(nodes[e[0]].x, nodes[e[0]].y); ctx.lineTo(nodes[e[1]].x, nodes[e[1]].y); ctx.stroke();
+        });
+    }
+    function drawAllNodes(ctx, nodes, color, r) {
+        ctx.fillStyle = color;
+        nodes.forEach(function(n) {
+            ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, Math.PI * 2); ctx.fill();
+        });
+    }
+
+    // ══════════════════════════════════
+    // ROUTER SANKEY (Slide 16)
+    // Same ribbon technique as defi-needs-a-cex.html sankey:
+    // Left bar divided into contiguous slots (no gaps).
+    // Each slot → filled bezier ribbon → right bar segment.
+    // Because left slots are contiguous, ribbons emerge as
+    // one solid flow that fans apart to the right.
+    // ══════════════════════════════════
+    var sankeyDrawn = false;
+    function drawRouterSankey() {
+        if (sankeyDrawn) return; sankeyDrawn = true;
+        var canvas = document.getElementById('sankey-router');
+        var container = canvas.parentElement;
+        var rect = container.getBoundingClientRect();
+        var dpr = window.devicePixelRatio || 1;
+        var W = Math.round(rect.width);
+        var H = Math.round(rect.height);
+        canvas.width = W * dpr; canvas.height = H * dpr;
+        var ctx = canvas.getContext('2d');
+        ctx.scale(dpr, dpr);
+
+        var fills = [
+            { name: 'MM Algo (25%)', pct: 0.25 },
+            { name: 'Maker hedging on CEX (50%)', pct: 0.50 },
+            { name: 'Searcher backrunning onchain (25%)', pct: 0.25 }
+        ];
+        var flowColor = '#ED1F24';
+
+        var pad = { t: 10, b: 30 };
+        var usableH = H - pad.t - pad.b;
+
+        // Right side: spaced bars, proportional heights — defines the total spread
+        var rightBarX = W * 0.52;
+        var rightBarW = 10;
+        var rightGap = Math.max(14, usableH * 0.06);
+        var totalRightGap = rightGap * (fills.length - 1);
+        var rightTotalBarH = usableH * 0.65;
+        var rightTotalH = rightTotalBarH + totalRightGap;
+        var rightTopY = pad.t + (usableH - rightTotalH) / 2;
+
+        // Build right node positions
+        var rightNodes = [];
+        var ry = rightTopY;
+        fills.forEach(function(f) {
+            var h = rightTotalBarH * f.pct;
+            rightNodes.push({ y: ry, h: h });
+            ry += h + rightGap;
+        });
+
+        // Left bar: half the height of the right side total, centered vertically
+        var leftBarX = W * 0.14;
+        var leftBarW = 12;
+        var leftBarH = rightTotalH * 0.5;
+        var leftCenterY = rightTopY + rightTotalH / 2;
+        var leftBarY = leftCenterY - leftBarH / 2;
+
+        ctx.fillStyle = '#333';
+        ctx.fillRect(leftBarX, leftBarY, leftBarW, leftBarH);
+
+        // Left label
+        var fs = Math.max(16, Math.round(W * 0.016));
+        ctx.save();
+        ctx.translate(leftBarX - 16, leftBarY + leftBarH / 2);
+        ctx.rotate(-Math.PI / 2);
+        ctx.fillStyle = '#333'; ctx.font = 'bold ' + fs + 'px "Courier New"';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText('TAKER TRADE', 0, 0);
+        ctx.restore();
+
+        // Draw ribbons: one color, no strokes, contiguous left slots
+        var leftSlotY = leftBarY;
+        fills.forEach(function(f, i) {
+            var rn = rightNodes[i];
+            var leftSlotH = leftBarH * f.pct;
+            var leftY0 = leftSlotY;
+            var leftY1 = leftSlotY + leftSlotH;
+
+            var x0 = leftBarX + leftBarW;
+            var x1 = rightBarX;
+            var cpx0 = x0 + (x1 - x0) * 0.4;
+            var cpx1 = x0 + (x1 - x0) * 0.6;
+
+            // Filled ribbon — same color, no stroke dividers
+            ctx.beginPath();
+            ctx.moveTo(x0, leftY0);
+            ctx.bezierCurveTo(cpx0, leftY0, cpx1, rn.y, x1, rn.y);
+            ctx.lineTo(x1, rn.y + rn.h);
+            ctx.bezierCurveTo(cpx1, rn.y + rn.h, cpx0, leftY1, x0, leftY1);
+            ctx.closePath();
+            ctx.fillStyle = flowColor;
+            ctx.globalAlpha = 0.2;
+            ctx.fill();
+            ctx.globalAlpha = 1;
+
+            // Right bar — same color
+            ctx.fillStyle = flowColor;
+            ctx.globalAlpha = 0.85;
+            ctx.fillRect(rightBarX, rn.y, rightBarW, rn.h);
+            ctx.globalAlpha = 1;
+
+            // Right label
+            var lfs = Math.max(15, Math.round(W * 0.016));
+            ctx.fillStyle = '#333'; ctx.font = '500 ' + lfs + 'px "Courier New"';
+            ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+            ctx.fillText(f.name, rightBarX + rightBarW + 14, rn.y + rn.h / 2);
+
+            leftSlotY = leftY1;
+        });
+
+        // Bottom label
+        ctx.fillStyle = '#ED1F24'; ctx.font = 'bold ' + Math.round(fs * 0.85) + 'px "Courier New"';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+        ctx.fillText('t+ matching engine', (leftBarX + rightBarX) / 2, rightTopY + rightTotalH + 16);
+    }
+
+    go(1);
+})();
+</script>
+</body>
+</html>

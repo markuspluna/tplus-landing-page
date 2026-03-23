@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DeFi Needs a CEX?!? — T+ Product Day 2026</title>
+    <link rel="icon" type="image/png" href="../assets/1836.webp">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: #000;
+            overflow: hidden;
+            font-family: 'Courier New', monospace;
+            color: #111;
+        }
+
+        /* ── Slides ── */
+        .slide {
+            position: fixed; inset: 0;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 36px 5vw;
+            background: #ffeeee;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+        .slide.active { display: flex; opacity: 1; }
+        .slide.align-start { align-items: flex-start; }
+
+        /* ── Chrome ── */
+        .progress-bar {
+            position: fixed; top: 0; left: 0; height: 4px;
+            background: #ED1F24; z-index: 100;
+            transition: width 0.4s ease;
+        }
+        .slide-counter {
+            position: fixed; bottom: 16px; right: 24px;
+            font: bold 21px 'Courier New', monospace;
+            color: #999; z-index: 100; user-select: none;
+        }
+        .nav-hint {
+            position: fixed; bottom: 16px; left: 24px;
+            font: 20px 'Courier New', monospace;
+            color: #bbb; z-index: 100; user-select: none;
+            transition: opacity 2s ease;
+        }
+
+        /* ── Typography ── */
+        .t-impact {
+            font-family: Impact, sans-serif;
+            color: #ED1F24;
+        }
+        .t-press {
+            font-family: 'Press Start 2P', monospace;
+        }
+        .t-vt {
+            font-family: 'VT323', monospace;
+        }
+
+        /* ═══ SLIDE 1: Title ═══ */
+        .title-logo { width: 140px; margin-bottom: 36px; image-rendering: pixelated; }
+        .title-main {
+            font-family: Impact, sans-serif;
+            font-size: 100px; color: #ED1F24;
+            line-height: 1; margin-bottom: 24px; letter-spacing: 3px;
+        }
+        .title-sub {
+            font: bold 22px 'Press Start 2P', monospace;
+            color: #666; letter-spacing: 3px;
+        }
+
+        /* ═══ SLIDE 2: Video ═══ */
+        .video-slide { background: #000; padding: 0; }
+        .video-placeholder {
+            width: 80%; max-width: 1100px; aspect-ratio: 16/9;
+            border: 3px solid #ED1F24;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center; gap: 20px;
+            position: relative;
+        }
+        .video-placeholder-text {
+            font: bold 18px 'Press Start 2P', monospace;
+            color: #ED1F24; text-align: center; line-height: 2;
+        }
+        .video-placeholder-sub {
+            font: 18px 'Courier New', monospace;
+            color: #666; text-align: center;
+        }
+        .video-timer {
+            position: absolute; top: 16px; right: 20px;
+            font: bold 36px 'VT323', monospace; color: #ED1F24;
+        }
+
+        /* ═══ SLIDE 3: Cost ═══ */
+        .cost-container { text-align: center; }
+        .cost-label {
+            font: 18px 'Press Start 2P', monospace;
+            color: #888; margin-bottom: 12px; letter-spacing: 2px;
+        }
+        .cost-value {
+            font-family: Impact, sans-serif;
+            font-size: 140px; color: #ED1F24; line-height: 1.1;
+            margin-bottom: 50px;
+        }
+        .cost-value span {
+            font: bold 36px 'Courier New', monospace;
+            color: #999; vertical-align: middle;
+        }
+
+        /* ═══ SLIDE 4: Market Structure ═══ */
+        .slide-headline {
+            font: bold 54px Impact, 'Arial Narrow', sans-serif;
+            color: #111; line-height: 1.2; margin-bottom: 20px;
+            letter-spacing: 0.5px; text-transform: uppercase;
+            width: 100%;
+        }
+        .slide-subtext {
+            font: bold 36px 'Courier New', monospace;
+            color: #333; width: 100%; line-height: 1.4;
+        }
+        .stat-callout {
+            font-family: Impact, sans-serif;
+            font-size: 80px; color: #ED1F24;
+            line-height: 1.2; margin: 20px 0 24px;
+        }
+        .slide-emphasis {
+            font-family: Impact, sans-serif;
+            color: #ED1F24; font-size: 52px;
+            margin-top: 28px; line-height: 1.3;
+        }
+
+        /* Sankey container */
+        .sankey-container {
+            width: 100%;
+            margin: 16px 0;
+            position: relative;
+        }
+        .sankey-canvas {
+            width: 100%;
+            display: block;
+        }
+        .sankey-toggle {
+            position: absolute; top: 8px; right: 8px;
+            font: bold 10px 'Press Start 2P', monospace;
+            color: #ED1F24; background: rgba(255,238,238,0.9);
+            border: 2px solid #ED1F24; padding: 6px 12px;
+            cursor: pointer; z-index: 5;
+        }
+        .sankey-toggle:hover { background: #ED1F24; color: #fff; }
+        .sankey-label {
+            position: absolute; top: 8px; left: 8px;
+            font: bold 14px 'Press Start 2P', monospace;
+            color: #111;
+        }
+
+        /* ═══ SLIDE 5: Venue Growth Bar Chart ═══ */
+        .stacked-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 6px;
+            width: 100%;
+            height: 360px;
+            margin: 16px 0;
+            padding-bottom: 30px;
+        }
+        .venue-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            min-width: 0;
+            height: 100%;
+            justify-content: flex-end;
+        }
+        .venue-count {
+            font: bold 18px 'Press Start 2P', monospace;
+            color: #ED1F24;
+            margin-bottom: 4px;
+        }
+        .venue-bar-wrap {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        /* Logo section: sits on top of the solid bar, 2-col grid */
+        .venue-logos {
+            display: grid;
+            grid-template-columns: 28px 28px;
+            gap: 3px;
+            padding: 4px 0;
+            justify-content: center;
+            width: 62px;
+            margin: 0 auto;
+        }
+        .venue-logo {
+            width: 28px; height: 28px;
+            object-fit: contain;
+            border-radius: 4px;
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 2px;
+        }
+        .venue-logo-composite {
+            width: 28px; height: 28px;
+            border-radius: 4px;
+            background: #fff;
+            border: 1px solid #ddd;
+            display: flex;
+            overflow: hidden;
+        }
+        .venue-logo-half {
+            width: 14px; height: 28px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .venue-logo-half img {
+            width: 26px; height: 26px;
+            object-fit: contain;
+        }
+        .venue-logo-half.right img {
+            margin-left: -14px;
+        }
+        /* Solid bar: represents the previous year's count, same width as logo grid */
+        .venue-bar-base {
+            width: 62px;
+            background: #ED1F24;
+            opacity: 0.2;
+            border-radius: 0;
+        }
+        .venue-year {
+            font: bold 16px 'Courier New', monospace;
+            color: #666;
+            margin-top: 6px;
+        }
+
+        /* ═══ SLIDES 6-8: Mission Blocks ═══ */
+        .missions-container {
+            width: 100%;
+            display: flex; flex-direction: column; gap: 16px;
+        }
+        .mission-block {
+            border: 3px solid #ED1F24;
+            background: #f5f5f5; overflow: hidden;
+        }
+        .mission-header {
+            background: #ED1F24; color: #fff;
+            padding: 16px 24px;
+            font: bold 18px 'Press Start 2P', monospace;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .mission-num { color: #f2ff00; font-size: 16px; }
+        .mission-requirements {
+            max-height: 0; overflow: hidden; padding: 0 28px;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+        .mission-requirements.revealed {
+            max-height: 800px; padding: 18px 28px;
+        }
+        .mission-req-item {
+            font: 500 32px 'Courier New', monospace;
+            color: #222; padding: 12px 0;
+            border-bottom: 1px dotted #ddd;
+            display: flex; align-items: flex-start; gap: 12px;
+            opacity: 0; transform: translateX(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .mission-req-item.visible { opacity: 1; transform: translateX(0); }
+        .mission-req-item:last-child { border-bottom: none; }
+        .mission-req-item .status { flex-shrink: 0; font-size: 32px; }
+        .mission-req-item .req-text { flex: 1; }
+        .mission-req-sub {
+            font: 400 26px 'Courier New', monospace;
+            color: #666; padding: 6px 0 6px 48px;
+            opacity: 0; transform: translateX(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .mission-req-sub.visible { opacity: 1; transform: translateX(0); }
+        .mission-req-sub::before { content: "- "; color: #999; }
+
+        /* Tweet/image in mission block */
+        .mission-image {
+            max-width: 440px; margin: 8px 0 8px 44px;
+            border: 1px solid #ddd; border-radius: 4px;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .mission-image.visible { opacity: 1; }
+
+        /* Slide intro text */
+        .slide-intro {
+            font: 500 34px 'Courier New', monospace;
+            color: #555; margin-bottom: 24px; width: 100%;
+        }
+
+        /* ═══ SLIDE 9: Network ═══ */
+        .network-container {
+            width: 100%;
+            display: flex; flex-direction: column;
+            align-items: center;
+        }
+        .network-label {
+            font: bold 14px 'Press Start 2P', monospace;
+            color: #888; letter-spacing: 3px;
+            padding: 8px 0; width: 100%; text-align: center;
+        }
+        .network-layer {
+            display: flex; gap: 14px; justify-content: center;
+            flex-wrap: wrap; padding: 18px 0; width: 100%;
+        }
+        .network-layer.middle {
+            background: rgba(204,0,0,0.04);
+            border: 3px solid #ED1F24;
+            padding: 24px; margin: 0;
+        }
+        .network-layer.top { border-bottom: 3px dashed #cc0000; }
+        .network-layer.bottom { border-top: 3px dashed #cc0000; }
+        .network-node {
+            padding: 14px 22px; border: 3px solid #cc0000;
+            border-radius: 4px; font: bold 22px 'Courier New', monospace;
+            color: #cc0000; background: #fff; text-align: center;
+        }
+        .network-node.tplus {
+            border-color: #ED1F24; color: #fff;
+            background: #ED1F24; font-size: 24px;
+        }
+        .network-middle-text {
+            font: bold 22px 'Press Start 2P', monospace;
+            color: #ED1F24; text-align: center;
+        }
+        .network-middle-sub {
+            font: 22px 'Courier New', monospace;
+            color: #555; text-align: center; margin-top: 8px;
+        }
+        .connector-lines {
+            display: flex; justify-content: center;
+            gap: 50px; padding: 2px 0;
+        }
+        .connector-line {
+            width: 3px; height: 20px; background: #cc0000;
+        }
+        .network-bullets {
+            list-style: none; padding: 0; margin: 24px 0 0;
+            width: 100%;
+        }
+        .network-bullets li {
+            font: 500 34px 'Courier New', monospace;
+            color: #333; padding: 10px 0;
+        }
+        .network-bullets li::before {
+            content: "> "; color: #ED1F24; font-weight: bold;
+        }
+
+        /* ── Generic reveal ── */
+        .reveal {
+            opacity: 0; transform: translateY(8px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+<div class="slide-counter" id="counter"></div>
+<div class="nav-hint" id="navHint">← → navigate &nbsp;|&nbsp; SPACE advance &nbsp;|&nbsp; F fullscreen</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 1: Title                         -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-1">
+    <img src="../assets/250.webp" class="title-logo" alt="t+">
+    <div class="title-main">DeFi Needs a CEX?!?</div>
+    <div class="title-sub">T+ PRODUCT DAY 2026</div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 2: Video Demo                    -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide video-slide" id="slide-2">
+    <div class="video-placeholder">
+        <div class="video-timer">00:00</div>
+        <div class="video-placeholder-text">
+            [VIDEO]<br>POPCAT DELTA EXECUTION
+        </div>
+        <div class="video-placeholder-sub">
+            12 steps &middot; 5 platforms &middot; 3 chains &middot; 2 asset classes
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 3: The Cost                      -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-3" data-clicks="1">
+    <div class="cost-container">
+        <div class="reveal" id="s3-time">
+            <div class="cost-label">TIME TO EXECUTE</div>
+            <div class="cost-value">[X] <span>min</span></div>
+        </div>
+        <div class="reveal" id="s3-markout">
+            <div class="cost-label">EXECUTION MARKOUT</div>
+            <div class="cost-value">[X] <span>bps</span></div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 4: Market Structure              -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide align-start" id="slide-4" data-clicks="3" style="justify-content: flex-start; padding-top: 30px;">
+    <div class="slide-headline">This isn't <i>just</i> a UX issue — it's a market structure issue</div>
+
+    <div class="sankey-container" id="sankey-container">
+        <div class="sankey-label" id="sankey-label">ETH SPOT LIQUIDITY</div>
+        <div style="font: 14px 'Courier New', monospace; color: #aaa; position: absolute; top: 24px; left: 8px;">perp flows not included</div>
+        <canvas class="sankey-canvas" id="sankey-canvas" width="900" height="380"></canvas>
+    </div>
+    <div class="slide-subtext" id="s4-caption" style="margin-top:8px; margin-bottom:12px; min-height:50px;"></div>
+
+    <div class="reveal" id="s4-frag">
+        <div class="slide-subtext" style="color:#888; margin-bottom:6px;">Liquidity fragmentation isn't isolated to crypto</div>
+        <div class="stat-callout">Only ~15% of NASDAQ-listed securities' volume trades on the NASDAQ.</div>
+    </div>
+    <div class="slide-subtext reveal" id="s4-optimal">Optimal (even reasonable) trade execution is <span class="t-impact" style="font-size:40px;">HARD</span></div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 5: Fragmentation Is Permanent    -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide align-start" id="slide-5" data-clicks="3">
+    <div class="slide-headline">Fragmentation will not solve itself</div>
+
+    <div class="stacked-chart" id="stacked-chart"></div>
+
+    <div class="slide-subtext reveal" id="s5-tradfi" style="color:#888;">Traditional assets are increasingly issued in permissionless environments — fragmentation will get worse</div>
+    <div class="slide-subtext reveal" id="s5-broker" style="margin-top:8px;">Brokers/OTC desks don't solve this either — no single party is good at executing everywhere</div>
+    <div class="slide-emphasis reveal" id="s5-emph">You need a marketplace for execution monopolies.</div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 6: What That Marketplace Needs   -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-6" data-clicks="7">
+    <div class="slide-headline" style="text-align:center; width:100%; margin-bottom:16px; font-family:'Courier New',monospace;">What that marketplace needs</div>
+    <div class="missions-container" id="missions-6">
+        <div class="mission-block">
+            <div class="mission-header">
+                <span class="mission-num">MISSION 1:</span> Optimal Quoting Environment
+            </div>
+            <div class="mission-requirements" id="m6-reqs-1">
+                <div class="mission-req-item" id="s6-i1"><span class="status">></span><span class="req-text">Consistently FAST</span></div>
+                <img src="../assets/fast-tweet.png" class="mission-image" id="fast-tweet-img" alt="burckmeister tweet">
+                <div class="mission-req-item" id="s6-i2"><span class="status">></span><span class="req-text">No cost-to-quote</span></div>
+                <div class="mission-req-item" id="s6-i3"><span class="status">></span><span class="req-text">Order and Position Privacy</span></div>
+                <div class="mission-req-item" id="s6-i4"><span class="status">></span><span class="req-text">Permissionless and Trustless</span></div>
+            </div>
+        </div>
+        <div class="mission-block">
+            <div class="mission-header">
+                <span class="mission-num">MISSION 2:</span> Full Composability
+            </div>
+            <div class="mission-requirements" id="m6-reqs-2">
+                <div class="mission-req-item" id="s6-i5"><span class="status">></span><span class="req-text">Efficient access to external liquidity & products</span></div>
+            </div>
+        </div>
+        <div class="mission-block">
+            <div class="mission-header">
+                <span class="mission-num">MISSION 3:</span> Extreme Capital Efficiency
+            </div>
+            <div class="mission-requirements" id="m6-reqs-3">
+                <div class="mission-req-item" id="s6-i6"><span class="status">></span><span class="req-text">Lots of Leverage/Margin</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 7: CEXs Are The Closest          -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-7" data-clicks="2">
+    <div class="slide-headline" style="text-align:center; width:100%; margin-bottom:16px; font-family:'Courier New',monospace;">CEXs are the closest</div>
+    <div class="missions-container">
+        <div class="mission-block">
+            <div class="mission-header"><span class="mission-num">MISSION 1:</span> Optimal Quoting Environment</div>
+            <div class="mission-requirements" id="m7-reqs-1">
+                <div class="mission-req-item"><span class="status">✅</span><span class="req-text">Consistently FAST — centralized matching engine, dedicated hardware</span></div>
+                <div class="mission-req-item"><span class="status">⚠️</span><span class="req-text">No cost-to-quote — no gas, prioritized cancels (sometimes), no margin check (sometimes)</span></div>
+                <div class="mission-req-item"><span class="status">❓</span><span class="req-text">Order and position privacy — "if you trust the operator"</span></div>
+                <img src="../assets/arthur-hayes.png" class="mission-image" style="max-width:440px;" alt="Arthur Hayes - Run the stops">
+                <div class="mission-req-item"><span class="status">❌</span><span class="req-text">Permissionless and trustless — KYC and jurisdiction restricted. Centralized custody.</span></div>
+            </div>
+        </div>
+        <div class="mission-block">
+            <div class="mission-header"><span class="mission-num">MISSION 2:</span> Full Composability</div>
+            <div class="mission-requirements" id="m7-reqs-2">
+                <div class="mission-req-item"><span class="status">⚠️</span><span class="req-text">Liquidity composability — credit lines for MMs (permissioned, relationship-based)</span></div>
+                <div class="mission-req-item"><span class="status">❌</span><span class="req-text">Product composability — limited to what the CEX lists</span></div>
+            </div>
+        </div>
+        <div class="mission-block">
+            <div class="mission-header"><span class="mission-num">MISSION 3:</span> Extreme Capital Efficiency</div>
+            <div class="mission-requirements" id="m7-reqs-3">
+                <div class="mission-req-item"><span class="status">✅</span><span class="req-text">100x+ leverage and credit lines</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 8: t+ The First Prime Exchange   -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-8" data-clicks="2">
+    <div class="slide-headline" style="text-align:center; width:100%; margin-bottom:16px; font-family:'Courier New',monospace;">t+ — The First Prime Exchange</div>
+    <div class="missions-container">
+        <div class="mission-block">
+            <div class="mission-header"><span class="mission-num">MISSION 1:</span> Optimal Quoting Environment</div>
+            <div class="mission-requirements" id="m8-reqs-1">
+                <div class="mission-req-item"><span class="status">✅</span><span class="req-text">Consistently FAST — one fast CLOB</span></div>
+                <div class="mission-req-item"><span class="status">✅</span><span class="req-text">No cost-to-quote — prioritized cancels, no gas, no margin req to quote (for MMs)</span></div>
+                <div class="mission-req-item"><span class="status">✅</span><span class="req-text">Order and Position Privacy — only L2 data leaves the TEE</span></div>
+                <div class="mission-req-item"><span class="status">✅</span><span class="req-text">Permissionless and Trustless — it's in a TEE (and more)</span></div>
+            </div>
+        </div>
+        <div class="mission-block">
+            <div class="mission-header"><span class="mission-num">MISSION 2:</span> Full Composability</div>
+            <div class="mission-requirements" id="m8-reqs-2">
+                <div class="mission-req-item"><span class="status">✅</span><span class="req-text">t+ accounts can:</span></div>
+                <div class="mission-req-sub">atomically interact with external protocols using global deposits</div>
+                <div class="mission-req-sub">cross-margin with external exchanges</div>
+            </div>
+        </div>
+        <div class="mission-block">
+            <div class="mission-header"><span class="mission-num">MISSION 3:</span> Extreme Capital Efficiency</div>
+            <div class="mission-requirements" id="m8-reqs-3">
+                <div class="mission-req-item"><span class="status">✅</span><span class="req-text">Matched Book Margin</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 9: The Prime Exchange Network    -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-9" data-clicks="2" style="justify-content: flex-start; padding-top: 30px;">
+    <div class="slide-headline" style="text-align:center; width:100%; margin-bottom:4px;">The Prime Exchange Network</div>
+    <div class="slide-subtext" style="text-align:center; width:100%; margin-bottom:24px; color:#666; font-size:26px;">
+        There are Source Exchanges and Flow Exchanges. Every Flow Exchange will become a Prime Exchange.<br>t+ is the network for them.
+    </div>
+    <div class="network-container reveal" id="s9-net">
+        <div class="network-label">PRIME EXCHANGES (FLOW)</div>
+        <div class="network-layer top">
+            <div class="network-node tplus">t+ CLOB</div>
+            <div class="network-node">OTC Desk</div>
+            <div class="network-node">T2 CEX</div>
+            <div class="network-node">Auction</div>
+            <div class="network-node">Dark Pool</div>
+        </div>
+        <div class="connector-lines"><div class="connector-line"></div><div class="connector-line"></div><div class="connector-line"></div><div class="connector-line"></div><div class="connector-line"></div></div>
+        <div class="network-layer middle">
+            <div>
+                <div class="network-middle-text">t+ Unified Capital &amp; State</div>
+                <div class="network-middle-sub">margin engine &middot; composability layer &middot; state machine</div>
+            </div>
+        </div>
+        <div class="connector-lines"><div class="connector-line"></div><div class="connector-line"></div><div class="connector-line"></div><div class="connector-line"></div><div class="connector-line"></div></div>
+        <div class="network-label">SOURCE EXCHANGES</div>
+        <div class="network-layer bottom">
+            <div class="network-node">Hyperliquid</div>
+            <div class="network-node">Binance</div>
+            <div class="network-node">Onchain DEXs</div>
+            <div class="network-node">CEXs</div>
+            <div class="network-node">RWA Venues</div>
+        </div>
+    </div>
+    <ul class="network-bullets reveal" id="s9-bullets">
+        <li>Unified capital base + state machine</li>
+        <li>Anyone can build an orderbook or auction that proposes mutations</li>
+        <li>Each proposer enforces own rules (AML, KYC, features)</li>
+    </ul>
+</div>
+
+<script>
+(function(){
+    var TOTAL = 9;
+    var cur = 1;
+    var cs = {};
+
+    function go(n, initClicks) {
+        if (n < 1 || n > TOTAL) return;
+        var prev = document.getElementById('slide-' + cur);
+        if (prev) prev.classList.remove('active');
+        cur = n;
+        if (initClicks !== undefined) cs[cur] = initClicks;
+        else if (!cs[cur]) cs[cur] = 0;
+        var slide = document.getElementById('slide-' + cur);
+        if (slide) { slide.classList.add('active'); apply(cur, cs[cur]); }
+        document.getElementById('progress').style.width = ((cur / TOTAL) * 100) + '%';
+        document.getElementById('counter').textContent = cur + ' / ' + TOTAL;
+        document.getElementById('navHint').style.opacity = cur > 1 ? '0' : '';
+    }
+
+    function mc(n) {
+        var s = document.getElementById('slide-' + n);
+        return s ? parseInt(s.getAttribute('data-clicks') || '0') : 0;
+    }
+
+    function advance() {
+        if (cs[cur] < mc(cur)) { cs[cur]++; apply(cur, cs[cur]); }
+        else go(cur + 1);
+    }
+
+    function retreat() {
+        if (cs[cur] > 0) { cs[cur]--; apply(cur, cs[cur]); }
+        else if (cur > 1) go(cur - 1, mc(cur - 1));
+    }
+
+    function v(id, on) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        if (on) el.classList.add('visible');
+        else el.classList.remove('visible');
+    }
+
+    function expandMission(prefix, num) {
+        for (var i = 1; i <= 3; i++) {
+            var reqs = document.getElementById(prefix + '-reqs-' + i);
+            if (!reqs) continue;
+            if (i === num) {
+                reqs.classList.add('revealed');
+                reqs.querySelectorAll('.mission-req-item, .mission-image, .mission-req-sub').forEach(function(el) {
+                    el.classList.add('visible');
+                });
+            } else {
+                reqs.classList.remove('revealed');
+                reqs.querySelectorAll('.mission-req-item, .mission-image, .mission-req-sub').forEach(function(el) {
+                    el.classList.remove('visible');
+                });
+            }
+        }
+    }
+
+    function apply(s, c) {
+        switch(s) {
+            case 3:
+                v('s3-time', true);
+                v('s3-markout', c >= 1);
+                break;
+            case 4:
+                var cap = document.getElementById('s4-caption');
+                if (c >= 1) { drawSankey('HYPE'); document.getElementById('sankey-label').textContent = 'HYPE SPOT LIQUIDITY'; }
+                else { drawSankey('ETH'); document.getElementById('sankey-label').textContent = 'ETH SPOT LIQUIDITY'; }
+                cap.textContent = c === 0 ? 'Liquidity is distributed across isolated venues.' : (c === 1 ? 'Products are distributed across isolated venues.' : '');
+                v('s4-frag', c >= 2);
+                v('s4-optimal', c >= 3);
+                break;
+            case 5:
+                buildStackedChart();
+                v('s5-tradfi', c >= 1);
+                v('s5-broker', c >= 2);
+                v('s5-emph', c >= 3);
+                break;
+            case 6:
+                var active6 = c === 0 ? 0 : (c <= 5 ? 1 : (c === 6 ? 2 : 3));
+                expandMission('m6', active6);
+                v('s6-i1', c >= 1 && active6 === 1);
+                v('fast-tweet-img', c >= 2 && active6 === 1);
+                v('s6-i2', c >= 3 && active6 === 1);
+                v('s6-i3', c >= 4 && active6 === 1);
+                v('s6-i4', c >= 5 && active6 === 1);
+                v('s6-i5', active6 === 2);
+                v('s6-i6', active6 === 3);
+                break;
+            case 7:
+                expandMission('m7', c + 1);
+                break;
+            case 8:
+                expandMission('m8', c + 1);
+                break;
+            case 9:
+                v('s9-net', c >= 1);
+                v('s9-bullets', c >= 2);
+                break;
+        }
+    }
+
+    document.addEventListener('keydown', function(e) {
+        switch(e.key) {
+            case 'ArrowRight': case ' ': case 'Enter':
+                e.preventDefault(); advance(); break;
+            case 'ArrowLeft': case 'Backspace':
+                e.preventDefault(); retreat(); break;
+            case 'ArrowUp':
+                e.preventDefault(); go(cur - 1); break;
+            case 'ArrowDown':
+                e.preventDefault(); go(cur + 1); break;
+            case 'f': case 'F':
+                if (!e.ctrlKey && !e.metaKey) {
+                    if (document.fullscreenElement) document.exitFullscreen();
+                    else document.documentElement.requestFullscreen();
+                }
+                break;
+        }
+    });
+
+    var tx = 0;
+    document.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; });
+    document.addEventListener('touchend', function(e) {
+        var dx = e.changedTouches[0].clientX - tx;
+        if (Math.abs(dx) > 50) { if (dx < 0) advance(); else retreat(); }
+    });
+
+    document.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
+        advance();
+    });
+
+    // ══════════════════════════════════
+    // SANKEY DIAGRAM (spot only)
+    // ══════════════════════════════════
+    const ethVenues = [
+        { name: 'Binance', cat: 'CEX', pct: 33 },
+        { name: 'MEXC', cat: 'CEX', pct: 11 },
+        { name: 'KuCoin', cat: 'CEX', pct: 10 },
+        { name: 'Gate.io', cat: 'CEX', pct: 9 },
+        { name: 'Coinbase', cat: 'CEX', pct: 8 },
+        { name: 'OKX', cat: 'CEX', pct: 7 },
+        { name: 'Bybit', cat: 'CEX', pct: 6 },
+        { name: 'Uniswap (Mainnet)', cat: 'DEX', pct: 16 },
+        { name: 'Kraken', cat: 'CEX', pct: 2.5 },
+        { name: 'Bitget', cat: 'CEX', pct: 3 },
+        { name: 'HTX', cat: 'CEX', pct: 2 },
+        { name: 'Curve (Mainnet)', cat: 'DEX', pct: 1.6 },
+        { name: 'Uniswap (Arbitrum)', cat: 'DEX', pct: 0.4 },
+        { name: 'Uniswap (Base)', cat: 'DEX', pct: 0.4 },
+        { name: 'Balancer', cat: 'DEX', pct: 0.4 },
+        { name: 'Aerodrome (Base)', cat: 'DEX', pct: 0.2 },
+        { name: 'Camelot (Arb)', cat: 'DEX', pct: 0.1 },
+        { name: 'Hyperliquid', cat: 'DEX', pct: 0 },
+        { name: 'Other CEXs', cat: 'Other', pct: 5 },
+    ];
+
+    // HYPE spot availability: venue name → pct (null = not available)
+    const hypeAvailability = {
+        'Binance': null,           // NOT listed on Binance spot
+        'MEXC': 3.5,
+        'KuCoin': 4.3,
+        'Gate.io': 4.8,
+        'Coinbase': 3.9,
+        'OKX': 6.9,
+        'Bybit': 11,
+        'Uniswap (Mainnet)': null,
+        'Kraken': 2.6,
+        'Bitget': 8.2,
+        'HTX': null,
+        'Curve (Mainnet)': null,
+        'Balancer': null,
+        'Uniswap (Arbitrum)': null,
+        'Uniswap (Base)': null,
+        'Aerodrome (Base)': null,
+        'Camelot (Arb)': null,
+        'Hyperliquid': 24,         // native venue — #1 spot
+        'Other CEXs': 5,
+    };
+
+    const catColors = {
+        CEX: '#cc0000',
+        DEX: '#0088cc',
+        Other: '#888888',
+    };
+
+    function drawSankey(mode) {
+        const canvas = document.getElementById('sankey-canvas');
+        const ctx = canvas.getContext('2d');
+        const dpr = window.devicePixelRatio || 1;
+        const W = 900, H = 380;
+        canvas.width = W * dpr; canvas.height = H * dpr;
+        canvas.style.width = '100%'; canvas.style.height = H + 'px';
+        ctx.scale(dpr, dpr);
+        ctx.clearRect(0, 0, W, H);
+
+        // Always use ethVenues for right-side layout
+        const venues = ethVenues;
+        const pad = { top: 14, bottom: 24, left: 80, right: 10 };
+        const flowAreaH = H - pad.top - pad.bottom;
+        const totalPct = venues.reduce((s, v) => s + v.pct, 0);
+
+        // ── Left: single solid bar, shorter than right total ──
+        const leftBarX = pad.left;
+        const leftBarW = 22;
+        const leftBarH = flowAreaH * 0.35;
+        const leftBarY = pad.top + (flowAreaH - leftBarH) / 2;
+
+        ctx.fillStyle = '#ED1F24';
+        ctx.fillRect(leftBarX, leftBarY, leftBarW, leftBarH);
+
+        // Left label
+        ctx.save();
+        ctx.translate(leftBarX - 14, leftBarY + leftBarH / 2);
+        ctx.rotate(-Math.PI / 2);
+        ctx.fillStyle = '#ED1F24';
+        ctx.font = 'bold 16px "Press Start 2P", monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(mode, 0, 0);
+        ctx.restore();
+
+        // ── Right: stacked venue bars sized by current mode ──
+        const rightBarX = W - 210;
+        const rightBarW = 10;
+        const rightGap = 2;
+        const totalRightGap = (venues.length - 1) * rightGap;
+        const rightUsableH = flowAreaH - totalRightGap;
+
+        // In HYPE mode: inactive venues keep ETH sizing, active venues resize to HYPE pcts
+        let rightNodes = [];
+        let ry = pad.top;
+        if (mode === 'ETH') {
+            venues.forEach(v => {
+                const h = Math.max(6, (v.pct / totalPct) * rightUsableH);
+                rightNodes.push({ ...v, y: ry, h });
+                ry += h + rightGap;
+            });
+        } else {
+            // Reserve space for inactive venues at their ETH sizes
+            let inactiveH = 0;
+            venues.forEach(v => {
+                if (hypeAvailability[v.name] == null) {
+                    inactiveH += Math.max(6, (v.pct / totalPct) * rightUsableH) + rightGap;
+                }
+            });
+            const activeUsableH = rightUsableH - inactiveH;
+            const totalHypePct = venues.reduce((s, v) => {
+                const hp = hypeAvailability[v.name];
+                return hp != null ? s + hp : s;
+            }, 0);
+            venues.forEach(v => {
+                const hp = hypeAvailability[v.name];
+                const h = hp != null
+                    ? Math.max(6, (hp / totalHypePct) * activeUsableH)
+                    : Math.max(6, (v.pct / totalPct) * rightUsableH);
+                rightNodes.push({ ...v, y: ry, h });
+                ry += h + rightGap;
+            });
+        }
+
+        // Figure out which venues are active and the left bar slot count
+        let activeIndices = [];
+        venues.forEach((v, i) => {
+            if (mode === 'ETH' ? v.pct > 0 : (hypeAvailability[v.name] != null)) {
+                activeIndices.push(i);
+            }
+        });
+        const activeCount = activeIndices.length;
+
+        // ── Draw each venue ──
+        let leftSlotIdx = 0;
+        venues.forEach((v, i) => {
+            const rn = rightNodes[i];
+            const color = catColors[v.cat] || '#888';
+            const isActive = mode === 'ETH' ? v.pct > 0 : (hypeAvailability[v.name] != null);
+
+            if (isActive) {
+                // ── Draw flow from left bar to right node ──
+                const leftSlotH = leftBarH / activeCount;
+                const leftY0 = leftBarY + leftSlotIdx * leftSlotH;
+                const leftY1 = leftY0 + leftSlotH;
+                leftSlotIdx++;
+
+                const x0 = leftBarX + leftBarW;
+                const x1 = rightBarX;
+                const cpx0 = x0 + (x1 - x0) * 0.4;
+                const cpx1 = x0 + (x1 - x0) * 0.6;
+
+                ctx.beginPath();
+                ctx.moveTo(x0, leftY0);
+                ctx.bezierCurveTo(cpx0, leftY0, cpx1, rn.y, x1, rn.y);
+                ctx.lineTo(x1, rn.y + rn.h);
+                ctx.bezierCurveTo(cpx1, rn.y + rn.h, cpx0, leftY1, x0, leftY1);
+                ctx.closePath();
+                ctx.fillStyle = color;
+                ctx.globalAlpha = 0.2;
+                ctx.fill();
+                ctx.globalAlpha = 0.45;
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 0.5;
+                ctx.stroke();
+                ctx.globalAlpha = 1;
+
+                // Active right bar
+                ctx.fillStyle = color;
+                ctx.globalAlpha = 0.85;
+                ctx.fillRect(rightBarX, rn.y, rightBarW, rn.h);
+                ctx.globalAlpha = 1;
+
+                // Active label
+                const pctVal = mode === 'ETH' ? v.pct : hypeAvailability[v.name];
+                const fontSize = Math.max(9, Math.min(13, rn.h - 1));
+                ctx.fillStyle = '#333';
+                ctx.font = '500 ' + fontSize + 'px "Courier New", monospace';
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(v.name + ' (' + pctVal + '%)', rightBarX + rightBarW + 8, rn.y + rn.h / 2);
+            } else {
+                // ── Grayed out: no flow, dimmed bar + label ──
+                ctx.fillStyle = '#ddd';
+                ctx.fillRect(rightBarX, rn.y, rightBarW, rn.h);
+
+                const fontSize = Math.max(9, Math.min(13, rn.h - 1));
+                ctx.fillStyle = '#ccc';
+                ctx.font = '500 ' + fontSize + 'px "Courier New", monospace';
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(v.name, rightBarX + rightBarW + 8, rn.y + rn.h / 2);
+            }
+        });
+
+        // ── Legend ──
+        const cats = [...new Set(venues.map(v => v.cat))];
+        ctx.font = 'bold 10px "Courier New", monospace';
+        cats.forEach((cat, i) => {
+            const lx = leftBarX + leftBarW + 20 + i * 110;
+            ctx.fillStyle = catColors[cat] || '#888';
+            ctx.fillRect(lx, H - 14, 10, 10);
+            ctx.fillStyle = '#666';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(cat, lx + 14, H - 9);
+        });
+    }
+
+    // ══════════════════════════════════
+    // STACKED BAR CHART (Slide 5)
+    // ══════════════════════════════════
+    let chartBuilt = false;
+    function buildStackedChart() {
+        if (chartBuilt) return;
+        chartBuilt = true;
+        const container = document.getElementById('stacked-chart');
+
+        // Logo map: venue name → logo filename, or { left, right } for composite
+        // Rule: standalone logo must appear before any composite using it
+        const logoMap = {
+            // 2017
+            'Coinbase': 'coinbase.png', 'Kraken': 'kraken.jpg', 'Bitfinex': 'bitfinex.png',
+            'Gemini': 'gemini.png', 'BitMEX': 'bitmex.png', 'EtherDelta': 'etherdelta.png',
+            // 2018
+            'Binance': 'binance.jpg', 'Huobi': 'huobi.png', 'OKEx': 'okx.png',
+            'Deribit': 'deribit.jpg', 'KuCoin': 'kucoin.png', 'Bancor': 'bancor.png',
+            // 2019
+            'Bybit': 'bybit.png', 'Uniswap V1': 'uniswap.png', 'Gate.io': 'gate.png',
+            'Kyber': 'kyber.png', '0x': '0x.png', 'Synthetix': 'kwenta.png',
+            // 2020
+            'FTX': 'ftx.png', 'SushiSwap': 'sushiswap.png', 'Curve': 'curve.png',
+            'Balancer': 'balancer.png', '1inch': '1inch.png', 'DODO': 'dodo.png',
+            // 2021
+            'PancakeSwap': 'pancakeswap.jpeg', 'Raydium': 'raydium.jpg', 'dYdX': 'dydx.png',
+            'Orca': 'orca.png', 'TraderJoe': 'trader-joe.png', 'Gains': 'gains.svg',
+            // 2022 — standalones first, then composites of earlier standalones
+            'GMX': 'gmx.png', 'Jupiter': 'jupiter.png', 'Bitget': 'bitget.jpg', 'Osmosis': 'osmosis.png',
+            'Uni (Arb)': { left: 'uniswap.png', right: 'arbitrum.png' },
+            'Sushi (Arb)': { left: 'sushiswap.png', right: 'arbitrum.png' },
+            // 2023
+            'Vertex': 'vertex.jpg', 'Drift': 'drift.png', 'Maverick': 'maverick.png', 'Velodrome': 'velodrome.png',
+            'GMX (Arb)': { left: 'gmx.png', right: 'arbitrum.png' },
+            'Curve (Arb)': { left: 'curve.png', right: 'arbitrum.png' },
+            // 2024
+            'Hyperliquid': 'hyperliquid.jpg', 'Aerodrome': 'aerodrome.png',
+            'Aevo': 'aevo.png', 'Meteora': 'meteora.png',
+            'Uni (Base)': { left: 'uniswap.png', right: 'base.png' },
+            'Ambient': 'ambient.png',
+            // 2025
+            'Ostium': 'ostium.png', 'Paradex': 'paradex.jpg', 'Backpack': 'backpack.jpeg',
+            'Fluid': 'fluid.png', 'Lighter': 'lighter.png', 'EdgeX': 'edgex.jpeg',
+        };
+
+        // Venues that should get featured (logo + label) treatment when new
+        const featuredSet = new Set(Object.keys(logoMap));
+
+        const yearData = {
+            2017: {
+                cex: ['Coinbase','Kraken','Bitstamp','Bitfinex','Poloniex','Gemini','Bittrex','HitBTC'],
+                dex: ['EtherDelta'],
+                perps: ['BitMEX'],
+                l2: [],
+            },
+            2018: {
+                cex: ['Binance','Coinbase','Kraken','Bitstamp','Bitfinex','Huobi','OKEx','KuCoin','Gemini','Poloniex','Bittrex','HitBTC'],
+                dex: ['EtherDelta','IDEX','Bancor'],
+                perps: ['BitMEX','Deribit'],
+                l2: [],
+            },
+            2019: {
+                cex: ['Binance','Coinbase','Kraken','Bitstamp','Bitfinex','Huobi','OKEx','KuCoin','Gemini','Poloniex','Bittrex','Gate.io'],
+                dex: ['Uniswap V1','Kyber','0x','IDEX','Bancor'],
+                perps: ['BitMEX','Deribit','Bybit','Synthetix'],
+                l2: [],
+            },
+            2020: {
+                cex: ['Binance','Coinbase','Kraken','Bitstamp','Bitfinex','Huobi','OKEx','KuCoin','Gemini','Poloniex','FTX','Gate.io','MEXC'],
+                dex: ['Uniswap V2','SushiSwap','Curve','Balancer','1inch','Kyber','Bancor','DODO','Loopring'],
+                perps: ['BitMEX','Deribit','Bybit','Synthetix','Binance Futures','FTX Perps'],
+                l2: [],
+            },
+            2021: {
+                cex: ['Binance','Coinbase','Kraken','Bitstamp','Bitfinex','Huobi','OKEx','KuCoin','Gemini','FTX','Gate.io','MEXC','Crypto.com'],
+                dex: ['Uniswap V3','SushiSwap','Curve','Balancer','1inch','DODO','PancakeSwap','TraderJoe','Raydium','Orca'],
+                perps: ['BitMEX','Deribit','Bybit','Synthetix','Binance Futures','FTX Perps','dYdX','Perpetual','Gains'],
+                l2: ['QuickSwap','Uni (Poly)'],
+            },
+            2022: {
+                cex: ['Binance','Coinbase','Kraken','Bitstamp','Bitfinex','Huobi','OKX','KuCoin','Gemini','Gate.io','MEXC','Bybit','Bitget','Crypto.com','Phemex'],
+                dex: ['Uniswap V3','SushiSwap','Curve','Balancer','1inch','DODO','TraderJoe','PancakeSwap','Osmosis','Raydium','Orca','Jupiter'],
+                perps: ['dYdX','GMX','Gains','Perpetual','Binance F','Bybit F','OKX F','Bitget F','Deribit'],
+                l2: ['Uni (Arb)','Sushi (Arb)','Uni (Opt)','Uni (Poly)','QuickSwap'],
+            },
+            2023: {
+                cex: ['Binance','Coinbase','Kraken','OKX','KuCoin','Gate.io','MEXC','Bybit','Bitget','Crypto.com','Phemex','HTX','BingX'],
+                dex: ['Uniswap V3','SushiSwap','Curve','Balancer','1inch','DODO','TraderJoe','PancakeSwap','Raydium','Orca','Jupiter','Maverick'],
+                perps: ['dYdX','GMX','Gains','Vertex','Drift','Perpetual','Binance F','Bybit F','OKX F','Bitget F','Gate F','Deribit'],
+                l2: ['Uni (Arb)','Uni (Opt)','Camelot','Velodrome','Sushi (Arb)','Curve (Arb)','GMX (Arb)','SyncSwap'],
+            },
+            2024: {
+                cex: ['Binance','Coinbase','Kraken','OKX','KuCoin','Gate.io','MEXC','Bybit','Bitget','Crypto.com','Phemex','HTX','BingX','Robinhood','Bitstamp','Gemini'],
+                dex: ['Uni V3 (ETH)','Curve','Balancer','1inch','DODO','TraderJoe','PancakeSwap','Raydium','Orca','Jupiter','Meteora','Ambient','Maverick','Thruster'],
+                perps: ['dYdX','GMX','Gains','Hyperliquid','Vertex','Drift','Aevo','Perpetual','Binance F','Bybit F','OKX F','Bitget F','Gate F','Deribit','Rabbitx'],
+                l2: ['Uni (Arb)','Uni (Base)','Uni (Opt)','Camelot','Aerodrome','Velodrome','Sushi (Arb)','Curve (Arb)','GMX (Arb)','BaseSwap','SyncSwap','Mute'],
+            },
+            2025: {
+                cex: ['Binance','Coinbase','Kraken','OKX','KuCoin','Gate.io','MEXC','Bybit','Bitget','Crypto.com','HTX','BingX','Robinhood','Gemini','Bitstamp','Phemex','Backpack','Upbit'],
+                dex: ['Uni V4 (ETH)','Curve','Balancer','1inch','PancakeSwap','Raydium','Orca','Jupiter','Meteora','Ambient','Maverick','Thruster','Odos','Fluid'],
+                perps: ['dYdX','GMX','Gains','Hyperliquid','Vertex','Drift','Aevo','Ostium','Perpetual','Paradex','Lighter','EdgeX','Binance F','Bybit F','OKX F','Bitget F','Gate F','Deribit','MEXC F','KuCoin F'],
+                l2: ['Uni (Arb)','Uni (Base)','Uni (Opt)','Uni (Scroll)','Camelot','Aerodrome','Velodrome','SyncSwap','Mute','iZiSwap','BaseSwap','Curve (Arb)','GMX (Arb)','Thruster (Blast)'],
+            },
+        };
+
+        const catMeta = {
+            cex: { label: 'CEXs', cls: 'cex', color: '#cc0000' },
+            dex: { label: 'DEXs', cls: 'dex', color: '#0088cc' },
+            perps: { label: 'Perps', cls: 'perps', color: '#ff6600' },
+            l2: { label: 'L2 DEXs', cls: 'l2', color: '#8833cc' },
+        };
+        const catOrder = ['cex', 'dex', 'perps', 'l2'];
+        const years = Object.keys(yearData).map(Number);
+        const maxTotal = Math.max(...years.map(y => {
+            const d = yearData[y];
+            return catOrder.reduce((s, c) => s + d[c].length, 0);
+        }));
+        let prevVenueSet = new Set();
+        const maxBarH = 280;
+        let prevTotal = 0;
+
+        years.forEach((year, yi) => {
+            const d = yearData[year];
+            const total = catOrder.reduce((s, c) => s + d[c].length, 0);
+
+            let allVenues = [];
+            catOrder.forEach(cat => {
+                d[cat].forEach(name => allVenues.push({ name, cat }));
+            });
+            const newFeatured = allVenues
+                .filter(v => !prevVenueSet.has(v.name) && featuredSet.has(v.name));
+            allVenues.forEach(v => prevVenueSet.add(v.name));
+
+            // Heights proportional to maxTotal
+            const totalH = (total / maxTotal) * maxBarH;
+            const baseH = (prevTotal / maxTotal) * maxBarH;
+            // Logo section fills the delta
+            const logoSectionH = totalH - baseH;
+
+            const col = document.createElement('div');
+            col.className = 'venue-column';
+
+            // Count label on top
+            const count = document.createElement('div');
+            count.className = 'venue-count';
+            count.textContent = total;
+            col.appendChild(count);
+
+            const wrap = document.createElement('div');
+            wrap.className = 'venue-bar-wrap';
+
+            // Logos (the increase)
+            const logos = document.createElement('div');
+            logos.className = 'venue-logos';
+            logos.style.minHeight = logoSectionH + 'px';
+            newFeatured.forEach(v => {
+                const logo = logoMap[v.name];
+                if (!logo) return;
+                if (typeof logo === 'string') {
+                    const img = document.createElement('img');
+                    img.className = 'venue-logo';
+                    img.src = 'assets/logos/' + logo;
+                    img.title = v.name;
+                    img.alt = v.name;
+                    logos.appendChild(img);
+                } else {
+                    // Composite: { left, right }
+                    const comp = document.createElement('div');
+                    comp.className = 'venue-logo-composite';
+                    comp.title = v.name;
+                    const lh = document.createElement('div');
+                    lh.className = 'venue-logo-half';
+                    const li = document.createElement('img');
+                    li.src = 'assets/logos/' + logo.left;
+                    li.alt = v.name;
+                    lh.appendChild(li);
+                    const rh = document.createElement('div');
+                    rh.className = 'venue-logo-half right';
+                    const ri = document.createElement('img');
+                    ri.src = 'assets/logos/' + logo.right;
+                    ri.alt = v.name;
+                    rh.appendChild(ri);
+                    comp.appendChild(lh);
+                    comp.appendChild(rh);
+                    logos.appendChild(comp);
+                }
+            });
+            wrap.appendChild(logos);
+
+            // Solid base bar (previous venues)
+            if (baseH > 0) {
+                const base = document.createElement('div');
+                base.className = 'venue-bar-base';
+                base.style.height = baseH + 'px';
+                wrap.appendChild(base);
+            }
+
+            col.appendChild(wrap);
+
+            // Year label
+            const yearLabel = document.createElement('div');
+            yearLabel.className = 'venue-year';
+            yearLabel.textContent = year;
+            col.appendChild(yearLabel);
+
+            container.appendChild(col);
+            prevTotal = total;
+        });
+
+    }
+
+    // ── Init ──
+    go(1);
+})();
+</script>
+</body>
+</html>

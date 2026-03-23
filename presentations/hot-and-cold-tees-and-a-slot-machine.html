@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hot and Cold TEEs plus a Slot Machine — T+ Product Day 2026</title>
+    <link rel="icon" type="image/png" href="../assets/1836.webp">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #000; overflow: hidden; font-family: 'Courier New', monospace; color: #111; }
+
+        /* ── Slides ── */
+        .slide {
+            position: fixed; inset: 0;
+            display: none; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 36px 5vw;
+            background: #ffeeee;
+            opacity: 0; transition: opacity 0.35s ease;
+        }
+        .slide.active { display: flex; opacity: 1; }
+        .slide.align-start { align-items: flex-start; }
+
+        /* ── Chrome ── */
+        .progress-bar { position: fixed; top: 0; left: 0; height: 4px; background: #ED1F24; z-index: 100; transition: width 0.4s ease; }
+        .slide-counter { position: fixed; bottom: 16px; right: 24px; font: bold 21px 'Courier New', monospace; color: #999; z-index: 100; user-select: none; }
+        .nav-hint { position: fixed; bottom: 16px; left: 24px; font: 20px 'Courier New', monospace; color: #bbb; z-index: 100; user-select: none; transition: opacity 2s ease; }
+
+        /* ── Typography ── */
+        .t-impact { font-family: Impact, sans-serif; color: #ED1F24; }
+        .slide-headline {
+            font: bold 54px Impact, 'Arial Narrow', sans-serif;
+            color: #111; line-height: 1.2; margin-bottom: 20px;
+            letter-spacing: 0.5px; text-transform: uppercase; width: 100%;
+        }
+        .slide-subtext { font: bold 36px 'Courier New', monospace; color: #333; line-height: 1.4; width: 100%; }
+        .slide-emphasis { font-family: Impact, sans-serif; color: #ED1F24; font-size: 48px; margin-top: 20px; line-height: 1.3; text-align: center; }
+
+        /* ═══ SLIDE 1: Title ═══ */
+        .title-logo { width: 140px; margin-bottom: 36px; image-rendering: pixelated; }
+        .title-main { font-family: Impact, sans-serif; font-size: 80px; color: #ED1F24; line-height: 1.05; margin-bottom: 24px; letter-spacing: 3px; text-transform: uppercase; text-align: center; }
+        .title-sub { font: bold 22px 'Courier New', monospace; color: #666; letter-spacing: 3px; line-height: 1.8; text-align: center; text-transform: uppercase; }
+        .title-event { font: 24px 'Courier New', monospace; color: #999; margin-top: 24px; }
+
+        /* ═══ SLIDE 2: Requirements ═══ */
+        .req-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 60px; margin: 20px 0; }
+        .req-item { font: bold 36px 'Courier New', monospace; color: #333; padding: 8px 0; }
+        .req-item::before { content: "> "; color: #ED1F24; font-weight: bold; }
+
+        /* ═══ SLIDE 3: Priority Table ═══ */
+        .pri-table { width: 100%; border-collapse: collapse; margin: 8px 0; }
+        .pri-table th { font: bold 16px 'Courier New', monospace; padding: 12px 20px; text-align: center; letter-spacing: 2px; text-transform: uppercase; }
+        .pri-table th:first-child { text-align: left; color: #888; width: 200px; }
+        .pri-table th.col-hot { background: #333; color: #fff; }
+        .pri-table th.col-cold { background: #ED1F24; color: #fff; }
+        .pri-table td { font: 500 22px 'Courier New', monospace; padding: 9px 20px; border-bottom: 2px solid #ddd; text-align: center; }
+        .pri-table td:first-child { text-align: left; font: bold 14px 'Courier New', monospace; color: #888; text-transform: uppercase; letter-spacing: 2px; }
+        .pri-table td.cell-hot { background: #f0f0f0; color: #333; }
+        .pri-table td.cell-cold { background: #fef0f0; color: #333; }
+        .def-pair { display: flex; gap: 28px; width: 100%; margin-top: 16px; }
+        .def-box { flex: 1; padding: 16px 24px; font: bold 28px 'Courier New', monospace; text-align: center; border: 3px solid #ddd; background: #f5f5f5; opacity: 0; transform: translateY(8px); transition: opacity 0.35s ease, transform 0.35s ease; }
+        .def-box.visible { opacity: 1; transform: translateY(0); }
+        .def-box.hot { border-color: #333; }
+        .def-box.cold { border-color: #ED1F24; }
+        .def-label { font: bold 16px 'Courier New', monospace; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+        .def-box.hot .def-label { color: #555; }
+        .def-box.cold .def-label { color: #ED1F24; }
+
+        /* ═══ SLIDES 4-5: Dual Blocks ═══ */
+        .dual-section { display: flex; gap: 28px; width: 100%; }
+        .dual-block {
+            flex: 1; border: 3px solid #ddd; background: #f5f5f5;
+            padding: 28px 32px; overflow: hidden;
+            opacity: 0; transform: translateY(12px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .dual-block.visible { opacity: 1; transform: translateY(0); }
+        .dual-block.accent { border-color: #ED1F24; }
+        .dual-block-title { font: bold 18px 'Courier New', monospace; color: #ED1F24; margin-bottom: 18px; line-height: 1.6; text-transform: uppercase; letter-spacing: 2px; }
+        .dual-block-list { list-style: none; padding: 0; margin: 0; }
+        .dual-block-list li { font: 500 28px 'Courier New', monospace; color: #444; padding: 7px 0; }
+        .dual-block-list li::before { content: "> "; color: #cc0000; font-weight: bold; }
+
+        /* ═══ SLIDE 6: Mechanism ═══ */
+        .mech-container { width: 100%; border: 3px solid #ED1F24; overflow: hidden; }
+        .mech-label { background: #ED1F24; color: #fff; padding: 14px 24px; font: bold 20px 'Courier New', monospace; text-align: center; letter-spacing: 3px; text-transform: uppercase; }
+        .mech-block {
+            display: flex; align-items: stretch; border-bottom: 2px solid #ddd;
+            opacity: 0; max-height: 0; overflow: hidden;
+            transition: opacity 0.4s ease, max-height 0.5s ease;
+        }
+        .mech-block.visible { opacity: 1; max-height: 200px; }
+        .mech-block:last-child { border-bottom: none; }
+        .mech-num { background: #ED1F24; color: #f2ff00; font: bold 36px 'Courier New', monospace; display: flex; align-items: center; justify-content: center; width: 80px; flex-shrink: 0; }
+        .mech-body { padding: 16px 28px; flex: 1; background: #f5f5f5; display: flex; align-items: center; }
+        .mech-desc { font: 500 28px 'Courier New', monospace; color: #333; line-height: 1.4; }
+
+        .chk-container { width: 100%; border: 3px solid #ddd; overflow: hidden; margin-top: 16px; opacity: 0; transform: translateY(12px); transition: opacity 0.4s ease, transform 0.4s ease; }
+        .chk-container.visible { opacity: 1; transform: translateY(0); }
+        .chk-label { background: #333; color: #fff; padding: 12px 24px; font: bold 18px 'Courier New', monospace; letter-spacing: 3px; text-transform: uppercase; }
+        .chk-body { padding: 14px 24px; background: #f5f5f5; }
+        .chk-body li { font: 500 24px 'Courier New', monospace; color: #444; padding: 5px 0; list-style: none; }
+        .chk-body li::before { content: "> "; color: #888; font-weight: bold; }
+
+        /* ═══ SLIDE 7: Comparison Table ═══ */
+        .cmp-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+        .cmp-table th { font: bold 14px 'Courier New', monospace; padding: 14px 16px; text-align: center; letter-spacing: 2px; text-transform: uppercase; }
+        .cmp-table th:first-child { background: transparent; color: #888; width: 130px; text-align: left; }
+        .cmp-table th.col-bc { background: #666; color: #fff; }
+        .cmp-table th.col-ru { background: #333; color: #fff; }
+        .cmp-table th.col-sm { background: #ED1F24; color: #fff; }
+        .cmp-table td { font: 500 21px 'Courier New', monospace; padding: 14px 16px; border-bottom: 2px solid #ddd; vertical-align: middle; }
+        .cmp-table td:first-child { font: bold 13px 'Courier New', monospace; color: #888; background: transparent; text-transform: uppercase; letter-spacing: 2px; }
+        .cmp-table td.cell-bc { background: #f0f0f0; color: #666; text-align: center; }
+        .cmp-table td.cell-ru { background: #e8e8e8; color: #555; text-align: center; }
+        .cmp-table td.cell-sm { background: #fef0f0; color: #333; text-align: center; }
+        .cmp-table tbody tr { opacity: 0; transform: translateY(6px); transition: opacity 0.3s ease, transform 0.3s ease; }
+        .cmp-table tbody tr.visible { opacity: 1; transform: translateY(0); }
+        .cmp-foot { font: 500 18px 'Courier New', monospace; color: #888; margin-top: 8px; opacity: 0; transition: opacity 0.4s ease; }
+        .cmp-foot.visible { opacity: 1; }
+
+        /* ═══ SLIDE 8: Section Blocks ═══ */
+        .sect-block { border: 3px solid #ddd; overflow: hidden; margin-bottom: 16px; opacity: 0; max-height: 0; transition: opacity 0.4s ease, max-height 0.6s ease; }
+        .sect-block.visible { opacity: 1; max-height: 400px; }
+        .sect-block.accent { border-color: #ED1F24; }
+        .sect-header { background: #333; color: #fff; padding: 14px 24px; font: bold 18px 'Courier New', monospace; letter-spacing: 2px; text-transform: uppercase; }
+        .sect-block.accent .sect-header { background: #ED1F24; }
+        .sect-body { padding: 16px 24px; background: #f5f5f5; }
+        .sect-body li { font: 500 26px 'Courier New', monospace; color: #333; padding: 6px 0; list-style: none; }
+        .sect-body li::before { content: "> "; color: #ED1F24; font-weight: bold; }
+        .sect-block:not(.accent) .sect-body li::before { color: #888; }
+
+        /* ═══ SLIDE 9: Credential Manager ═══ */
+        .cred-list { list-style: none; padding: 0; margin: 12px 0; width: 100%; }
+        .cred-list li { font: 500 28px 'Courier New', monospace; color: #333; padding: 8px 0; border-bottom: 2px solid #eee; }
+        .cred-list li strong { font-family: Impact, sans-serif; color: #ED1F24; font-size: 30px; font-weight: normal; letter-spacing: 0.5px; }
+        .escape-block { border: 3px solid #ED1F24; padding: 18px 24px; background: #fef0f0; margin-top: 16px; opacity: 0; transform: translateY(8px); transition: opacity 0.4s ease, transform 0.4s ease; }
+        .escape-block.visible { opacity: 1; transform: translateY(0); }
+        .escape-label { font: bold 16px 'Courier New', monospace; color: #ED1F24; margin-bottom: 8px; letter-spacing: 2px; text-transform: uppercase; }
+        .escape-text { font: 500 26px 'Courier New', monospace; color: #333; }
+        .compare-pair { display: flex; gap: 28px; width: 100%; margin-top: 16px; }
+        .compare-box { flex: 1; padding: 18px 24px; opacity: 0; transform: translateY(8px); transition: opacity 0.35s ease, transform 0.35s ease; }
+        .compare-box.visible { opacity: 1; transform: translateY(0); }
+        .compare-box.muted { border: 3px solid #ddd; background: #f0f0f0; }
+        .compare-box.acc { border: 3px solid #ED1F24; background: #fef0f0; }
+        .compare-box-label { font: bold 18px 'Courier New', monospace; margin-bottom: 8px; letter-spacing: 2px; text-transform: uppercase; }
+        .compare-box-label.muted-label { color: #888; }
+        .compare-box-label.acc-label { color: #ED1F24; }
+        .compare-box-text { font: 500 28px 'Courier New', monospace; }
+        .compare-box.muted .compare-box-text { color: #666; }
+        .compare-box.acc .compare-box-text { color: #333; }
+
+        /* ═══ SLIDE 10: Architecture ═══ */
+        .arch-svg { width: 100%; max-width: 880px; height: auto; }
+        .arch-hier { font: 500 22px 'Courier New', monospace; color: #888; margin-top: 12px; text-align: center; opacity: 0; transform: translateY(8px); transition: opacity 0.4s ease, transform 0.4s ease; }
+        .arch-hier.visible { opacity: 1; transform: translateY(0); }
+
+        /* ═══ SLIDE 11: Landing ═══ */
+        .land-item { font: bold 30px 'Courier New', monospace; color: #333; padding: 14px 0; opacity: 0; transform: translateY(10px); transition: opacity 0.4s ease, transform 0.4s ease; }
+        .land-item.visible { opacity: 1; transform: translateY(0); }
+        .land-check { font-family: Impact, sans-serif; color: #ED1F24; font-size: 34px; margin-right: 8px; }
+
+        /* ── Generic reveal ── */
+        .reveal { opacity: 0; transform: translateY(12px); transition: opacity 0.4s ease, transform 0.4s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+<div class="slide-counter" id="counter"></div>
+<div class="nav-hint" id="navHint">← → navigate &nbsp;|&nbsp; SPACE advance &nbsp;|&nbsp; F fullscreen</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 1: Title                         -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-1">
+    <img src="../assets/250.webp" class="title-logo" alt="t+">
+    <div class="title-main">HOT AND COLD TEES<br>PLUS A SLOT MACHINE</div>
+    <div class="title-sub">PROCESSING 10 MILLION ORDERS PER SECOND<br>WITHOUT COMPROMISING</div>
+    <div class="title-event">Talk 2 of 4 — Architecture Deep-Dive</div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 2: The Problem                   -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-2" data-clicks="1">
+    <div class="slide-headline" style="text-align:center;">A prime exchange needs to be:</div>
+    <div class="req-grid">
+        <div class="req-item">Private</div>
+        <div class="req-item">Permissionless</div>
+        <div class="req-item">Decentralized</div>
+        <div class="req-item">Trustless</div>
+        <div class="req-item">VERY fast</div>
+        <div class="req-item">High throughput</div>
+        <div class="req-item">Non-rotating</div>
+        <div class="req-item">Continuous execution</div>
+    </div>
+    <div class="slide-emphasis reveal" id="s2-imp">THIS IS IMPOSSIBLE. EVEN WITH TDX.</div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 3: Hot and Cold TEEs             -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-3" data-clicks="1">
+    <div class="slide-headline" style="text-align:center; margin-bottom:12px;">Not every component needs all eight</div>
+    <table class="pri-table">
+        <thead>
+            <tr><th></th><th class="col-hot">Hot TEEs</th><th class="col-cold">Cold TEEs</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Private</td><td class="cell-hot">🔴 Critical</td><td class="cell-cold">🟡 Important</td></tr>
+            <tr><td>Fast</td><td class="cell-hot">🔴 Critical</td><td class="cell-cold">🟢 Low</td></tr>
+            <tr><td>Throughput</td><td class="cell-hot">🔴 Critical</td><td class="cell-cold">🟢 Low</td></tr>
+            <tr><td>Non-rotating</td><td class="cell-hot">🔴 Critical</td><td class="cell-cold">🟢 Low</td></tr>
+            <tr><td>Continuous</td><td class="cell-hot">🔴 Critical</td><td class="cell-cold">🟢 Low</td></tr>
+            <tr><td>Permissionless</td><td class="cell-hot">🟡 Important</td><td class="cell-cold">🔴 Critical</td></tr>
+            <tr><td>Decentralized</td><td class="cell-hot">🟡 Important</td><td class="cell-cold">🔴 Critical</td></tr>
+            <tr><td>Trustless</td><td class="cell-hot">🟡 Important</td><td class="cell-cold">🔴 Critical</td></tr>
+        </tbody>
+    </table>
+    <div class="def-pair">
+        <div class="def-box hot" id="s3-hot">
+            <div class="def-label">HOT TEEs</div>
+            Performance is the priority
+        </div>
+        <div class="def-box cold" id="s3-cold">
+            <div class="def-label">COLD TEEs</div>
+            Security is the priority
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 4: Hot TEEs                      -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-4" data-clicks="1">
+    <div class="slide-headline" style="text-align:center; margin-bottom:4px;">Hot TEEs</div>
+    <div class="slide-subtext" style="text-align:center; font-size:22px; color:#888; margin-bottom:20px; letter-spacing:2px; text-transform:uppercase;">OMS &bull; Orderbook &bull; Matching Engine</div>
+    <div class="dual-section">
+        <div class="dual-block" id="s4-perf">
+            <div class="dual-block-title">PERFORMANCE</div>
+            <ul class="dual-block-list">
+                <li>Fast and non-rotating</li>
+                <li>Private — L2 data only</li>
+                <li>Continuous execution</li>
+                <li>Primary/backup for liveness</li>
+            </ul>
+        </div>
+        <div class="dual-block accent" id="s4-perm">
+            <div class="dual-block-title">PERMISSIONLESS &amp; SAFE</div>
+            <ul class="dual-block-list">
+                <li>Censored? Run your own</li>
+                <li>dstack — verifiable containers</li>
+                <li>Proposers only — can't touch state</li>
+                <li>Safe to upgrade — can't steal funds</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 5: Cold TEEs                     -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-5" data-clicks="1">
+    <div class="slide-headline" style="text-align:center; margin-bottom:4px;">Cold TEEs</div>
+    <div class="slide-subtext" style="text-align:center; font-size:22px; color:#888; margin-bottom:20px; letter-spacing:2px; text-transform:uppercase;">Clearing Engine &bull; Risk &bull; Deposits &bull; Accounting</div>
+    <div class="dual-section">
+        <div class="dual-block" id="s5-sec">
+            <div class="dual-block-title">SECURITY OVER SPEED</div>
+            <ul class="dual-block-list">
+                <li>Decentralized — TEE network</li>
+                <li>No single party controls state</li>
+                <li>All state encrypted in memory</li>
+            </ul>
+        </div>
+        <div class="dual-block accent" id="s5-thresh">
+            <div class="dual-block-title">THRESHOLD TEE SIGNING</div>
+            <ul class="dual-block-list">
+                <li>Quorum must agree to act</li>
+                <li>No single TEE can approve alone</li>
+                <li>No single operator can move funds</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 6: The Slot Machine              -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-6" data-clicks="2">
+    <div class="slide-headline" style="text-align:center; margin-bottom:16px;">The Slot Machine</div>
+    <div class="mech-container">
+        <div class="mech-label">HOW COLD TEEs COORDINATE</div>
+        <div class="mech-block" id="s6-m1">
+            <div class="mech-num">1</div>
+            <div class="mech-body"><div class="mech-desc">Hot TEEs propose state mutations</div></div>
+        </div>
+        <div class="mech-block" id="s6-m2">
+            <div class="mech-num">2</div>
+            <div class="mech-body"><div class="mech-desc">Leader Cold TEE batches proposals into <span class="t-impact" style="font-size:32px;">slots</span></div></div>
+        </div>
+        <div class="mech-block" id="s6-m3">
+            <div class="mech-num">3</div>
+            <div class="mech-body"><div class="mech-desc">Peers independently validate the slot</div></div>
+        </div>
+        <div class="mech-block" id="s6-m4">
+            <div class="mech-num">4</div>
+            <div class="mech-body"><div class="mech-desc">Threshold signs off → <span class="t-impact" style="font-size:32px;">slot finalized</span></div></div>
+        </div>
+    </div>
+    <div class="chk-container" id="s6-chk">
+        <div class="chk-label">CHECKPOINTING</div>
+        <div class="chk-body">
+            <ul style="padding:0;margin:0;">
+                <li>Periodic encrypted state snapshots</li>
+                <li>Key shards held by governance council</li>
+                <li>Peers endorse → distributed recovery point</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 7: Comparison                    -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-7" data-clicks="5">
+    <div class="slide-headline" style="text-align:center; margin-bottom:12px; font-size:44px;">Slot Machine vs Traditional State Machines</div>
+    <table class="cmp-table">
+        <thead>
+            <tr><th></th><th class="col-bc">Blockchains</th><th class="col-ru">Rollups</th><th class="col-sm">Slot Machine</th></tr>
+        </thead>
+        <tbody>
+            <tr id="s7-r1"><td>Visibility</td><td class="cell-bc">Public</td><td class="cell-ru">Public (posted to L1)</td><td class="cell-sm">Private (encrypted in memory)</td></tr>
+            <tr id="s7-r2"><td>Finality</td><td class="cell-bc">Often multi-block</td><td class="cell-ru">Fraud proof window / proof gen</td><td class="cell-sm">Single-slot</td></tr>
+            <tr id="s7-r3"><td>Compute</td><td class="cell-bc">Re-executed by all validators</td><td class="cell-ru">Provable via ZK circuits</td><td class="cell-sm">Arbitrary — no re-execution</td></tr>
+            <tr id="s7-r4"><td>Trust</td><td class="cell-bc">Cryptographic / economic</td><td class="cell-ru">Inherited from L1</td><td class="cell-sm">TEE integrity + threshold*</td></tr>
+            <tr id="s7-r5"><td>Throughput</td><td class="cell-bc">Consensus-limited</td><td class="cell-ru">Proof overhead</td><td class="cell-sm">High — no hot-path overhead</td></tr>
+        </tbody>
+    </table>
+    <div class="cmp-foot" id="s7-foot">*Can be enhanced with ZK proof systems or economic security — asynchronously, not on the hot path.</div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 8: Recovery and Failover         -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide align-start" id="slide-8" data-clicks="2">
+    <div class="slide-headline" style="margin-bottom:16px;">Recovery and Failover</div>
+    <div class="sect-block" id="s8-leader" style="width:100%;">
+        <div class="sect-header">LEADER GOES DOWN</div>
+        <div class="sect-body">
+            <ul style="padding:0;margin:0;">
+                <li>View change → new leader elected</li>
+                <li>Surgical rollback — only unrecovered tail</li>
+                <li>Trading continues during failover</li>
+            </ul>
+        </div>
+    </div>
+    <div class="sect-block" id="s8-full" style="width:100%;">
+        <div class="sect-header">FULL NETWORK FAILURE</div>
+        <div class="sect-body">
+            <ul style="padding:0;margin:0;">
+                <li>Council decrypts checkpoint key shards</li>
+                <li>L1 verifies: correct software + valid checkpoint</li>
+                <li>Best candidate promoted to leader</li>
+            </ul>
+        </div>
+    </div>
+    <div class="sect-block accent" id="s8-witness" style="width:100%;">
+        <div class="sect-header">THE COUNCIL IS A BOTTLENECK — WE'RE REMOVING IT</div>
+        <div class="sect-body">
+            <ul style="padding:0;margin:0;">
+                <li>Witness encryption for DCAP</li>
+                <li>Any valid TEE can decrypt — no council needed</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 9: Credential Manager            -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide align-start" id="slide-9" data-clicks="2">
+    <div class="slide-headline" style="margin-bottom:4px;">The Credential Manager</div>
+    <div class="slide-subtext" style="font-size:24px; color:#888; margin-bottom:16px;">Onchain root of trust for the entire system.</div>
+    <ul class="cred-list">
+        <li><strong>Dual-key model</strong> — identity + hardware-attested key</li>
+        <li><strong>Measurement profiles</strong> — approved TDX gold images only</li>
+        <li><strong>Proof of cloud</strong> — Automata DCAP + ZK onchain verification</li>
+        <li><strong>Timelocked governance</strong> — 48h to 7-day delays</li>
+        <li><strong>Restart certification</strong> — onchain leader election</li>
+    </ul>
+    <div class="escape-block" id="s9-escape">
+        <div class="escape-label">ESCAPE HATCH</div>
+        <div class="escape-text">Bonded withdrawal request → timelock → CE quorum can reject → unilateral exit if unchallenged</div>
+    </div>
+    <div class="compare-pair" id="s9-ops-wrap">
+        <div class="compare-box muted" id="s9-today">
+            <div class="compare-box-label muted-label">TODAY</div>
+            <div class="compare-box-text">Known, permissioned operators</div>
+        </div>
+        <div class="compare-box acc" id="s9-tomorrow">
+            <div class="compare-box-label acc-label">TOMORROW</div>
+            <div class="compare-box-text">Federated trust-based quorum</div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 10: Network Architecture         -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-10" data-clicks="1">
+    <div class="slide-headline" style="text-align:center; margin-bottom:4px;">Network Architecture</div>
+    <svg viewBox="20 20 780 520" class="arch-svg" xmlns="http://www.w3.org/2000/svg">
+
+        <!-- ═══ 1. CE WHEEL RING GUIDE ═══ -->
+        <circle cx="650" cy="275" r="80" fill="none" stroke="#e8d8d8" stroke-width="1" stroke-dasharray="4,8"/>
+
+        <!-- ═══ 2. "SLOT MACHINE" LABEL ═══ -->
+        <text x="650" y="168" text-anchor="middle" font-family="Impact,sans-serif" font-size="13" fill="#999" letter-spacing="2">SLOT MACHINE</text>
+
+        <!-- ═══ 3. CONNECTION LINES ═══ -->
+
+        <!-- User → OMS lines (stroke=#e0e0e0 width=1) -->
+        <line x1="55" y1="47" x2="155" y2="47" stroke="#e0e0e0" stroke-width="1"/>
+        <line x1="55" y1="83" x2="155" y2="83" stroke="#e0e0e0" stroke-width="1"/>
+        <line x1="55" y1="123" x2="155" y2="123" stroke="#e0e0e0" stroke-width="1"/>
+        <line x1="55" y1="149" x2="155" y2="149" stroke="#e0e0e0" stroke-width="1"/>
+        <line x1="55" y1="175" x2="155" y2="175" stroke="#e0e0e0" stroke-width="1"/>
+        <line x1="55" y1="215" x2="155" y2="215" stroke="#e0e0e0" stroke-width="1"/>
+        <line x1="55" y1="251" x2="155" y2="251" stroke="#e0e0e0" stroke-width="1"/>
+        <line x1="55" y1="317" x2="155" y2="317" stroke="#e0e0e0" stroke-width="1"/>
+        <line x1="55" y1="383" x2="155" y2="383" stroke="#e0e0e0" stroke-width="1"/>
+        <line x1="55" y1="419" x2="155" y2="419" stroke="#e0e0e0" stroke-width="1"/>
+        <line x1="55" y1="459" x2="155" y2="459" stroke="#e0e0e0" stroke-width="1"/>
+        <line x1="55" y1="485" x2="155" y2="485" stroke="#e0e0e0" stroke-width="1"/>
+        <line x1="55" y1="511" x2="155" y2="511" stroke="#e0e0e0" stroke-width="1"/>
+
+        <!-- OMS → OB lines (stroke=#ddd width=1.5) -->
+        <line x1="155" y1="47" x2="310" y2="65" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="155" y1="83" x2="310" y2="65" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="155" y1="123" x2="310" y2="149" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="155" y1="149" x2="310" y2="149" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="155" y1="175" x2="310" y2="149" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="155" y1="215" x2="310" y2="233" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="155" y1="251" x2="310" y2="233" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="155" y1="317" x2="310" y2="317" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="155" y1="383" x2="310" y2="401" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="155" y1="419" x2="310" y2="401" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="155" y1="459" x2="310" y2="485" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="155" y1="485" x2="310" y2="485" stroke="#ddd" stroke-width="1.5"/>
+        <line x1="155" y1="511" x2="310" y2="485" stroke="#ddd" stroke-width="1.5"/>
+
+        <!-- OB → Leader lines (all converge to 570,275 — stroke=#ccc width=2 opacity=0.6) -->
+        <line x1="310" y1="65" x2="570" y2="275" stroke="#ccc" stroke-width="2" opacity="0.6"/>
+        <line x1="310" y1="149" x2="570" y2="275" stroke="#ccc" stroke-width="2" opacity="0.6"/>
+        <line x1="310" y1="233" x2="570" y2="275" stroke="#ccc" stroke-width="2" opacity="0.6"/>
+        <line x1="310" y1="317" x2="570" y2="275" stroke="#ccc" stroke-width="2" opacity="0.6"/>
+        <line x1="310" y1="401" x2="570" y2="275" stroke="#ccc" stroke-width="2" opacity="0.6"/>
+        <line x1="310" y1="485" x2="570" y2="275" stroke="#ccc" stroke-width="2" opacity="0.6"/>
+
+        <!-- ═══ 4. NODE CIRCLES ═══ -->
+
+        <!-- User dots (r=5, stroke-only) -->
+        <circle cx="55" cy="47" r="5" fill="none" stroke="#ccc" stroke-width="1.5"/>
+        <circle cx="55" cy="83" r="5" fill="none" stroke="#ccc" stroke-width="1.5"/>
+        <circle cx="55" cy="123" r="5" fill="none" stroke="#ccc" stroke-width="1.5"/>
+        <circle cx="55" cy="149" r="5" fill="none" stroke="#ccc" stroke-width="1.5"/>
+        <circle cx="55" cy="175" r="5" fill="none" stroke="#ccc" stroke-width="1.5"/>
+        <circle cx="55" cy="215" r="5" fill="none" stroke="#ccc" stroke-width="1.5"/>
+        <circle cx="55" cy="251" r="5" fill="none" stroke="#ccc" stroke-width="1.5"/>
+        <circle cx="55" cy="317" r="5" fill="none" stroke="#ccc" stroke-width="1.5"/>
+        <circle cx="55" cy="383" r="5" fill="none" stroke="#ccc" stroke-width="1.5"/>
+        <circle cx="55" cy="419" r="5" fill="none" stroke="#ccc" stroke-width="1.5"/>
+        <circle cx="55" cy="459" r="5" fill="none" stroke="#ccc" stroke-width="1.5"/>
+        <circle cx="55" cy="485" r="5" fill="none" stroke="#ccc" stroke-width="1.5"/>
+        <circle cx="55" cy="511" r="5" fill="none" stroke="#ccc" stroke-width="1.5"/>
+
+        <!-- OMS nodes (r=14) -->
+        <circle cx="155" cy="47" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
+        <text x="155" y="51" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <circle cx="155" cy="83" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
+        <text x="155" y="87" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <circle cx="155" cy="123" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
+        <text x="155" y="127" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <circle cx="155" cy="149" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
+        <text x="155" y="153" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <circle cx="155" cy="175" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
+        <text x="155" y="179" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <circle cx="155" cy="215" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
+        <text x="155" y="219" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <circle cx="155" cy="251" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
+        <text x="155" y="255" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <circle cx="155" cy="317" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
+        <text x="155" y="321" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <circle cx="155" cy="383" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
+        <text x="155" y="387" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <circle cx="155" cy="419" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
+        <text x="155" y="423" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <circle cx="155" cy="459" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
+        <text x="155" y="463" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <circle cx="155" cy="485" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
+        <text x="155" y="489" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <circle cx="155" cy="511" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
+        <text x="155" y="515" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+
+        <!-- OB nodes (r=18) -->
+        <circle cx="310" cy="65" r="18" fill="#f5f5f5" stroke="#888" stroke-width="2"/>
+        <text x="310" y="70" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="bold" fill="#555">OB</text>
+        <circle cx="310" cy="149" r="18" fill="#f5f5f5" stroke="#888" stroke-width="2"/>
+        <text x="310" y="154" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="bold" fill="#555">OB</text>
+        <circle cx="310" cy="233" r="18" fill="#f5f5f5" stroke="#888" stroke-width="2"/>
+        <text x="310" y="238" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="bold" fill="#555">OB</text>
+        <circle cx="310" cy="317" r="18" fill="#f5f5f5" stroke="#888" stroke-width="2"/>
+        <text x="310" y="322" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="bold" fill="#555">OB</text>
+        <circle cx="310" cy="401" r="18" fill="#f5f5f5" stroke="#888" stroke-width="2"/>
+        <text x="310" y="406" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="bold" fill="#555">OB</text>
+        <circle cx="310" cy="485" r="18" fill="#f5f5f5" stroke="#888" stroke-width="2"/>
+        <text x="310" y="490" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="bold" fill="#555">OB</text>
+
+        <!-- ═══ 5. ANIMATED DOTS (fixed frame) ═══ -->
+
+        <!-- User → OMS (dur=0.5s, r=1.5, fill=#ccc, 8 selected paths) -->
+        <circle r="1.5" fill="#ccc"><animateMotion dur="0.5s" repeatCount="indefinite" begin="0s" path="M55,47 L155,47"/><animate attributeName="opacity" values="0;0.7;0.7;0" keyTimes="0;0.2;0.8;1" dur="0.5s" repeatCount="indefinite" begin="0s"/></circle>
+        <circle r="1.5" fill="#ccc"><animateMotion dur="0.5s" repeatCount="indefinite" begin="0.12s" path="M55,123 L155,123"/><animate attributeName="opacity" values="0;0.7;0.7;0" keyTimes="0;0.2;0.8;1" dur="0.5s" repeatCount="indefinite" begin="0.12s"/></circle>
+        <circle r="1.5" fill="#ccc"><animateMotion dur="0.5s" repeatCount="indefinite" begin="0.37s" path="M55,149 L155,149"/><animate attributeName="opacity" values="0;0.7;0.7;0" keyTimes="0;0.2;0.8;1" dur="0.5s" repeatCount="indefinite" begin="0.37s"/></circle>
+        <circle r="1.5" fill="#ccc"><animateMotion dur="0.5s" repeatCount="indefinite" begin="0.06s" path="M55,215 L155,215"/><animate attributeName="opacity" values="0;0.7;0.7;0" keyTimes="0;0.2;0.8;1" dur="0.5s" repeatCount="indefinite" begin="0.06s"/></circle>
+        <circle r="1.5" fill="#ccc"><animateMotion dur="0.5s" repeatCount="indefinite" begin="0.18s" path="M55,317 L155,317"/><animate attributeName="opacity" values="0;0.7;0.7;0" keyTimes="0;0.2;0.8;1" dur="0.5s" repeatCount="indefinite" begin="0.18s"/></circle>
+        <circle r="1.5" fill="#ccc"><animateMotion dur="0.5s" repeatCount="indefinite" begin="0.09s" path="M55,419 L155,419"/><animate attributeName="opacity" values="0;0.7;0.7;0" keyTimes="0;0.2;0.8;1" dur="0.5s" repeatCount="indefinite" begin="0.09s"/></circle>
+        <circle r="1.5" fill="#ccc"><animateMotion dur="0.5s" repeatCount="indefinite" begin="0.3s" path="M55,459 L155,459"/><animate attributeName="opacity" values="0;0.7;0.7;0" keyTimes="0;0.2;0.8;1" dur="0.5s" repeatCount="indefinite" begin="0.3s"/></circle>
+        <circle r="1.5" fill="#ccc"><animateMotion dur="0.5s" repeatCount="indefinite" begin="0.42s" path="M55,485 L155,485"/><animate attributeName="opacity" values="0;0.7;0.7;0" keyTimes="0;0.2;0.8;1" dur="0.5s" repeatCount="indefinite" begin="0.42s"/></circle>
+        <circle r="1.5" fill="#ccc"><animateMotion dur="0.5s" repeatCount="indefinite" begin="0.15s" path="M55,511 L155,511"/><animate attributeName="opacity" values="0;0.7;0.7;0" keyTimes="0;0.2;0.8;1" dur="0.5s" repeatCount="indefinite" begin="0.15s"/></circle>
+
+        <!-- OMS → OB (dur=0.7s, r=2, fill=#999, 10 paths) -->
+        <circle r="2" fill="#999"><animateMotion dur="0.7s" repeatCount="indefinite" begin="0s" path="M155,47 L310,65"/><animate attributeName="opacity" values="0;0.8;0.8;0" keyTimes="0;0.15;0.85;1" dur="0.7s" repeatCount="indefinite" begin="0s"/></circle>
+        <circle r="2" fill="#999"><animateMotion dur="0.7s" repeatCount="indefinite" begin="0.35s" path="M155,83 L310,65"/><animate attributeName="opacity" values="0;0.8;0.8;0" keyTimes="0;0.15;0.85;1" dur="0.7s" repeatCount="indefinite" begin="0.35s"/></circle>
+        <circle r="2" fill="#999"><animateMotion dur="0.7s" repeatCount="indefinite" begin="0.1s" path="M155,123 L310,149"/><animate attributeName="opacity" values="0;0.8;0.8;0" keyTimes="0;0.15;0.85;1" dur="0.7s" repeatCount="indefinite" begin="0.1s"/></circle>
+        <circle r="2" fill="#999"><animateMotion dur="0.7s" repeatCount="indefinite" begin="0.45s" path="M155,149 L310,149"/><animate attributeName="opacity" values="0;0.8;0.8;0" keyTimes="0;0.15;0.85;1" dur="0.7s" repeatCount="indefinite" begin="0.45s"/></circle>
+        <circle r="2" fill="#999"><animateMotion dur="0.7s" repeatCount="indefinite" begin="0.55s" path="M155,175 L310,149"/><animate attributeName="opacity" values="0;0.8;0.8;0" keyTimes="0;0.15;0.85;1" dur="0.7s" repeatCount="indefinite" begin="0.55s"/></circle>
+        <circle r="2" fill="#999"><animateMotion dur="0.7s" repeatCount="indefinite" begin="0.2s" path="M155,215 L310,233"/><animate attributeName="opacity" values="0;0.8;0.8;0" keyTimes="0;0.15;0.85;1" dur="0.7s" repeatCount="indefinite" begin="0.2s"/></circle>
+        <circle r="2" fill="#999"><animateMotion dur="0.7s" repeatCount="indefinite" begin="0.15s" path="M155,317 L310,317"/><animate attributeName="opacity" values="0;0.8;0.8;0" keyTimes="0;0.15;0.85;1" dur="0.7s" repeatCount="indefinite" begin="0.15s"/></circle>
+        <circle r="2" fill="#999"><animateMotion dur="0.7s" repeatCount="indefinite" begin="0.05s" path="M155,383 L310,401"/><animate attributeName="opacity" values="0;0.8;0.8;0" keyTimes="0;0.15;0.85;1" dur="0.7s" repeatCount="indefinite" begin="0.05s"/></circle>
+        <circle r="2" fill="#999"><animateMotion dur="0.7s" repeatCount="indefinite" begin="0.25s" path="M155,459 L310,485"/><animate attributeName="opacity" values="0;0.8;0.8;0" keyTimes="0;0.15;0.85;1" dur="0.7s" repeatCount="indefinite" begin="0.25s"/></circle>
+        <circle r="2" fill="#999"><animateMotion dur="0.7s" repeatCount="indefinite" begin="0.4s" path="M155,485 L310,485"/><animate attributeName="opacity" values="0;0.8;0.8;0" keyTimes="0;0.15;0.85;1" dur="0.7s" repeatCount="indefinite" begin="0.4s"/></circle>
+        <circle r="2" fill="#999"><animateMotion dur="0.7s" repeatCount="indefinite" begin="0.6s" path="M155,511 L310,485"/><animate attributeName="opacity" values="0;0.8;0.8;0" keyTimes="0;0.15;0.85;1" dur="0.7s" repeatCount="indefinite" begin="0.6s"/></circle>
+
+        <!-- OB → Leader (dur=1.5s, r=2.5, fill=#666, 6 paths converging to 570,275) -->
+        <circle r="2.5" fill="#666"><animateMotion dur="2.5s" repeatCount="indefinite" begin="0s" path="M310,65 L570,275"/><animate attributeName="opacity" values="0;0.8;0.8;0" keyTimes="0;0.15;0.85;1" dur="2.5s" repeatCount="indefinite" begin="0s"/></circle>
+        <circle r="2.5" fill="#666"><animateMotion dur="2.5s" repeatCount="indefinite" begin="0.5s" path="M310,149 L570,275"/><animate attributeName="opacity" values="0;0.8;0.8;0" keyTimes="0;0.15;0.85;1" dur="2.5s" repeatCount="indefinite" begin="0.5s"/></circle>
+        <circle r="2.5" fill="#666"><animateMotion dur="2.5s" repeatCount="indefinite" begin="0.25s" path="M310,233 L570,275"/><animate attributeName="opacity" values="0;0.8;0.8;0" keyTimes="0;0.15;0.85;1" dur="2.5s" repeatCount="indefinite" begin="0.25s"/></circle>
+        <circle r="2.5" fill="#666"><animateMotion dur="2.5s" repeatCount="indefinite" begin="0.75s" path="M310,317 L570,275"/><animate attributeName="opacity" values="0;0.8;0.8;0" keyTimes="0;0.15;0.85;1" dur="2.5s" repeatCount="indefinite" begin="0.75s"/></circle>
+        <circle r="2.5" fill="#666"><animateMotion dur="2.5s" repeatCount="indefinite" begin="1.0s" path="M310,401 L570,275"/><animate attributeName="opacity" values="0;0.8;0.8;0" keyTimes="0;0.15;0.85;1" dur="2.5s" repeatCount="indefinite" begin="1.0s"/></circle>
+        <circle r="2.5" fill="#666"><animateMotion dur="2.5s" repeatCount="indefinite" begin="1.25s" path="M310,485 L570,275"/><animate attributeName="opacity" values="0;0.8;0.8;0" keyTimes="0;0.15;0.85;1" dur="2.5s" repeatCount="indefinite" begin="1.25s"/></circle>
+
+        <!-- ═══ 6. CE ROTATING GROUP ═══ -->
+        <!-- CE positions relative to center (650,275), radius 80:
+             CE1: (570, 275) — left
+             CE2: (625, 199) — upper
+             CE3: (715, 228) — upper-right
+             CE4: (715, 322) — lower-right
+             CE5: (625, 351) — lower
+        -->
+        <g>
+            <animateTransform attributeName="transform" type="rotate" values="0 650 275; 0 650 275; 72 650 275; 72 650 275; 144 650 275; 144 650 275; 216 650 275; 216 650 275; 288 650 275; 288 650 275; 360 650 275" keyTimes="0; 0.18; 0.2; 0.38; 0.4; 0.58; 0.6; 0.78; 0.8; 0.98; 1" dur="25s" repeatCount="indefinite"/>
+
+            <!-- Pentagon edges (CE↔CE) -->
+            <line x1="570" y1="275" x2="625" y2="199" stroke="#e8a0a0" stroke-width="2"/>
+            <line x1="625" y1="199" x2="715" y2="228" stroke="#e8a0a0" stroke-width="2"/>
+            <line x1="715" y1="228" x2="715" y2="322" stroke="#e8a0a0" stroke-width="2"/>
+            <line x1="715" y1="322" x2="625" y2="351" stroke="#e8a0a0" stroke-width="2"/>
+            <line x1="625" y1="351" x2="570" y2="275" stroke="#e8a0a0" stroke-width="2"/>
+
+            <!-- CE↔CE animated dots (dur=3.5s, r=3, fill=#ED1F24, inside rotating group) -->
+            <circle r="3" fill="#ED1F24"><animateMotion dur="3.5s" repeatCount="indefinite" begin="0s" path="M570,275 L625,199"/><animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.1;0.9;1" dur="3.5s" repeatCount="indefinite" begin="0s"/></circle>
+            <circle r="3" fill="#ED1F24"><animateMotion dur="3.5s" repeatCount="indefinite" begin="0.7s" path="M625,199 L715,228"/><animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.1;0.9;1" dur="3.5s" repeatCount="indefinite" begin="0.7s"/></circle>
+            <circle r="3" fill="#ED1F24"><animateMotion dur="3.5s" repeatCount="indefinite" begin="1.4s" path="M715,228 L715,322"/><animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.1;0.9;1" dur="3.5s" repeatCount="indefinite" begin="1.4s"/></circle>
+            <circle r="3" fill="#ED1F24"><animateMotion dur="3.5s" repeatCount="indefinite" begin="2.1s" path="M715,322 L625,351"/><animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.1;0.9;1" dur="3.5s" repeatCount="indefinite" begin="2.1s"/></circle>
+            <circle r="3" fill="#ED1F24"><animateMotion dur="3.5s" repeatCount="indefinite" begin="2.8s" path="M625,351 L570,275"/><animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.1;0.9;1" dur="3.5s" repeatCount="indefinite" begin="2.8s"/></circle>
+
+            <!-- CE1 (570, 275) — left -->
+            <circle cx="570" cy="275" r="22" fill="#333" stroke="#222" stroke-width="2"/>
+            <text x="570" y="279" text-anchor="middle" font-family="'Courier New',monospace" font-size="12" font-weight="bold" fill="#fff">
+                CE<animateTransform attributeName="transform" type="rotate" values="0 570 275; 0 570 275; -72 570 275; -72 570 275; -144 570 275; -144 570 275; -216 570 275; -216 570 275; -288 570 275; -288 570 275; -360 570 275" keyTimes="0; 0.18; 0.2; 0.38; 0.4; 0.58; 0.6; 0.78; 0.8; 0.98; 1" dur="25s" repeatCount="indefinite"/>
+            </text>
+
+            <!-- CE2 (625, 199) — upper -->
+            <circle cx="625" cy="199" r="22" fill="#333" stroke="#222" stroke-width="2"/>
+            <text x="625" y="203" text-anchor="middle" font-family="'Courier New',monospace" font-size="12" font-weight="bold" fill="#fff">
+                CE<animateTransform attributeName="transform" type="rotate" values="0 625 199; 0 625 199; -72 625 199; -72 625 199; -144 625 199; -144 625 199; -216 625 199; -216 625 199; -288 625 199; -288 625 199; -360 625 199" keyTimes="0; 0.18; 0.2; 0.38; 0.4; 0.58; 0.6; 0.78; 0.8; 0.98; 1" dur="25s" repeatCount="indefinite"/>
+            </text>
+
+            <!-- CE3 (715, 228) — upper-right -->
+            <circle cx="715" cy="228" r="22" fill="#333" stroke="#222" stroke-width="2"/>
+            <text x="715" y="232" text-anchor="middle" font-family="'Courier New',monospace" font-size="12" font-weight="bold" fill="#fff">
+                CE<animateTransform attributeName="transform" type="rotate" values="0 715 228; 0 715 228; -72 715 228; -72 715 228; -144 715 228; -144 715 228; -216 715 228; -216 715 228; -288 715 228; -288 715 228; -360 715 228" keyTimes="0; 0.18; 0.2; 0.38; 0.4; 0.58; 0.6; 0.78; 0.8; 0.98; 1" dur="25s" repeatCount="indefinite"/>
+            </text>
+
+            <!-- CE4 (715, 322) — lower-right -->
+            <circle cx="715" cy="322" r="22" fill="#333" stroke="#222" stroke-width="2"/>
+            <text x="715" y="326" text-anchor="middle" font-family="'Courier New',monospace" font-size="12" font-weight="bold" fill="#fff">
+                CE<animateTransform attributeName="transform" type="rotate" values="0 715 322; 0 715 322; -72 715 322; -72 715 322; -144 715 322; -144 715 322; -216 715 322; -216 715 322; -288 715 322; -288 715 322; -360 715 322" keyTimes="0; 0.18; 0.2; 0.38; 0.4; 0.58; 0.6; 0.78; 0.8; 0.98; 1" dur="25s" repeatCount="indefinite"/>
+            </text>
+
+            <!-- CE5 (625, 351) — lower -->
+            <circle cx="625" cy="351" r="22" fill="#333" stroke="#222" stroke-width="2"/>
+            <text x="625" y="355" text-anchor="middle" font-family="'Courier New',monospace" font-size="12" font-weight="bold" fill="#fff">
+                CE<animateTransform attributeName="transform" type="rotate" values="0 625 351; 0 625 351; -72 625 351; -72 625 351; -144 625 351; -144 625 351; -216 625 351; -216 625 351; -288 625 351; -288 625 351; -360 625 351" keyTimes="0; 0.18; 0.2; 0.38; 0.4; 0.58; 0.6; 0.78; 0.8; 0.98; 1" dur="25s" repeatCount="indefinite"/>
+            </text>
+        </g>
+
+        <!-- ═══ 7. CREDENTIAL MANAGER (fixed, topmost) ═══ -->
+        <circle cx="650" cy="275" r="30" fill="#ED1F24" stroke="#b01" stroke-width="3"/>
+        <text x="650" y="271" text-anchor="middle" font-family="Impact,sans-serif" font-size="10" fill="#fff" letter-spacing="1">CREDENTIAL</text>
+        <text x="650" y="284" text-anchor="middle" font-family="Impact,sans-serif" font-size="10" fill="#fff" letter-spacing="1">MANAGER</text>
+
+    </svg>
+    <div class="arch-hier" id="s10-hier">USERS → OMS → ORDERBOOK → CLEARING ENGINE &nbsp;|&nbsp; Each layer scales independently</div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 11: Landing                      -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-11" data-clicks="4">
+    <div class="slide-headline" style="text-align:center; margin-bottom:28px;">Hot TEEs + Cold TEEs + Slot Machine =</div>
+    <div style="width:100%; max-width:900px;">
+        <div class="land-item" id="s11-i1"><span class="land-check">✓</span> Optimal quoting environment</div>
+        <div class="land-item" id="s11-i2"><span class="land-check">✓</span> 10M+ orders per second</div>
+        <div class="land-item" id="s11-i3"><span class="land-check">✓</span> Permissionless — run your own</div>
+        <div class="land-item" id="s11-i4"><span class="land-check">✓</span> Noncustodial and trustless</div>
+        <div class="land-item" id="s11-i5"><span class="land-check">✓</span> Foundation for composability + capital efficiency</div>
+    </div>
+</div>
+
+<script>
+(function(){
+    var TOTAL = 11;
+    var cur = 1;
+    var cs = {};
+
+    function go(n, initClicks) {
+        if (n < 1 || n > TOTAL) return;
+        var prev = document.getElementById('slide-' + cur);
+        if (prev) prev.classList.remove('active');
+        cur = n;
+        if (initClicks !== undefined) cs[cur] = initClicks;
+        else if (!cs[cur]) cs[cur] = 0;
+        var slide = document.getElementById('slide-' + cur);
+        if (slide) { slide.classList.add('active'); apply(cur, cs[cur]); }
+        document.getElementById('progress').style.width = ((cur / TOTAL) * 100) + '%';
+        document.getElementById('counter').textContent = cur + ' / ' + TOTAL;
+        document.getElementById('navHint').style.opacity = '0';
+    }
+
+    function mc(n) {
+        var s = document.getElementById('slide-' + n);
+        return s ? parseInt(s.getAttribute('data-clicks') || '0') : 0;
+    }
+
+    function advance() {
+        if (cs[cur] < mc(cur)) { cs[cur]++; apply(cur, cs[cur]); }
+        else go(cur + 1);
+    }
+
+    function retreat() {
+        if (cs[cur] > 0) { cs[cur]--; apply(cur, cs[cur]); }
+        else if (cur > 1) go(cur - 1, mc(cur - 1));
+    }
+
+    function v(id, on) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        if (on) el.classList.add('visible');
+        else el.classList.remove('visible');
+    }
+
+    function apply(s, c) {
+        switch(s) {
+            case 2:
+                v('s2-imp', c >= 1);
+                break;
+            case 3:
+                v('s3-hot', c >= 1); v('s3-cold', c >= 1);
+                break;
+            case 4:
+                v('s4-perf', true); v('s4-perm', c >= 1);
+                break;
+            case 5:
+                v('s5-sec', true); v('s5-thresh', c >= 1);
+                break;
+            case 6:
+                v('s6-m1', true); v('s6-m2', true);
+                v('s6-m3', c >= 1); v('s6-m4', c >= 1);
+                v('s6-chk', c >= 2);
+                break;
+            case 7:
+                v('s7-r1', c >= 1); v('s7-r2', c >= 2);
+                v('s7-r3', c >= 3); v('s7-r4', c >= 4);
+                v('s7-r5', c >= 5); v('s7-foot', c >= 4);
+                break;
+            case 8:
+                v('s8-leader', true);
+                v('s8-full', c >= 1);
+                v('s8-witness', c >= 2);
+                break;
+            case 9:
+                v('s9-escape', c >= 1);
+                v('s9-today', c >= 2); v('s9-tomorrow', c >= 2);
+                break;
+            case 10:
+                v('s10-hier', c >= 1);
+                break;
+            case 11:
+                v('s11-i1', true);
+                v('s11-i2', c >= 1); v('s11-i3', c >= 2);
+                v('s11-i4', c >= 3); v('s11-i5', c >= 4);
+                break;
+        }
+    }
+
+    document.addEventListener('keydown', function(e) {
+        switch(e.key) {
+            case 'ArrowRight': case ' ': case 'Enter':
+                e.preventDefault(); advance(); break;
+            case 'ArrowLeft': case 'Backspace':
+                e.preventDefault(); retreat(); break;
+            case 'ArrowUp':
+                e.preventDefault(); go(cur - 1); break;
+            case 'ArrowDown':
+                e.preventDefault(); go(cur + 1); break;
+            case 'f': case 'F':
+                if (!e.ctrlKey && !e.metaKey) {
+                    if (document.fullscreenElement) document.exitFullscreen();
+                    else document.documentElement.requestFullscreen();
+                }
+                break;
+        }
+    });
+
+    var tx = 0;
+    document.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; });
+    document.addEventListener('touchend', function(e) {
+        var dx = e.changedTouches[0].clientX - tx;
+        if (Math.abs(dx) > 50) { if (dx < 0) advance(); else retreat(); }
+    });
+
+    document.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
+        advance();
+    });
+
+    go(1);
+})();
+</script>
+</body>
+</html>

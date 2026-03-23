@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Matched Book Margin — T+ Product Day 2026</title>
+    <link rel="icon" type="image/png" href="../assets/1836.webp">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #000; overflow: hidden; font-family: 'Courier New', monospace; color: #111; }
+
+        /* ── Slides ── */
+        .slide {
+            position: fixed; inset: 0;
+            display: none; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 36px 5vw;
+            background: #ffeeee;
+            opacity: 0; transition: opacity 0.35s ease;
+        }
+        .slide.active { display: flex; opacity: 1; }
+        .slide.align-start { align-items: flex-start; }
+
+        /* ── Chrome ── */
+        .progress-bar { position: fixed; top: 0; left: 0; height: 4px; background: #ED1F24; z-index: 100; transition: width 0.4s ease; }
+        .slide-counter { position: fixed; bottom: 16px; right: 24px; font: bold 21px 'Courier New', monospace; color: #999; z-index: 100; user-select: none; }
+        .nav-hint { position: fixed; bottom: 16px; left: 24px; font: 20px 'Courier New', monospace; color: #bbb; z-index: 100; user-select: none; transition: opacity 2s ease; }
+
+        /* ── Typography ── */
+        .t-impact { font-family: Impact, sans-serif; color: #ED1F24; }
+        .slide-headline {
+            font: bold 54px Impact, 'Arial Narrow', sans-serif;
+            color: #111; line-height: 1.2; margin-bottom: 20px;
+            letter-spacing: 0.5px; text-transform: uppercase; width: 100%;
+        }
+        .slide-subtext { font: bold 36px 'Courier New', monospace; color: #333; line-height: 1.4; width: 100%; }
+        .slide-emphasis { font-family: Impact, sans-serif; color: #ED1F24; font-size: 48px; margin-top: 20px; line-height: 1.3; text-align: center; }
+
+        /* ═══ SLIDE 1: Title ═══ */
+        .title-logo { width: 140px; margin-bottom: 36px; image-rendering: pixelated; }
+        .title-main { font-family: Impact, sans-serif; font-size: 100px; color: #ED1F24; line-height: 1; margin-bottom: 24px; letter-spacing: 3px; text-transform: uppercase; text-align: center; }
+        .title-sub { font: bold 24px 'Courier New', monospace; color: #666; letter-spacing: 3px; line-height: 1.8; text-align: center; text-transform: uppercase; }
+        .title-event { font: 24px 'Courier New', monospace; color: #999; margin-top: 24px; }
+
+        /* ═══ SLIDE 2: Question ═══ */
+        .slide-question { font-family: Impact, sans-serif; font-size: 90px; color: #333; text-align: center; line-height: 1.2; }
+        .slide-answer { font-family: Impact, sans-serif; font-size: 80px; color: #ED1F24; text-align: center; line-height: 1; margin: 10px 0 16px; }
+        .chart-img { max-width: 900px; width: 90%; border: 3px solid #ED1F24; margin: 12px 0 0; }
+        .chart-caption { font: 500 24px 'Courier New', monospace; color: #888; margin-top: 10px; text-align: center; }
+
+        /* ═══ SLIDES 3-4: Dual Blocks ═══ */
+        .dual-section { display: flex; gap: 28px; width: 100%; }
+        .dual-block {
+            flex: 1; border: 3px solid #ddd; background: #f5f5f5;
+            padding: 28px 32px; overflow: hidden;
+            opacity: 0; transform: translateY(12px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .dual-block.visible { opacity: 1; transform: translateY(0); }
+        .dual-block.warn { border-color: #ED1F24; }
+        .dual-block-title { font: bold 20px 'Courier New', monospace; color: #ED1F24; margin-bottom: 18px; line-height: 1.6; text-transform: uppercase; letter-spacing: 2px; }
+        .dual-block-list { list-style: none; padding: 0; margin: 0; }
+        .dual-block-list li { font: 500 32px 'Courier New', monospace; color: #444; padding: 8px 0; }
+        .dual-block-list li::before { content: "> "; color: #cc0000; font-weight: bold; }
+
+        /* ═══ SLIDE 5: Mechanism ═══ */
+        .mech-container { width: 100%; border: 3px solid #ED1F24; overflow: hidden; }
+        .mech-label { background: #ED1F24; color: #fff; padding: 14px 24px; font: bold 20px 'Courier New', monospace; text-align: center; letter-spacing: 3px; text-transform: uppercase; }
+        .mech-block {
+            display: flex; align-items: stretch; border-bottom: 2px solid #ddd;
+            opacity: 0; max-height: 0; overflow: hidden;
+            transition: opacity 0.4s ease, max-height 0.5s ease;
+        }
+        .mech-block.visible { opacity: 1; max-height: 200px; }
+        .mech-block:last-child { border-bottom: none; }
+        .mech-num { background: #ED1F24; color: #f2ff00; font: bold 36px 'Courier New', monospace; display: flex; align-items: center; justify-content: center; width: 80px; flex-shrink: 0; }
+        .mech-body { padding: 20px 28px; flex: 1; background: #f5f5f5; }
+        .mech-title { font: bold 22px 'Courier New', monospace; color: #111; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; }
+        .mech-desc { font: 500 30px 'Courier New', monospace; color: #555; line-height: 1.4; }
+        .mech-tag { display: inline-block; font: bold 16px 'Courier New', monospace; padding: 4px 12px; margin-top: 10px; letter-spacing: 2px; text-transform: uppercase; }
+        .tag-default { background: #e0e0e0; color: #555; }
+        .tag-opt { background: #fff3cd; color: #856404; }
+        .tag-rem { background: #f8d7da; color: #721c24; }
+
+        /* ═══ SLIDE 6: Funding Table ═══ */
+        .fund-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        .fund-table th { background: #ED1F24; color: #fff; font: bold 18px 'Courier New', monospace; padding: 16px 24px; text-align: left; letter-spacing: 2px; text-transform: uppercase; }
+        .fund-table td { font: 500 30px 'Courier New', monospace; padding: 16px 24px; border-bottom: 2px solid #ddd; background: #f5f5f5; color: #333; }
+        .fund-table tbody tr { opacity: 0; transform: translateY(6px); transition: opacity 0.3s ease, transform 0.3s ease; }
+        .fund-table tbody tr.visible { opacity: 1; transform: translateY(0); }
+
+        .compare-pair { display: flex; gap: 28px; width: 100%; margin-top: 20px; }
+        .compare-box { flex: 1; padding: 20px 24px; opacity: 0; transform: translateY(8px); transition: opacity 0.35s ease, transform 0.35s ease; }
+        .compare-box.visible { opacity: 1; transform: translateY(0); }
+        .compare-box.muted { border: 3px solid #ddd; background: #f0f0f0; }
+        .compare-box.accent { border: 3px solid #ED1F24; background: #fef0f0; }
+        .compare-box-label { font: bold 18px 'Courier New', monospace; margin-bottom: 8px; letter-spacing: 2px; text-transform: uppercase; }
+        .compare-box-label.muted-label { color: #888; }
+        .compare-box-label.accent-label { color: #ED1F24; }
+        .compare-box-text { font: 500 28px 'Courier New', monospace; }
+        .compare-box.muted .compare-box-text { color: #666; }
+        .compare-box.accent .compare-box-text { color: #333; }
+
+        .premium-note { font: 500 28px 'Courier New', monospace; color: #888; margin-top: 18px; opacity: 0; transform: translateY(6px); transition: opacity 0.35s ease, transform 0.35s ease; }
+        .premium-note.visible { opacity: 1; transform: translateY(0); }
+
+        /* ═══ SLIDE 7: Comparison Table ═══ */
+        .cmp-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        .cmp-table th { font: bold 18px 'Courier New', monospace; padding: 18px 24px; text-align: center; letter-spacing: 2px; text-transform: uppercase; }
+        .cmp-table th:first-child { background: transparent; color: #888; width: 160px; text-align: left; }
+        .cmp-table th.col-perp { background: #333; color: #fff; }
+        .cmp-table th.col-mbm { background: #ED1F24; color: #fff; }
+        .cmp-table td { font: 500 30px 'Courier New', monospace; padding: 18px 24px; border-bottom: 2px solid #ddd; vertical-align: middle; }
+        .cmp-table td:first-child { font: bold 16px 'Courier New', monospace; color: #888; background: transparent; text-transform: uppercase; letter-spacing: 2px; }
+        .cmp-table td.cell-perp { background: #f0f0f0; color: #666; text-align: center; }
+        .cmp-table td.cell-mbm { background: #fef0f0; color: #333; text-align: center; }
+        .cmp-table tbody tr { opacity: 0; transform: translateY(6px); transition: opacity 0.3s ease, transform 0.3s ease; }
+        .cmp-table tbody tr.visible { opacity: 1; transform: translateY(0); }
+
+        /* ═══ SLIDE 8: Data ═══ */
+        .data-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        .data-table th { background: #ED1F24; color: #fff; font: bold 16px 'Courier New', monospace; padding: 14px 24px; text-align: left; letter-spacing: 2px; text-transform: uppercase; }
+        .data-table th:last-child { text-align: right; }
+        .data-table td { font: bold 30px 'Courier New', monospace; padding: 14px 24px; border-bottom: 2px solid #ddd; background: #f5f5f5; color: #333; }
+        .data-table td:last-child { text-align: right; color: #555; }
+        .data-table tr.hl td { background: #fef0f0; }
+        .data-table tr.hl td:last-child { color: #ED1F24; font-size: 34px; }
+
+        /* ═══ SLIDE 9: Section Blocks ═══ */
+        .sect-block { border: 3px solid #ED1F24; overflow: hidden; opacity: 0; max-height: 0; transition: opacity 0.4s ease, max-height 0.6s ease; }
+        .sect-block.visible { opacity: 1; max-height: 400px; }
+        .sect-header { background: #ED1F24; color: #fff; padding: 14px 24px; font: bold 18px 'Courier New', monospace; letter-spacing: 2px; text-transform: uppercase; }
+        .sect-body { padding: 18px 24px; background: #f5f5f5; }
+        .sect-body li { font: 500 28px 'Courier New', monospace; color: #333; padding: 8px 0; list-style: none; }
+        .sect-body li::before { content: "> "; color: #ED1F24; font-weight: bold; }
+
+        .reverse-block { padding: 18px 24px; border: 3px solid #333; background: #f5f5f5; opacity: 0; transform: translateY(8px); transition: opacity 0.4s ease, transform 0.4s ease; }
+        .reverse-block.visible { opacity: 1; transform: translateY(0); }
+
+        /* ═══ SLIDE 10: Close ═══ */
+        .close-era { text-align: center; margin: 20px 0; opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+        .close-era.visible { opacity: 1; transform: translateY(0); }
+        .close-year { font: bold 28px 'Courier New', monospace; color: #999; margin-bottom: 12px; letter-spacing: 3px; }
+        .close-name { font-family: Impact, sans-serif; font-size: 72px; color: #ED1F24; line-height: 1.1; margin-bottom: 12px; }
+        .close-desc { font: 500 30px 'Courier New', monospace; color: #555; line-height: 1.6; }
+        .close-div { width: 100px; height: 4px; background: #ED1F24; margin: 32px auto; opacity: 0; transition: opacity 0.5s ease; }
+        .close-div.visible { opacity: 1; }
+
+        /* ── Generic reveal ── */
+        .reveal { opacity: 0; transform: translateY(12px); transition: opacity 0.4s ease, transform 0.4s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+<div class="slide-counter" id="counter"></div>
+<div class="nav-hint" id="navHint">← → navigate &nbsp;|&nbsp; SPACE advance &nbsp;|&nbsp; F fullscreen</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 1: Title                         -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-1">
+    <img src="../assets/250.webp" class="title-logo" alt="t+">
+    <div class="title-main">MATCHED BOOK MARGIN</div>
+    <div class="title-sub">ARTHUR HAYES DIDN'T ONESHOT<br>LEVERAGE TRADING IN 2016</div>
+    <div class="title-event">Talk 3 of 3 — Capital Efficiency Deep-Dive</div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 2: Capital Efficiency            -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-2" data-clicks="2">
+    <div class="slide-question reveal" id="s2-q">"Isn't leverage evil?"</div>
+    <div class="slide-answer reveal" id="s2-a">NO.</div>
+    <div class="slide-subtext reveal" id="s2-sub" style="text-align:center; margin-bottom:16px; width:auto;">Capital efficiency means more liquidity.</div>
+    <img src="../assets/spot-vs-per-vol.png" class="chart-img reveal" id="s2-chart" alt="Perp vs Spot Volume Ratio">
+    <div class="chart-caption reveal" id="s2-cap">Binance BTC/USDT — perps trade 3-5x spot volume, 10x+ during volatility.</div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 3: Why Perps Work                -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-3" data-clicks="1">
+    <div class="slide-headline" style="text-align:center; margin-bottom:28px;">Why perps are so capital efficient</div>
+    <div class="dual-section">
+        <div class="dual-block" id="s3-a">
+            <div class="dual-block-title">PURELY SYNTHETIC</div>
+            <ul class="dual-block-list">
+                <li>No underlying needed</li>
+                <li>Not constrained by lender supply</li>
+                <li>Just need a counterparty</li>
+            </ul>
+        </div>
+        <div class="dual-block" id="s3-b">
+            <div class="dual-block-title">LIQUIDATION WITHOUT MARKET IMPACT</div>
+            <ul class="dual-block-list">
+                <li>Closing = unwinding a contract</li>
+                <li>ADL: force-close against counterparties</li>
+                <li>Zero new liquidity needed</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 4: What Perps Get Wrong          -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-4" data-clicks="1">
+    <div class="slide-headline" style="text-align:center; margin-bottom:28px;">What perps get wrong</div>
+    <div class="dual-section">
+        <div class="dual-block warn" id="s4-a">
+            <div class="dual-block-title">SCALING IS ADVERSARIAL</div>
+            <ul class="dual-block-list">
+                <li>Flow imbalances → premiums</li>
+                <li>Funding = unpredictable carry cost</li>
+                <li>Punishes hedgers &amp; long-term holders</li>
+            </ul>
+        </div>
+        <div class="dual-block warn" id="s4-b">
+            <div class="dual-block-title">NON-FUNGIBLE WITH SPOT</div>
+            <ul class="dual-block-list">
+                <li>Every position is bilateral</li>
+                <li>Can't settle or deliver one side</li>
+                <li>Only fix: trade spot on margin</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 5: MBM Mechanism                 -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-5" data-clicks="2">
+    <div class="slide-headline" style="text-align:center; margin-bottom:24px;">How Matched Book Margin works</div>
+    <div class="mech-container">
+        <div class="mech-label">UNIFIED ORDER BOOK</div>
+        <div class="mech-block" id="s5-m1">
+            <div class="mech-num">1</div>
+            <div class="mech-body">
+                <div class="mech-title">NON-SYNTHETIC LEVERAGE</div>
+                <div class="mech-desc">Borrow, buy the underlying, hold it. Spot and leveraged orders share one book.</div>
+                <div class="mech-tag tag-default">DEFAULT</div>
+            </div>
+        </div>
+        <div class="mech-block" id="s5-m2">
+            <div class="mech-num">2</div>
+            <div class="mech-body">
+                <div class="mech-title">MATCHED POSITIONS</div>
+                <div class="mech-desc">Opposite-side positions offset — no borrow needed. ADL-able against each other.</div>
+                <div class="mech-tag tag-opt">OPTIMIZATION</div>
+            </div>
+        </div>
+        <div class="mech-block" id="s5-m3">
+            <div class="mech-num">3</div>
+            <div class="mech-body">
+                <div class="mech-title">SKEW</div>
+                <div class="mech-desc">Unmatched leverage stays as spot margin. Actually borrowed, actually delivered.</div>
+                <div class="mech-tag tag-rem">REMAINDER</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 6: Skew-Based Funding            -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-6" data-clicks="2">
+    <div class="slide-headline" style="text-align:center; margin-bottom:20px;">Skew-based funding</div>
+    <table class="fund-table">
+        <thead><tr><th>BOOK STATE</th><th>WHO PAYS</th><th>WHY</th></tr></thead>
+        <tbody>
+            <tr id="s6-r1"><td>Skewed long</td><td>Longs → shorts</td><td>Incentivize new shorts</td></tr>
+            <tr id="s6-r2"><td>Skewed short</td><td>Shorts → longs</td><td>Incentivize new longs</td></tr>
+            <tr id="s6-r3"><td>Balanced</td><td>No funding</td><td>Matched = self-sustaining</td></tr>
+        </tbody>
+    </table>
+    <div class="compare-pair">
+        <div class="compare-box muted" id="s6-perp">
+            <div class="compare-box-label muted-label">PERP FUNDING</div>
+            <div class="compare-box-text">Tethers synthetic price to spot</div>
+        </div>
+        <div class="compare-box accent" id="s6-mbm">
+            <div class="compare-box-label accent-label">MBM FUNDING</div>
+            <div class="compare-box-text">Actual cost of carrying skew</div>
+        </div>
+    </div>
+    <div class="premium-note" id="s6-prem">Premiums only under stress (deposit scarcity) — not during normal flow imbalances.</div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 7: Why Better                    -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-7" data-clicks="4">
+    <div class="slide-headline" style="text-align:center; margin-bottom:20px;">Why this is better</div>
+    <table class="cmp-table">
+        <thead>
+            <tr><th></th><th class="col-perp">PERPS</th><th class="col-mbm">MBM</th></tr>
+        </thead>
+        <tbody>
+            <tr id="s7-r1"><td>LIQUIDITY</td><td class="cell-perp">Separate spot + perp books</td><td class="cell-mbm">One unified book</td></tr>
+            <tr id="s7-r2"><td>SCALING</td><td class="cell-perp">Imbalance → premiums</td><td class="cell-mbm">Imbalance → spot margin</td></tr>
+            <tr id="s7-r3"><td>FUNGIBILITY</td><td class="cell-perp">Bilateral contracts</td><td class="cell-mbm">Real spot — settleable, routable</td></tr>
+            <tr id="s7-r4"><td>HEDGE COST</td><td class="cell-perp">Funding rate (volatile)</td><td class="cell-mbm">Borrow rate (transparent)</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 8: Data                          -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide align-start" id="slide-8" data-clicks="4">
+    <div class="slide-headline" style="margin-bottom:16px;">"But perps are so much more liquid —<br>fungible spot makes no difference."</div>
+    <div class="reveal" id="s8-naive">
+        <div class="slide-subtext" style="font-size:30px; color:#888; margin-bottom:16px;">
+            The naive comparison: AMM spot ETH volume is ~2-3% of perp volume.
+        </div>
+    </div>
+    <div class="reveal" id="s8-reframe">
+        <div class="slide-subtext" style="font-size:30px; color:#333; margin-bottom:20px;">
+            Cross-side positions offset internally. Only <span class="t-impact" style="font-size:36px;">net skew</span> needs external spot to absorb.
+        </div>
+    </div>
+    <div class="reveal" id="s8-stats">
+        <div style="display:flex; gap:28px; width:100%; margin-bottom:8px;">
+            <div style="flex:1; padding:20px 24px; border:3px solid #ddd; background:#f5f5f5; text-align:center;">
+                <div style="font:bold 16px 'Courier New',monospace; color:#888; margin-bottom:8px; letter-spacing:2px; text-transform:uppercase;">Net Taker Skew</div>
+                <div style="font-family:Impact,sans-serif; font-size:64px; color:#333; line-height:1;">$38M<span style="font-size:28px; color:#888;">/day</span></div>
+            </div>
+            <div style="flex:1; padding:20px 24px; border:3px solid #ddd; background:#f5f5f5; text-align:center;">
+                <div style="font:bold 16px 'Courier New',monospace; color:#888; margin-bottom:8px; letter-spacing:2px; text-transform:uppercase;">AMM Directional Throughput</div>
+                <div style="font-family:Impact,sans-serif; font-size:64px; color:#333; line-height:1;">~$525M<span style="font-size:28px; color:#888;">/day</span></div>
+            </div>
+            <div style="flex:1; padding:20px 24px; border:3px solid #ED1F24; background:#fef0f0; text-align:center;">
+                <div style="font:bold 16px 'Courier New',monospace; color:#ED1F24; margin-bottom:8px; letter-spacing:2px; text-transform:uppercase;">Headroom</div>
+                <div style="font-family:Impact,sans-serif; font-size:64px; color:#ED1F24; line-height:1;">13.7x</div>
+            </div>
+        </div>
+        <div style="font:500 20px 'Courier New',monospace; color:#aaa;">Source: Hyperliquid via Allium, GeckoTerminal — ETH, Mar 12-18 2026</div>
+    </div>
+    <div class="reveal" id="s8-stress">
+        <div class="slide-subtext" style="font-size:28px;">
+            Highest skew day ($83M) still had <span class="t-impact" style="font-size:34px;">8.7x</span> headroom. Liquidity showed up when skew spiked.
+        </div>
+    </div>
+    <div class="reveal" id="s8-why">
+        <div style="font:500 24px 'Courier New',monospace; color:#888; margin-top:12px;">
+            Why throughput, not depth? Arbs refill AMM depth instantly — static snapshots understate real capacity. Throughput captures the full recovery cycle.
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 9: Why Not Everyone              -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-9" data-clicks="2">
+    <div class="slide-headline" style="text-align:center; margin-bottom:12px;">Why doesn't everyone do this?</div>
+    <div class="slide-emphasis reveal" id="s9-hl" style="margin-bottom:28px;">
+        MBM requires composability
+    </div>
+    <div style="display:flex; gap:24px; width:100%;">
+        <div class="sect-block" id="s9-spot" style="flex:1;">
+            <div class="sect-header">MBM → COMPOSABLE SPOT</div>
+            <div class="sect-body">
+                <ul style="padding:0;margin:0;">
+                    <li>Settle into AMMs to fund skew</li>
+                    <li>Unwind liquidations externally</li>
+                </ul>
+            </div>
+        </div>
+        <div class="sect-block" id="s9-deriv" style="flex:1;">
+            <div class="sect-header">MBM → COMPOSABLE DERIVATIVES</div>
+            <div class="sect-body">
+                <ul style="padding:0;margin:0;">
+                    <li>Cross-margin keeps skew stable</li>
+                    <li>Basis traders arb funding rate</li>
+                    <li>Skew self-corrects via arb</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SLIDE 10: Close                        -->
+<!-- ══════════════════════════════════════ -->
+<div class="slide" id="slide-10" data-clicks="2">
+    <div class="close-era" id="s10-old">
+        <div class="close-year">2016</div>
+        <div class="close-name">BitMEX invents perps.</div>
+        <div class="close-desc">Synthetic leverage for a world<br>without composable liquidity.</div>
+    </div>
+    <div class="close-div" id="s10-div"></div>
+    <div class="close-era" id="s10-new">
+        <div class="close-year">2026</div>
+        <div class="close-name">t+ ships Matched Book Margin.</div>
+        <div class="close-desc">Spot-fungible leverage for a world with it.</div>
+    </div>
+</div>
+
+<script>
+(function(){
+    var TOTAL = 10;
+    var cur = 1;
+    var cs = {};
+
+    function go(n, initClicks) {
+        if (n < 1 || n > TOTAL) return;
+        var prev = document.getElementById('slide-' + cur);
+        if (prev) prev.classList.remove('active');
+        cur = n;
+        if (initClicks !== undefined) cs[cur] = initClicks;
+        else if (!cs[cur]) cs[cur] = 0;
+        var slide = document.getElementById('slide-' + cur);
+        if (slide) { slide.classList.add('active'); apply(cur, cs[cur]); }
+        document.getElementById('progress').style.width = ((cur / TOTAL) * 100) + '%';
+        document.getElementById('counter').textContent = cur + ' / ' + TOTAL;
+        document.getElementById('navHint').style.opacity = '0';
+    }
+
+    function mc(n) {
+        var s = document.getElementById('slide-' + n);
+        return s ? parseInt(s.getAttribute('data-clicks') || '0') : 0;
+    }
+
+    function advance() {
+        if (cs[cur] < mc(cur)) { cs[cur]++; apply(cur, cs[cur]); }
+        else go(cur + 1);
+    }
+
+    function retreat() {
+        if (cs[cur] > 0) { cs[cur]--; apply(cur, cs[cur]); }
+        else if (cur > 1) go(cur - 1, mc(cur - 1));
+    }
+
+    function v(id, on) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        if (on) el.classList.add('visible');
+        else el.classList.remove('visible');
+    }
+
+    function apply(s, c) {
+        switch(s) {
+            case 2:
+                v('s2-q', true);
+                v('s2-a', c >= 1); v('s2-sub', c >= 1);
+                v('s2-chart', c >= 2); v('s2-cap', c >= 2);
+                break;
+            case 3:
+                v('s3-a', true); v('s3-b', c >= 1);
+                break;
+            case 4:
+                v('s4-a', true); v('s4-b', c >= 1);
+                break;
+            case 5:
+                v('s5-m1', true); v('s5-m2', c >= 1); v('s5-m3', c >= 2);
+                break;
+            case 6:
+                v('s6-r1', true); v('s6-r2', true); v('s6-r3', true);
+                v('s6-perp', c >= 1); v('s6-mbm', c >= 1);
+                v('s6-prem', c >= 2);
+                break;
+            case 7:
+                v('s7-r1', c >= 1); v('s7-r2', c >= 2);
+                v('s7-r3', c >= 3); v('s7-r4', c >= 4);
+                break;
+            case 8:
+                v('s8-naive', true);
+                v('s8-reframe', c >= 1); v('s8-stats', c >= 2);
+                v('s8-stress', c >= 3); v('s8-why', c >= 4);
+                break;
+            case 9:
+                v('s9-hl', true);
+                v('s9-spot', c >= 1); v('s9-deriv', c >= 2);
+                break;
+            case 10:
+                v('s10-old', true);
+                v('s10-div', c >= 1); v('s10-new', c >= 2);
+                break;
+        }
+    }
+
+    document.addEventListener('keydown', function(e) {
+        switch(e.key) {
+            case 'ArrowRight': case ' ': case 'Enter':
+                e.preventDefault(); advance(); break;
+            case 'ArrowLeft': case 'Backspace':
+                e.preventDefault(); retreat(); break;
+            case 'ArrowUp':
+                e.preventDefault(); go(cur - 1); break;
+            case 'ArrowDown':
+                e.preventDefault(); go(cur + 1); break;
+            case 'f': case 'F':
+                if (!e.ctrlKey && !e.metaKey) {
+                    if (document.fullscreenElement) document.exitFullscreen();
+                    else document.documentElement.requestFullscreen();
+                }
+                break;
+        }
+    });
+
+    var tx = 0;
+    document.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; });
+    document.addEventListener('touchend', function(e) {
+        var dx = e.changedTouches[0].clientX - tx;
+        if (Math.abs(dx) > 50) { if (dx < 0) advance(); else retreat(); }
+    });
+
+    document.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
+        advance();
+    });
+
+    go(1);
+})();
+</script>
+</body>
+</html>

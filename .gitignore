@@ -1,3 +1,25 @@
+# Claude Code
+.claude/
+
+# Dev/scratch files
+CTF-PLAN.md
+agent-loop-prompt.md
+dev.sh
+format-stream.py
+run-market-context-loop.sh
+market-context.md
+market-context-instructions.md
+
+# Presentation working files
+presentation-outlines/data/
+presentation-outlines/prompts/
+presentation-outlines/data-collection-plan.md
+presentation-outlines/venue-chart-data.md
+presentation-outlines/*.pdf
+perp-volume-data-2026-03-19.txt
+spot-volume-data-2026-03-19.md
+data/
+
 # Dependencies
 node_modules/
 npm-debug.log*
