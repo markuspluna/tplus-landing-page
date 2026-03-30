@@ -39,14 +39,14 @@
         /* ═══ SLIDE 1: Title ═══ */
         .title-logo { width: 140px; margin-bottom: 36px; image-rendering: pixelated; }
         .title-main { font-family: Impact, sans-serif; font-size: 100px; color: #ED1F24; line-height: 1; margin-bottom: 24px; letter-spacing: 3px; text-transform: uppercase; text-align: center; }
-        .title-sub { font: bold 24px 'Courier New', monospace; color: #666; letter-spacing: 3px; line-height: 1.8; text-align: center; text-transform: uppercase; }
-        .title-event { font: 24px 'Courier New', monospace; color: #999; margin-top: 24px; }
+        .title-sub { font: bold 24px 'Courier New', monospace; color: #333; letter-spacing: 3px; line-height: 1.8; text-align: center; text-transform: uppercase; }
+        .title-event { font: 24px 'Courier New', monospace; color: #333; margin-top: 24px; }
 
         /* ═══ SLIDE 2: Question ═══ */
         .slide-question { font-family: Impact, sans-serif; font-size: 90px; color: #333; text-align: center; line-height: 1.2; }
         .slide-answer { font-family: Impact, sans-serif; font-size: 80px; color: #ED1F24; text-align: center; line-height: 1; margin: 10px 0 16px; }
         .chart-img { max-width: 900px; width: 90%; border: 3px solid #ED1F24; margin: 12px 0 0; }
-        .chart-caption { font: 500 24px 'Courier New', monospace; color: #888; margin-top: 10px; text-align: center; }
+        .chart-caption { font: 500 24px 'Courier New', monospace; color: #333; margin-top: 10px; text-align: center; }
 
         /* ═══ SLIDES 3-4: Dual Blocks ═══ */
         .dual-section { display: flex; gap: 28px; width: 100%; }
@@ -62,6 +62,9 @@
         .dual-block-list { list-style: none; padding: 0; margin: 0; }
         .dual-block-list li { font: 500 32px 'Courier New', monospace; color: #444; padding: 8px 0; }
         .dual-block-list li::before { content: "> "; color: #cc0000; font-weight: bold; }
+        .dual-block-list li ul { list-style: none; padding: 0 0 0 24px; margin: 4px 0 0; }
+        .dual-block-list li ul li { font-size: 24px; color: #666; padding: 3px 0; }
+        .dual-block-list li ul li::before { content: "– "; color: #999; }
 
         /* ═══ SLIDE 5: Mechanism ═══ */
         .mech-container { width: 100%; border: 3px solid #ED1F24; overflow: hidden; }
@@ -76,9 +79,9 @@
         .mech-num { background: #ED1F24; color: #f2ff00; font: bold 36px 'Courier New', monospace; display: flex; align-items: center; justify-content: center; width: 80px; flex-shrink: 0; }
         .mech-body { padding: 20px 28px; flex: 1; background: #f5f5f5; }
         .mech-title { font: bold 22px 'Courier New', monospace; color: #111; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; }
-        .mech-desc { font: 500 30px 'Courier New', monospace; color: #555; line-height: 1.4; }
+        .mech-desc { font: 500 30px 'Courier New', monospace; color: #333; line-height: 1.4; }
         .mech-tag { display: inline-block; font: bold 16px 'Courier New', monospace; padding: 4px 12px; margin-top: 10px; letter-spacing: 2px; text-transform: uppercase; }
-        .tag-default { background: #e0e0e0; color: #555; }
+        .tag-default { background: #e0e0e0; color: #333; }
         .tag-opt { background: #fff3cd; color: #856404; }
         .tag-rem { background: #f8d7da; color: #721c24; }
 
@@ -95,24 +98,24 @@
         .compare-box.muted { border: 3px solid #ddd; background: #f0f0f0; }
         .compare-box.accent { border: 3px solid #ED1F24; background: #fef0f0; }
         .compare-box-label { font: bold 18px 'Courier New', monospace; margin-bottom: 8px; letter-spacing: 2px; text-transform: uppercase; }
-        .compare-box-label.muted-label { color: #888; }
+        .compare-box-label.muted-label { color: #333; }
         .compare-box-label.accent-label { color: #ED1F24; }
         .compare-box-text { font: 500 28px 'Courier New', monospace; }
-        .compare-box.muted .compare-box-text { color: #666; }
+        .compare-box.muted .compare-box-text { color: #333; }
         .compare-box.accent .compare-box-text { color: #333; }
 
-        .premium-note { font: 500 28px 'Courier New', monospace; color: #888; margin-top: 18px; opacity: 0; transform: translateY(6px); transition: opacity 0.35s ease, transform 0.35s ease; }
+        .premium-note { font: 500 28px 'Courier New', monospace; color: #333; margin-top: 18px; opacity: 0; transform: translateY(6px); transition: opacity 0.35s ease, transform 0.35s ease; }
         .premium-note.visible { opacity: 1; transform: translateY(0); }
 
         /* ═══ SLIDE 7: Comparison Table ═══ */
         .cmp-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
         .cmp-table th { font: bold 18px 'Courier New', monospace; padding: 18px 24px; text-align: center; letter-spacing: 2px; text-transform: uppercase; }
-        .cmp-table th:first-child { background: transparent; color: #888; width: 160px; text-align: left; }
+        .cmp-table th:first-child { background: transparent; color: #333; width: 160px; text-align: left; }
         .cmp-table th.col-perp { background: #333; color: #fff; }
         .cmp-table th.col-mbm { background: #ED1F24; color: #fff; }
-        .cmp-table td { font: 500 30px 'Courier New', monospace; padding: 18px 24px; border-bottom: 2px solid #ddd; vertical-align: middle; }
-        .cmp-table td:first-child { font: bold 16px 'Courier New', monospace; color: #888; background: transparent; text-transform: uppercase; letter-spacing: 2px; }
-        .cmp-table td.cell-perp { background: #f0f0f0; color: #666; text-align: center; }
+        .cmp-table td { font: 500 26px 'Courier New', monospace; padding: 14px 20px; border-bottom: 2px solid #ddd; vertical-align: middle; white-space: normal; line-height: 1.3; }
+        .cmp-table td:first-child { font: bold 16px 'Courier New', monospace; color: #333; background: transparent; text-transform: uppercase; letter-spacing: 2px; }
+        .cmp-table td.cell-perp { background: #f0f0f0; color: #333; text-align: center; }
         .cmp-table td.cell-mbm { background: #fef0f0; color: #333; text-align: center; }
         .cmp-table tbody tr { opacity: 0; transform: translateY(6px); transition: opacity 0.3s ease, transform 0.3s ease; }
         .cmp-table tbody tr.visible { opacity: 1; transform: translateY(0); }
@@ -122,7 +125,7 @@
         .data-table th { background: #ED1F24; color: #fff; font: bold 16px 'Courier New', monospace; padding: 14px 24px; text-align: left; letter-spacing: 2px; text-transform: uppercase; }
         .data-table th:last-child { text-align: right; }
         .data-table td { font: bold 30px 'Courier New', monospace; padding: 14px 24px; border-bottom: 2px solid #ddd; background: #f5f5f5; color: #333; }
-        .data-table td:last-child { text-align: right; color: #555; }
+        .data-table td:last-child { text-align: right; color: #333; }
         .data-table tr.hl td { background: #fef0f0; }
         .data-table tr.hl td:last-child { color: #ED1F24; font-size: 34px; }
 
@@ -140,9 +143,9 @@
         /* ═══ SLIDE 10: Close ═══ */
         .close-era { text-align: center; margin: 20px 0; opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
         .close-era.visible { opacity: 1; transform: translateY(0); }
-        .close-year { font: bold 28px 'Courier New', monospace; color: #999; margin-bottom: 12px; letter-spacing: 3px; }
+        .close-year { font: bold 28px 'Courier New', monospace; color: #333; margin-bottom: 12px; letter-spacing: 3px; }
         .close-name { font-family: Impact, sans-serif; font-size: 72px; color: #ED1F24; line-height: 1.1; margin-bottom: 12px; }
-        .close-desc { font: 500 30px 'Courier New', monospace; color: #555; line-height: 1.6; }
+        .close-desc { font: 500 30px 'Courier New', monospace; color: #333; line-height: 1.6; }
         .close-div { width: 100px; height: 4px; background: #ED1F24; margin: 32px auto; opacity: 0; transition: opacity 0.5s ease; }
         .close-div.visible { opacity: 1; }
 
@@ -164,18 +167,17 @@
     <img src="../assets/250.webp" class="title-logo" alt="t+">
     <div class="title-main">MATCHED BOOK MARGIN</div>
     <div class="title-sub">ARTHUR HAYES DIDN'T ONESHOT<br>LEVERAGE TRADING IN 2016</div>
-    <div class="title-event">Talk 3 of 3 — Capital Efficiency Deep-Dive</div>
+    <div class="title-event">Talk 3 of 4 — Capital Efficiency Deep-Dive</div>
 </div>
 
 <!-- ══════════════════════════════════════ -->
 <!-- SLIDE 2: Capital Efficiency            -->
 <!-- ══════════════════════════════════════ -->
-<div class="slide" id="slide-2" data-clicks="2">
-    <div class="slide-question reveal" id="s2-q">"Isn't leverage evil?"</div>
-    <div class="slide-answer reveal" id="s2-a">NO.</div>
-    <div class="slide-subtext reveal" id="s2-sub" style="text-align:center; margin-bottom:16px; width:auto;">Capital efficiency means more liquidity.</div>
-    <img src="../assets/spot-vs-per-vol.png" class="chart-img reveal" id="s2-chart" alt="Perp vs Spot Volume Ratio">
-    <div class="chart-caption reveal" id="s2-cap">Binance BTC/USDT — perps trade 3-5x spot volume, 10x+ during volatility.</div>
+<div class="slide" id="slide-2" data-clicks="3">
+    <div class="slide-answer" id="s2-a" style="font-size:60px; margin:0 0 16px;"><span style="color:#ED1F24;">TRUTH NUKE:</span> <span style="color:#333;">Leverage isn't just for degenerate gambling</span></div>
+    <div class="slide-subtext reveal" id="s2-sub" style="text-align:center; margin-bottom:16px; width:auto; font-size:40px;">Capital efficiency improves liquidity.</div>
+    <img src="../assets/spot-vs-per-vol.png" class="chart-img reveal" id="s2-chart" alt="Perp vs Spot Volume Ratio" style="max-height:55vh;">
+    <div class="chart-caption reveal" id="s2-cap" style="font-size:26px;">Perps trade 3-5x spot volume, 10x+ during volatility.</div>
 </div>
 
 <!-- ══════════════════════════════════════ -->
@@ -193,11 +195,15 @@
             </ul>
         </div>
         <div class="dual-block" id="s3-b">
-            <div class="dual-block-title">LIQUIDATION WITHOUT MARKET IMPACT</div>
+            <div class="dual-block-title">LOW-RISK DELEVERAGING</div>
             <ul class="dual-block-list">
                 <li>Closing = unwinding a contract</li>
-                <li>ADL: force-close against counterparties</li>
-                <li>Zero new liquidity needed</li>
+                <li>ADL: force-close against counterparties
+                    <ul>
+                        <li>No market impact</li>
+                        <li>Zero new liquidity needed</li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
@@ -210,19 +216,19 @@
     <div class="slide-headline" style="text-align:center; margin-bottom:28px;">What perps get wrong</div>
     <div class="dual-section">
         <div class="dual-block warn" id="s4-a">
-            <div class="dual-block-title">SCALING IS ADVERSARIAL</div>
+            <div class="dual-block-title">SCALING CREATES INSTABILITY</div>
             <ul class="dual-block-list">
-                <li>Flow imbalances → premiums</li>
-                <li>Funding = unpredictable carry cost</li>
-                <li>Punishes hedgers &amp; long-term holders</li>
+                <li>Flow imbalances → premiums → funding</li>
+                <li>Unpredictable execution costs</li>
+                <li>Unpredictable carry costs</li>
             </ul>
         </div>
         <div class="dual-block warn" id="s4-b">
             <div class="dual-block-title">NON-FUNGIBLE WITH SPOT</div>
             <ul class="dual-block-list">
-                <li>Every position is bilateral</li>
-                <li>Can't settle or deliver one side</li>
-                <li>Only fix: trade spot on margin</li>
+                <li>Every position is a contract</li>
+                <li>Cash settlement - delivery is impossible</li>
+                <li>Harms liquidity and UX</li>
             </ul>
         </div>
     </div>
@@ -232,31 +238,31 @@
 <!-- SLIDE 5: MBM Mechanism                 -->
 <!-- ══════════════════════════════════════ -->
 <div class="slide" id="slide-5" data-clicks="2">
-    <div class="slide-headline" style="text-align:center; margin-bottom:24px;">How Matched Book Margin works</div>
+    <div class="slide-headline" style="text-align:center; margin-bottom:24px;">Matched Book Margin</div>
     <div class="mech-container">
-        <div class="mech-label">UNIFIED ORDER BOOK</div>
+        <div class="mech-label">HYBRID MARGIN ENGINE</div>
         <div class="mech-block" id="s5-m1">
             <div class="mech-num">1</div>
             <div class="mech-body">
                 <div class="mech-title">NON-SYNTHETIC LEVERAGE</div>
-                <div class="mech-desc">Borrow, buy the underlying, hold it. Spot and leveraged orders share one book.</div>
-                <div class="mech-tag tag-default">DEFAULT</div>
+                <div class="mech-desc">Spot and leveraged orders share one book - leverage positions are deliverable.</div>
+                <div class="mech-tag tag-default">PRINCIPLE</div>
             </div>
         </div>
         <div class="mech-block" id="s5-m2">
             <div class="mech-num">2</div>
             <div class="mech-body">
                 <div class="mech-title">MATCHED POSITIONS</div>
-                <div class="mech-desc">Opposite-side positions offset — no borrow needed. ADL-able against each other.</div>
+                <div class="mech-desc">Cross-side leverage positions offset. No underlying needed to fund a borrow. ADL-able against each other.</div>
                 <div class="mech-tag tag-opt">OPTIMIZATION</div>
             </div>
         </div>
         <div class="mech-block" id="s5-m3">
             <div class="mech-num">3</div>
             <div class="mech-body">
-                <div class="mech-title">SKEW</div>
-                <div class="mech-desc">Unmatched leverage stays as spot margin. Actually borrowed, actually delivered.</div>
-                <div class="mech-tag tag-rem">REMAINDER</div>
+                <div class="mech-title">UNMATCHED POSITIONS (SKEW)</div>
+                <div class="mech-desc">Leverage not offset by a cross-side position is funded with a borrow of the underlying and treated as spot margin.</div>
+                <div class="mech-tag tag-rem">DEFAULT</div>
             </div>
         </div>
     </div>
@@ -282,7 +288,7 @@
         </div>
         <div class="compare-box accent" id="s6-mbm">
             <div class="compare-box-label accent-label">MBM FUNDING</div>
-            <div class="compare-box-text">Actual cost of carrying skew</div>
+            <div class="compare-box-text">Incentivizes matched leverage exposure</div>
         </div>
     </div>
     <div class="premium-note" id="s6-prem">Premiums only under stress (deposit scarcity) — not during normal flow imbalances.</div>
@@ -298,10 +304,10 @@
             <tr><th></th><th class="col-perp">PERPS</th><th class="col-mbm">MBM</th></tr>
         </thead>
         <tbody>
-            <tr id="s7-r1"><td>LIQUIDITY</td><td class="cell-perp">Separate spot + perp books</td><td class="cell-mbm">One unified book</td></tr>
+            <tr id="s7-r1"><td>LIQUIDITY&UX</td><td class="cell-perp">Separate spot + perp books</td><td class="cell-mbm">One unified book</td></tr>
             <tr id="s7-r2"><td>SCALING</td><td class="cell-perp">Imbalance → premiums</td><td class="cell-mbm">Imbalance → spot margin</td></tr>
-            <tr id="s7-r3"><td>FUNGIBILITY</td><td class="cell-perp">Bilateral contracts</td><td class="cell-mbm">Real spot — settleable, routable</td></tr>
-            <tr id="s7-r4"><td>HEDGE COST</td><td class="cell-perp">Funding rate (volatile)</td><td class="cell-mbm">Borrow rate (transparent)</td></tr>
+            <tr id="s7-r3"><td>FUNGIBILITY</td><td class="cell-perp">Bilateral contracts</td><td class="cell-mbm">Real spot — Deliverable via settlements (composes with external spot markets)</td></tr>
+            <tr id="s7-r4"><td>CARRY COST</td><td class="cell-perp">Premium driven funding rate (volatile - can spike)</td><td class="cell-mbm">Skew driven funding rate <br> (proportional to flow imbalance)</td></tr>
         </tbody>
     </table>
 </div>
@@ -312,31 +318,31 @@
 <div class="slide align-start" id="slide-8" data-clicks="4">
     <div class="slide-headline" style="margin-bottom:16px;">"But perps are so much more liquid —<br>fungible spot makes no difference."</div>
     <div class="reveal" id="s8-naive">
-        <div class="slide-subtext" style="font-size:30px; color:#888; margin-bottom:16px;">
-            The naive comparison: AMM spot ETH volume is ~2-3% of perp volume.
+        <div class="slide-subtext" style="font-size:30px; color:#333; margin-bottom:16px;">
+            AMM spot ETH volume is ~2-3% of perp volume.
         </div>
     </div>
     <div class="reveal" id="s8-reframe">
         <div class="slide-subtext" style="font-size:30px; color:#333; margin-bottom:20px;">
-            Cross-side positions offset internally. Only <span class="t-impact" style="font-size:36px;">net skew</span> needs external spot to absorb.
+            Cross-side positions offset internally. Only <span class="t-impact" style="font-size:36px;">net skew</span> needs external liquidity.
         </div>
     </div>
     <div class="reveal" id="s8-stats">
         <div style="display:flex; gap:28px; width:100%; margin-bottom:8px;">
             <div style="flex:1; padding:20px 24px; border:3px solid #ddd; background:#f5f5f5; text-align:center;">
-                <div style="font:bold 16px 'Courier New',monospace; color:#888; margin-bottom:8px; letter-spacing:2px; text-transform:uppercase;">Net Taker Skew</div>
-                <div style="font-family:Impact,sans-serif; font-size:64px; color:#333; line-height:1;">$38M<span style="font-size:28px; color:#888;">/day</span></div>
+                <div style="font:bold 16px 'Courier New',monospace; color:#333; margin-bottom:8px; letter-spacing:2px; text-transform:uppercase;">Net Taker Skew</div>
+                <div style="font-family:Impact,sans-serif; font-size:64px; color:#333; line-height:1;">$38M<span style="font-size:28px; color:#333;">/day</span></div>
             </div>
             <div style="flex:1; padding:20px 24px; border:3px solid #ddd; background:#f5f5f5; text-align:center;">
-                <div style="font:bold 16px 'Courier New',monospace; color:#888; margin-bottom:8px; letter-spacing:2px; text-transform:uppercase;">AMM Directional Throughput</div>
-                <div style="font-family:Impact,sans-serif; font-size:64px; color:#333; line-height:1;">~$525M<span style="font-size:28px; color:#888;">/day</span></div>
+                <div style="font:bold 16px 'Courier New',monospace; color:#333; margin-bottom:8px; letter-spacing:2px; text-transform:uppercase;">AMM Directional Throughput</div>
+                <div style="font-family:Impact,sans-serif; font-size:64px; color:#333; line-height:1;">~$525M<span style="font-size:28px; color:#333;">/day</span></div>
             </div>
             <div style="flex:1; padding:20px 24px; border:3px solid #ED1F24; background:#fef0f0; text-align:center;">
                 <div style="font:bold 16px 'Courier New',monospace; color:#ED1F24; margin-bottom:8px; letter-spacing:2px; text-transform:uppercase;">Headroom</div>
                 <div style="font-family:Impact,sans-serif; font-size:64px; color:#ED1F24; line-height:1;">13.7x</div>
             </div>
         </div>
-        <div style="font:500 20px 'Courier New',monospace; color:#aaa;">Source: Hyperliquid via Allium, GeckoTerminal — ETH, Mar 12-18 2026</div>
+        <div style="font:500 20px 'Courier New',monospace; color:#333;">Source: Hyperliquid, AMM data, Mar 12-18 2026</div>
     </div>
     <div class="reveal" id="s8-stress">
         <div class="slide-subtext" style="font-size:28px;">
@@ -344,8 +350,8 @@
         </div>
     </div>
     <div class="reveal" id="s8-why">
-        <div style="font:500 24px 'Courier New',monospace; color:#888; margin-top:12px;">
-            Why throughput, not depth? Arbs refill AMM depth instantly — static snapshots understate real capacity. Throughput captures the full recovery cycle.
+        <div style="font:500 24px 'Courier New',monospace; color:#333; margin-top:12px;">
+            Throughput NOT depth: Arbs refill AMM depth instantly — depth snapshots understate capacity.
         </div>
     </div>
 </div>
@@ -354,27 +360,31 @@
 <!-- SLIDE 9: Why Not Everyone              -->
 <!-- ══════════════════════════════════════ -->
 <div class="slide" id="slide-9" data-clicks="2">
-    <div class="slide-headline" style="text-align:center; margin-bottom:12px;">Why doesn't everyone do this?</div>
+    <div class="slide-headline" style="text-align:center; margin-bottom:12px;">Why doesn't everyone use MBM?</div>
     <div class="slide-emphasis reveal" id="s9-hl" style="margin-bottom:28px;">
         MBM requires composability
     </div>
     <div style="display:flex; gap:24px; width:100%;">
         <div class="sect-block" id="s9-spot" style="flex:1;">
-            <div class="sect-header">MBM → COMPOSABLE SPOT</div>
+            <div class="sect-header">MBM needs COMPOSABLE SPOT</div>
             <div class="sect-body">
                 <ul style="padding:0;margin:0;">
-                    <li>Settle into AMMs to fund skew</li>
-                    <li>Unwind liquidations externally</li>
+                    <li>Settle imbalanced flow into AMMs</li>
+                    <li>Liquidate skewed exposure (spot margin) externally</li>
                 </ul>
             </div>
         </div>
         <div class="sect-block" id="s9-deriv" style="flex:1;">
-            <div class="sect-header">MBM → COMPOSABLE DERIVATIVES</div>
+            <div class="sect-header">MBM needs COMPOSABLE DERIVATIVES</div>
             <div class="sect-body">
                 <ul style="padding:0;margin:0;">
-                    <li>Cross-margin keeps skew stable</li>
-                    <li>Basis traders arb funding rate</li>
-                    <li>Skew self-corrects via arb</li>
+                    <li>Cross-margined basis traders keep exposure and deposits balanced</li>
+                    <ul>
+                        <li>Long bias → flow net long</li>
+                        <li>Spot liquidity fills imbalance → Skewed long → USD drawdown (borrows swap USD for ETH) </li>
+                        <li>Funding arbs → flow net short</li>
+                        <li>Spot liquidity fills imbalance → Long skew decreases → USD drawdown decreases (borrows swap ETH for USD) </li>
+                    </ul>
                 </ul>
             </div>
         </div>
@@ -387,20 +397,24 @@
 <div class="slide" id="slide-10" data-clicks="2">
     <div class="close-era" id="s10-old">
         <div class="close-year">2016</div>
-        <div class="close-name">BitMEX invents perps.</div>
+        <div class="close-name">BitMEX ships Perpetual Futures.</div>
         <div class="close-desc">Synthetic leverage for a world<br>without composable liquidity.</div>
     </div>
     <div class="close-div" id="s10-div"></div>
     <div class="close-era" id="s10-new">
         <div class="close-year">2026</div>
         <div class="close-name">t+ ships Matched Book Margin.</div>
-        <div class="close-desc">Spot-fungible leverage for a world with it.</div>
+        <div class="close-desc">Spot-fungible leverage for a world with composable liquidity.</div>
     </div>
+</div>
+
+<div class="slide" id="slide-11" style="">
+    <img src="../assets/try-perfect-markets.png" style="max-height:85vh; max-width:85vw; object-fit:contain;" alt="Try Perfect Markets — tplus.cx">
 </div>
 
 <script>
 (function(){
-    var TOTAL = 10;
+    var TOTAL = 11;
     var cur = 1;
     var cs = {};
 

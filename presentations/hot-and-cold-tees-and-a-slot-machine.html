@@ -39,8 +39,8 @@
         /* ═══ SLIDE 1: Title ═══ */
         .title-logo { width: 140px; margin-bottom: 36px; image-rendering: pixelated; }
         .title-main { font-family: Impact, sans-serif; font-size: 80px; color: #ED1F24; line-height: 1.05; margin-bottom: 24px; letter-spacing: 3px; text-transform: uppercase; text-align: center; }
-        .title-sub { font: bold 22px 'Courier New', monospace; color: #666; letter-spacing: 3px; line-height: 1.8; text-align: center; text-transform: uppercase; }
-        .title-event { font: 24px 'Courier New', monospace; color: #999; margin-top: 24px; }
+        .title-sub { font: bold 22px 'Courier New', monospace; color: #333; letter-spacing: 3px; line-height: 1.8; text-align: center; text-transform: uppercase; }
+        .title-event { font: 24px 'Courier New', monospace; color: #333; margin-top: 24px; }
 
         /* ═══ SLIDE 2: Requirements ═══ */
         .req-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 60px; margin: 20px 0; }
@@ -50,11 +50,11 @@
         /* ═══ SLIDE 3: Priority Table ═══ */
         .pri-table { width: 100%; border-collapse: collapse; margin: 8px 0; }
         .pri-table th { font: bold 16px 'Courier New', monospace; padding: 12px 20px; text-align: center; letter-spacing: 2px; text-transform: uppercase; }
-        .pri-table th:first-child { text-align: left; color: #888; width: 200px; }
+        .pri-table th:first-child { text-align: left; color: #333; width: 200px; }
         .pri-table th.col-hot { background: #333; color: #fff; }
         .pri-table th.col-cold { background: #ED1F24; color: #fff; }
         .pri-table td { font: 500 22px 'Courier New', monospace; padding: 9px 20px; border-bottom: 2px solid #ddd; text-align: center; }
-        .pri-table td:first-child { text-align: left; font: bold 14px 'Courier New', monospace; color: #888; text-transform: uppercase; letter-spacing: 2px; }
+        .pri-table td:first-child { text-align: left; font: bold 14px 'Courier New', monospace; color: #333; text-transform: uppercase; letter-spacing: 2px; }
         .pri-table td.cell-hot { background: #f0f0f0; color: #333; }
         .pri-table td.cell-cold { background: #fef0f0; color: #333; }
         .def-pair { display: flex; gap: 28px; width: 100%; margin-top: 16px; }
@@ -63,7 +63,7 @@
         .def-box.hot { border-color: #333; }
         .def-box.cold { border-color: #ED1F24; }
         .def-label { font: bold 16px 'Courier New', monospace; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
-        .def-box.hot .def-label { color: #555; }
+        .def-box.hot .def-label { color: #333; }
         .def-box.cold .def-label { color: #ED1F24; }
 
         /* ═══ SLIDES 4-5: Dual Blocks ═══ */
@@ -100,23 +100,23 @@
         .chk-label { background: #333; color: #fff; padding: 12px 24px; font: bold 18px 'Courier New', monospace; letter-spacing: 3px; text-transform: uppercase; }
         .chk-body { padding: 14px 24px; background: #f5f5f5; }
         .chk-body li { font: 500 24px 'Courier New', monospace; color: #444; padding: 5px 0; list-style: none; }
-        .chk-body li::before { content: "> "; color: #888; font-weight: bold; }
+        .chk-body li::before { content: "> "; color: #333; font-weight: bold; }
 
         /* ═══ SLIDE 7: Comparison Table ═══ */
         .cmp-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
         .cmp-table th { font: bold 14px 'Courier New', monospace; padding: 14px 16px; text-align: center; letter-spacing: 2px; text-transform: uppercase; }
-        .cmp-table th:first-child { background: transparent; color: #888; width: 130px; text-align: left; }
+        .cmp-table th:first-child { background: transparent; color: #333; width: 130px; text-align: left; }
         .cmp-table th.col-bc { background: #666; color: #fff; }
         .cmp-table th.col-ru { background: #333; color: #fff; }
         .cmp-table th.col-sm { background: #ED1F24; color: #fff; }
         .cmp-table td { font: 500 21px 'Courier New', monospace; padding: 14px 16px; border-bottom: 2px solid #ddd; vertical-align: middle; }
-        .cmp-table td:first-child { font: bold 13px 'Courier New', monospace; color: #888; background: transparent; text-transform: uppercase; letter-spacing: 2px; }
-        .cmp-table td.cell-bc { background: #f0f0f0; color: #666; text-align: center; }
-        .cmp-table td.cell-ru { background: #e8e8e8; color: #555; text-align: center; }
+        .cmp-table td:first-child { font: bold 13px 'Courier New', monospace; color: #333; background: transparent; text-transform: uppercase; letter-spacing: 2px; }
+        .cmp-table td.cell-bc { background: #f0f0f0; color: #333; text-align: center; }
+        .cmp-table td.cell-ru { background: #e8e8e8; color: #333; text-align: center; }
         .cmp-table td.cell-sm { background: #fef0f0; color: #333; text-align: center; }
         .cmp-table tbody tr { opacity: 0; transform: translateY(6px); transition: opacity 0.3s ease, transform 0.3s ease; }
         .cmp-table tbody tr.visible { opacity: 1; transform: translateY(0); }
-        .cmp-foot { font: 500 18px 'Courier New', monospace; color: #888; margin-top: 8px; opacity: 0; transition: opacity 0.4s ease; }
+        .cmp-foot { font: 500 18px 'Courier New', monospace; color: #333; margin-top: 8px; opacity: 0; transition: opacity 0.4s ease; }
         .cmp-foot.visible { opacity: 1; }
 
         /* ═══ SLIDE 8: Section Blocks ═══ */
@@ -128,7 +128,7 @@
         .sect-body { padding: 16px 24px; background: #f5f5f5; }
         .sect-body li { font: 500 26px 'Courier New', monospace; color: #333; padding: 6px 0; list-style: none; }
         .sect-body li::before { content: "> "; color: #ED1F24; font-weight: bold; }
-        .sect-block:not(.accent) .sect-body li::before { color: #888; }
+        .sect-block:not(.accent) .sect-body li::before { color: #333; }
 
         /* ═══ SLIDE 9: Credential Manager ═══ */
         .cred-list { list-style: none; padding: 0; margin: 12px 0; width: 100%; }
@@ -144,15 +144,15 @@
         .compare-box.muted { border: 3px solid #ddd; background: #f0f0f0; }
         .compare-box.acc { border: 3px solid #ED1F24; background: #fef0f0; }
         .compare-box-label { font: bold 18px 'Courier New', monospace; margin-bottom: 8px; letter-spacing: 2px; text-transform: uppercase; }
-        .compare-box-label.muted-label { color: #888; }
+        .compare-box-label.muted-label { color: #333; }
         .compare-box-label.acc-label { color: #ED1F24; }
         .compare-box-text { font: 500 28px 'Courier New', monospace; }
-        .compare-box.muted .compare-box-text { color: #666; }
+        .compare-box.muted .compare-box-text { color: #333; }
         .compare-box.acc .compare-box-text { color: #333; }
 
         /* ═══ SLIDE 10: Architecture ═══ */
         .arch-svg { width: 100%; max-width: 880px; height: auto; }
-        .arch-hier { font: 500 22px 'Courier New', monospace; color: #888; margin-top: 12px; text-align: center; opacity: 0; transform: translateY(8px); transition: opacity 0.4s ease, transform 0.4s ease; }
+        .arch-hier { font: 500 22px 'Courier New', monospace; color: #333; margin-top: 12px; text-align: center; opacity: 0; transform: translateY(8px); transition: opacity 0.4s ease, transform 0.4s ease; }
         .arch-hier.visible { opacity: 1; transform: translateY(0); }
 
         /* ═══ SLIDE 11: Landing ═══ */
@@ -178,7 +178,7 @@
     <img src="../assets/250.webp" class="title-logo" alt="t+">
     <div class="title-main">HOT AND COLD TEES<br>PLUS A SLOT MACHINE</div>
     <div class="title-sub">PROCESSING 10 MILLION ORDERS PER SECOND<br>WITHOUT COMPROMISING</div>
-    <div class="title-event">Talk 2 of 4 — Architecture Deep-Dive</div>
+    <div class="title-event">Talk 4 of 4 — Architecture Deep-Dive</div>
 </div>
 
 <!-- ══════════════════════════════════════ -->
@@ -203,7 +203,7 @@
 <!-- SLIDE 3: Hot and Cold TEEs             -->
 <!-- ══════════════════════════════════════ -->
 <div class="slide" id="slide-3" data-clicks="1">
-    <div class="slide-headline" style="text-align:center; margin-bottom:12px;">Not every component needs all eight</div>
+    <div class="slide-headline" style="text-align:center; margin-bottom:12px;">Not every component cares about every property</div>
     <table class="pri-table">
         <thead>
             <tr><th></th><th class="col-hot">Hot TEEs</th><th class="col-cold">Cold TEEs</th></tr>
@@ -236,7 +236,7 @@
 <!-- ══════════════════════════════════════ -->
 <div class="slide" id="slide-4" data-clicks="1">
     <div class="slide-headline" style="text-align:center; margin-bottom:4px;">Hot TEEs</div>
-    <div class="slide-subtext" style="text-align:center; font-size:22px; color:#888; margin-bottom:20px; letter-spacing:2px; text-transform:uppercase;">OMS &bull; Orderbook &bull; Matching Engine</div>
+    <div class="slide-subtext" style="text-align:center; font-size:22px; color:#333; margin-bottom:20px; letter-spacing:2px; text-transform:uppercase;">OMS &bull; Orderbook &bull; Matching Engine</div>
     <div class="dual-section">
         <div class="dual-block" id="s4-perf">
             <div class="dual-block-title">PERFORMANCE</div>
@@ -248,12 +248,12 @@
             </ul>
         </div>
         <div class="dual-block accent" id="s4-perm">
-            <div class="dual-block-title">PERMISSIONLESS &amp; SAFE</div>
+            <div class="dual-block-title">PERMISSIONLESS &amp; SAFE & PRIVATE</div>
             <ul class="dual-block-list">
-                <li>Censored? Run your own</li>
-                <li>dstack — verifiable containers</li>
-                <li>Proposers only — can't touch state</li>
-                <li>Safe to upgrade — can't steal funds</li>
+                <li>Censored? Run your own w/dstack</li>
+                <li>Only propose state mutations - Safe to upgrade quickly </li>
+                <li>State and packets encrypted to TDX box operated by users preferred operator</li>
+
             </ul>
         </div>
     </div>
@@ -264,13 +264,13 @@
 <!-- ══════════════════════════════════════ -->
 <div class="slide" id="slide-5" data-clicks="1">
     <div class="slide-headline" style="text-align:center; margin-bottom:4px;">Cold TEEs</div>
-    <div class="slide-subtext" style="text-align:center; font-size:22px; color:#888; margin-bottom:20px; letter-spacing:2px; text-transform:uppercase;">Clearing Engine &bull; Risk &bull; Deposits &bull; Accounting</div>
+    <div class="slide-subtext" style="text-align:center; font-size:22px; color:#333; margin-bottom:20px; letter-spacing:2px; text-transform:uppercase;">Clearing Engine &bull; Risk &bull; Deposits &bull; Accounting</div>
     <div class="dual-section">
         <div class="dual-block" id="s5-sec">
             <div class="dual-block-title">SECURITY OVER SPEED</div>
             <ul class="dual-block-list">
                 <li>Decentralized — TEE network</li>
-                <li>No single party controls state</li>
+                <li>Frequent key+hardware rotation</li>
                 <li>All state encrypted in memory</li>
             </ul>
         </div>
@@ -278,8 +278,7 @@
             <div class="dual-block-title">THRESHOLD TEE SIGNING</div>
             <ul class="dual-block-list">
                 <li>Quorum must agree to act</li>
-                <li>No single TEE can approve alone</li>
-                <li>No single operator can move funds</li>
+                <li>No single TEE can modify state or move funds</li>
             </ul>
         </div>
     </div>
@@ -298,7 +297,7 @@
         </div>
         <div class="mech-block" id="s6-m2">
             <div class="mech-num">2</div>
-            <div class="mech-body"><div class="mech-desc">Leader Cold TEE batches proposals into <span class="t-impact" style="font-size:32px;">slots</span></div></div>
+            <div class="mech-body"><div class="mech-desc">Leader Cold TEE batches proposals into <span class="t-impact" style="font-size:32px;">SLOTS</span></div></div>
         </div>
         <div class="mech-block" id="s6-m3">
             <div class="mech-num">3</div>
@@ -306,16 +305,16 @@
         </div>
         <div class="mech-block" id="s6-m4">
             <div class="mech-num">4</div>
-            <div class="mech-body"><div class="mech-desc">Threshold signs off → <span class="t-impact" style="font-size:32px;">slot finalized</span></div></div>
+            <div class="mech-body"><div class="mech-desc">Threshold signs off → <span class="t-impact" style="font-size:32px;">SLOT FINALIZED</span></div></div>
         </div>
     </div>
     <div class="chk-container" id="s6-chk">
-        <div class="chk-label">CHECKPOINTING</div>
+        <div class="chk-label">CHECKPOINT BASED RECOVERY</div>
         <div class="chk-body">
             <ul style="padding:0;margin:0;">
                 <li>Periodic encrypted state snapshots</li>
                 <li>Key shards held by governance council</li>
-                <li>Peers endorse → distributed recovery point</li>
+                <li>Quorum endorsed checkpoint → distributed recovery point</li>
             </ul>
         </div>
     </div>
@@ -333,12 +332,12 @@
         <tbody>
             <tr id="s7-r1"><td>Visibility</td><td class="cell-bc">Public</td><td class="cell-ru">Public (posted to L1)</td><td class="cell-sm">Private (encrypted in memory)</td></tr>
             <tr id="s7-r2"><td>Finality</td><td class="cell-bc">Often multi-block</td><td class="cell-ru">Fraud proof window / proof gen</td><td class="cell-sm">Single-slot</td></tr>
-            <tr id="s7-r3"><td>Compute</td><td class="cell-bc">Re-executed by all validators</td><td class="cell-ru">Provable via ZK circuits</td><td class="cell-sm">Arbitrary — no re-execution</td></tr>
+            <tr id="s7-r3"><td>Compute</td><td class="cell-bc">Re-executed by all validators</td><td class="cell-ru">Provable via ZK or L1 execution</td><td class="cell-sm">Arbitrary — no re-execution</td></tr>
             <tr id="s7-r4"><td>Trust</td><td class="cell-bc">Cryptographic / economic</td><td class="cell-ru">Inherited from L1</td><td class="cell-sm">TEE integrity + threshold*</td></tr>
-            <tr id="s7-r5"><td>Throughput</td><td class="cell-bc">Consensus-limited</td><td class="cell-ru">Proof overhead</td><td class="cell-sm">High — no hot-path overhead</td></tr>
+            <tr id="s7-r5"><td>Throughput</td><td class="cell-bc">Consensus-limited</td><td class="cell-ru">Proof overhead</td><td class="cell-sm">High — no hot-path overhead. Hot-path can be horizontally scaled (no networking bottleneck)</td></tr>
         </tbody>
     </table>
-    <div class="cmp-foot" id="s7-foot">*Can be enhanced with ZK proof systems or economic security — asynchronously, not on the hot path.</div>
+    <div class="cmp-foot" id="s7-foot">*Can be enhanced with ZK proof systems or economic security.</div>
 </div>
 
 <!-- ══════════════════════════════════════ -->
@@ -382,17 +381,17 @@
 <!-- ══════════════════════════════════════ -->
 <div class="slide align-start" id="slide-9" data-clicks="2">
     <div class="slide-headline" style="margin-bottom:4px;">The Credential Manager</div>
-    <div class="slide-subtext" style="font-size:24px; color:#888; margin-bottom:16px;">Onchain root of trust for the entire system.</div>
+    <div class="slide-subtext" style="font-size:24px; color:#333; margin-bottom:16px;">Smart Contract serving as Onchain Root of Trust.</div>
     <ul class="cred-list">
         <li><strong>Dual-key model</strong> — identity + hardware-attested key</li>
-        <li><strong>Measurement profiles</strong> — approved TDX gold images only</li>
-        <li><strong>Proof of cloud</strong> — Automata DCAP + ZK onchain verification</li>
+        <li><strong>Measurement profiles</strong> — approved TDX images only</li>
+        <li><strong>Proof of cloud</strong> — cryptographic proof of data center</li>
         <li><strong>Timelocked governance</strong> — 48h to 7-day delays</li>
         <li><strong>Restart certification</strong> — onchain leader election</li>
     </ul>
     <div class="escape-block" id="s9-escape">
-        <div class="escape-label">ESCAPE HATCH</div>
-        <div class="escape-text">Bonded withdrawal request → timelock → CE quorum can reject → unilateral exit if unchallenged</div>
+        <div class="escape-label">DEPOSIT VAULT ESCAPE HATCH</div>
+        <div class="escape-text">Bonded onchain withdrawal request → timelock → CE quorum can reject → unilateral exit if unchallenged</div>
     </div>
     <div class="compare-pair" id="s9-ops-wrap">
         <div class="compare-box muted" id="s9-today">
@@ -400,7 +399,7 @@
             <div class="compare-box-text">Known, permissioned operators</div>
         </div>
         <div class="compare-box acc" id="s9-tomorrow">
-            <div class="compare-box-label acc-label">TOMORROW</div>
+            <div class="compare-box-label acc-label">FUTURE</div>
             <div class="compare-box-text">Federated trust-based quorum</div>
         </div>
     </div>
@@ -417,7 +416,7 @@
         <circle cx="650" cy="275" r="80" fill="none" stroke="#e8d8d8" stroke-width="1" stroke-dasharray="4,8"/>
 
         <!-- ═══ 2. "SLOT MACHINE" LABEL ═══ -->
-        <text x="650" y="168" text-anchor="middle" font-family="Impact,sans-serif" font-size="13" fill="#999" letter-spacing="2">SLOT MACHINE</text>
+        <text x="650" y="168" text-anchor="middle" font-family="Impact,sans-serif" font-size="13" fill="#333" letter-spacing="2">SLOT MACHINE</text>
 
         <!-- ═══ 3. CONNECTION LINES ═══ -->
 
@@ -478,45 +477,45 @@
 
         <!-- OMS nodes (r=14) -->
         <circle cx="155" cy="47" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
-        <text x="155" y="51" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <text x="155" y="51" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#333">OMS</text>
         <circle cx="155" cy="83" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
-        <text x="155" y="87" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <text x="155" y="87" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#333">OMS</text>
         <circle cx="155" cy="123" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
-        <text x="155" y="127" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <text x="155" y="127" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#333">OMS</text>
         <circle cx="155" cy="149" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
-        <text x="155" y="153" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <text x="155" y="153" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#333">OMS</text>
         <circle cx="155" cy="175" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
-        <text x="155" y="179" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <text x="155" y="179" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#333">OMS</text>
         <circle cx="155" cy="215" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
-        <text x="155" y="219" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <text x="155" y="219" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#333">OMS</text>
         <circle cx="155" cy="251" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
-        <text x="155" y="255" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <text x="155" y="255" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#333">OMS</text>
         <circle cx="155" cy="317" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
-        <text x="155" y="321" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <text x="155" y="321" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#333">OMS</text>
         <circle cx="155" cy="383" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
-        <text x="155" y="387" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <text x="155" y="387" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#333">OMS</text>
         <circle cx="155" cy="419" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
-        <text x="155" y="423" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <text x="155" y="423" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#333">OMS</text>
         <circle cx="155" cy="459" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
-        <text x="155" y="463" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <text x="155" y="463" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#333">OMS</text>
         <circle cx="155" cy="485" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
-        <text x="155" y="489" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <text x="155" y="489" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#333">OMS</text>
         <circle cx="155" cy="511" r="14" fill="#f5f5f5" stroke="#aaa" stroke-width="1.5"/>
-        <text x="155" y="515" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#666">OMS</text>
+        <text x="155" y="515" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="bold" fill="#333">OMS</text>
 
         <!-- OB nodes (r=18) -->
         <circle cx="310" cy="65" r="18" fill="#f5f5f5" stroke="#888" stroke-width="2"/>
-        <text x="310" y="70" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="bold" fill="#555">OB</text>
+        <text x="310" y="70" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="bold" fill="#333">OB</text>
         <circle cx="310" cy="149" r="18" fill="#f5f5f5" stroke="#888" stroke-width="2"/>
-        <text x="310" y="154" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="bold" fill="#555">OB</text>
+        <text x="310" y="154" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="bold" fill="#333">OB</text>
         <circle cx="310" cy="233" r="18" fill="#f5f5f5" stroke="#888" stroke-width="2"/>
-        <text x="310" y="238" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="bold" fill="#555">OB</text>
+        <text x="310" y="238" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="bold" fill="#333">OB</text>
         <circle cx="310" cy="317" r="18" fill="#f5f5f5" stroke="#888" stroke-width="2"/>
-        <text x="310" y="322" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="bold" fill="#555">OB</text>
+        <text x="310" y="322" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="bold" fill="#333">OB</text>
         <circle cx="310" cy="401" r="18" fill="#f5f5f5" stroke="#888" stroke-width="2"/>
-        <text x="310" y="406" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="bold" fill="#555">OB</text>
+        <text x="310" y="406" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="bold" fill="#333">OB</text>
         <circle cx="310" cy="485" r="18" fill="#f5f5f5" stroke="#888" stroke-width="2"/>
-        <text x="310" y="490" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="bold" fill="#555">OB</text>
+        <text x="310" y="490" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="bold" fill="#333">OB</text>
 
         <!-- ═══ 5. ANIMATED DOTS (fixed frame) ═══ -->
 
@@ -623,17 +622,21 @@
 <div class="slide" id="slide-11" data-clicks="4">
     <div class="slide-headline" style="text-align:center; margin-bottom:28px;">Hot TEEs + Cold TEEs + Slot Machine =</div>
     <div style="width:100%; max-width:900px;">
-        <div class="land-item" id="s11-i1"><span class="land-check">✓</span> Optimal quoting environment</div>
+        <div class="land-item" id="s11-i1"><span class="land-check">✓</span> Fast, private quoting environment</div>
         <div class="land-item" id="s11-i2"><span class="land-check">✓</span> 10M+ orders per second</div>
         <div class="land-item" id="s11-i3"><span class="land-check">✓</span> Permissionless — run your own</div>
         <div class="land-item" id="s11-i4"><span class="land-check">✓</span> Noncustodial and trustless</div>
-        <div class="land-item" id="s11-i5"><span class="land-check">✓</span> Foundation for composability + capital efficiency</div>
+        <div class="land-item" id="s11-i5"><span class="land-check">✓</span> Foundation for composability + MBM</div>
     </div>
+</div>
+
+<div class="slide" id="slide-12" style="">
+    <img src="../assets/try-perfect-markets.png" style="max-height:85vh; max-width:85vw; object-fit:contain;" alt="Try Perfect Markets — tplus.cx">
 </div>
 
 <script>
 (function(){
-    var TOTAL = 11;
+    var TOTAL = 12;
     var cur = 1;
     var cs = {};
 
