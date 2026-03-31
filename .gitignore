@@ -335,6 +335,3 @@ jest-coverage/
 
 # Selenium
 selenium-debug.log
-/prompts
-/run-docs-refinement.sh
-/plan.md
